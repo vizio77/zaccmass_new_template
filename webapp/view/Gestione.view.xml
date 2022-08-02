@@ -1,0 +1,517 @@
+<mvc:View  controllerName="zsap.com.mef.bilancio.formazione.accmass.controller.Gestione"
+xmlns:html="http://www.w3.org/1999/xhtml" xmlns:semantic="sap.f.semantic" xmlns:layout="sap.ui.layout" xmlns:f="sap.f"
+xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+ displayBlock="true" xmlns:commons="sap.suite.ui.commons" xmlns:uxap="sap.uxap">
+<App id="app">
+	<f:DynamicPage id="dynamicPageId" showFooter="true"  preserveHeaderStateOnScroll="true" class="sapUiNoContentPadding">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+				<Title text="{modelHome>/HeaderDetail/status}"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title> 
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>
+					<FlexBox alignItems="Center" justifyContent="SpaceBetween">
+						<layout:VerticalLayout class="sapUiTinyMargin">
+							<VBox direction='Row' visible="true">
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>nome}" text="{modelHome>/AccantonamentoSelected/NomeSessione}" class="textBold"/>
+										
+									<ObjectStatus title="{i18n>Esercizio}"
+										text="{modelHome>/AccantonamentoSelected/Esercizio}"
+										class="textBold"/>
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>descrizione}" text="{modelHome>/AccantonamentoSelected/Descrizione}" class="textBold"/>
+									<ObjectStatus title="{i18n>statoWF}"
+										text="{modelHome>/AccantonamentoSelected/statoWf}"
+										class="textBold"/>
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>SottoStrumentoAssociato}"
+										text="{modelHome>/AccantonamentoSelected/STAC}"
+										class="textBold" visible="{visibilityModel>/STAC}"/>
+								</layout:VerticalLayout>
+								
+							</VBox>
+						</layout:VerticalLayout>
+					</FlexBox>
+					<FlexBox alignItems="Center" justifyContent="SpaceBetween">
+						<layout:VerticalLayout class="sapUiTinyMargin">
+							<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+								<ObjectStatus title="{i18n>datiElemento}" class="textBold"/>
+							</layout:VerticalLayout>
+							<VBox direction='Row' visible="true">
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>ammLB}" text="{modelHome>/ItemHeader/Amministrazione}" class="textBold"/>
+
+									<ObjectStatus title="{i18n>cpCsLB}" text="{path:'modelHome>/ItemHeader/CpCs', formatter: '.formatter.cpCs' }" class="textBold"/>
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>catLB}" text="{modelHome>/ItemHeader/CodiceCategoria}" class="textBold"/>
+
+									<ObjectStatus title="{i18n>obbLinLB}" text="{path:'modelHome>/ItemHeader/Taglio', formatter: '.formatter.taglio' }" class="textBold"/>
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>ce2LB}" text="{modelHome>/ItemHeader/CodiceClaeco2}" class="textBold"/>
+
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>ce3LB}" text="{modelHome>/ItemHeader/CodiceClaeco3}" class="textBold"/>
+
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>classLB}" text="{path:'modelHome>/ItemHeader/class', formatter: '.formatter.auth' }" class="textBold" visible="true"/>
+
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>misLB}" text="{modelHome>/ItemHeader/CodiceMissione}" class="textBold" visible="true"/>
+
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>progLB}" text="{modelHome>/ItemHeader/CodiceProgramma}" class="textBold" visible="true"/>
+
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>aziLB}" text="{modelHome>/ItemHeader/CodiceAzione}" class="textBold" visible="true"/>
+
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'PLUR'}">
+									<ObjectStatus title="{i18n>da}" text="{modelHome>/ItemHeader/AnnoDa}" class="textBold" visible="true"/>
+									<ObjectStatus title="{i18n>a}" text="{modelHome>/ItemHeader/AnnoA}"	class="textBold"/>
+									<ObjectStatus title="{i18n>importo}" text="{modelHome>/ItemHeader/importo}"	class="textBold"/>
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'OBC'}">
+									<ObjectStatus title="{i18n>importo1}" text="{modelHome>/ItemHeader/PrimoAnno}" class="textBold" visible="true"/>
+									<ObjectStatus title="{i18n>importo2}" text="{modelHome>/ItemHeader/SecondoAnno}"	class="textBold"/>
+									<ObjectStatus title="{i18n>importo3}" text="{modelHome>/ItemHeader/TerzoAnno}"	class="textBold"/>
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'LIN'}">
+									<ObjectStatus title="{i18n>percent1}" text="{modelHome>/ItemHeader/PercPrimoAnno}" class="textBold" visible="true"/>
+									<ObjectStatus title="{i18n>percent2}" text="{modelHome>/ItemHeader/PercSecondoAnno}"	class="textBold"/>
+									<ObjectStatus title="{i18n>percent2}" text="{modelHome>/ItemHeader/PercTerzoAnno}"	class="textBold"/>
+								</layout:VerticalLayout>
+								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
+									<ObjectStatus title="{i18n>aDecorrereLB}"  state="{ parts: [ {path: 'modelHome>/ItemHeader/ADecorrere'}], formatter: '.formatter.State' }" icon="{ parts: [ {path: 'modelHome>/ItemHeader/ADecorrere'}], formatter: '.formatter.StatoTrue' }" class="textBold" visible="true"/>
+
+									<ObjectStatus title="{i18n>allCassaLB}"  state="{ parts: [ {path: 'modelHome>/ItemHeader/AllaCassa'}], formatter: '.formatter.State' }" icon="{ parts: [ {path: 'modelHome>/ItemHeader/AllaCassa'}], formatter: '.formatter.StatoTrue' }" class="textBold" visible="true"/>
+								</layout:VerticalLayout><!-- -->
+								<!-- state="{ parts: [ {path: 'modelHome>aDecorrere'}], formatter: '.formatter.State' }"  -->
+							</VBox>
+						</layout:VerticalLayout>
+						
+					</FlexBox>
+					<!-- <Table id="TableGestione" width="auto"  
+										items="{ path: 'modelHome>/AccantonamentoSelected/Item'}"
+										itemPress="onItemPress" selectionChange="onGirSelect">
+							
+							<columns>
+								<Column  width="auto">
+									<Text text="{i18n>amm}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>cat}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>ce2}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>ce3}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>class}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>mis}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>prog}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>azi}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>cpCs}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>obbLin}"/>
+								</Column>
+								<Column width="auto" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'pluri'}">
+									<Text text="{i18n>da}"/>
+								</Column>
+								<Column width="auto" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'pluri'}">
+									<Text text="{i18n>a}"/>
+								</Column>
+								<Column width="auto" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'pluri'}">
+									<Text text="{i18n>importo}" />
+								</Column>
+								<Column width="auto" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'obb'}">
+									<Text text="{i18n>importo1}" />
+								</Column>
+								<Column width="auto" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'obb'}">
+									<Text text="{i18n>importo2}" />
+								</Column>
+								<Column width="auto" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'obb'}">
+									<Text text="{i18n>importo3}" />
+								</Column>
+								<Column width="auto" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'lin'}">
+									<Text text="{i18n>percent1}" />
+								</Column>
+								<Column width="auto" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'lin'}">
+									<Text text="{i18n>percent2}" />
+								</Column>
+								<Column width="auto" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'lin'}">
+									<Text text="{i18n>percent3}" />
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>aDecorrere}"/>
+								</Column>
+								<Column width="auto">
+									<Text text="{i18n>allCassa}"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem >
+									<cells>
+										<Text text="{modelHome>amm}" />
+										<Text text="{modelHome>cat}" />
+										<Text text="{modelHome>ce2}" />
+										<Text text="{modelHome>ce3}" />
+										<Text text="{modelHome>class}" />
+										<Text text="{modelHome>mis}" />
+										<Text text="{modelHome>prog}" />
+										<Text text="{modelHome>azi}" />	
+										<Text text="{modelHome>cpCs}" />	
+										<Text text="{modelHome>obbLin}" />
+										<Text text="{modelHome>da}" />
+										<Text text="{modelHome>a}" />
+										<Text text="{modelHome>importo}"  visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'pluri'}"/>
+										<Text text="{modelHome>importo1}"  visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'obb'}"/>
+										<Text text="{modelHome>importo2}"  visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'obb'}"/>
+										<Text text="{modelHome>importo3}"  visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'obb'}"/>
+										<Text text="{modelHome>percent1}" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'lin'}"/>
+										<Text text="{modelHome>percent2}" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'lin'}"/>
+										<Text text="{modelHome>percent3}" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'lin'}"/>
+											<core:Icon src="{ parts: [ {path: 'modelHome>aDecorrere'}], formatter: '.formatter.StatoTrue' }" color="{ parts: [ {path: 'modelHome>allCassa'}], formatter: '.formatter.ColorTrue' }" size="1.5em" />
+											<core:Icon src="{ parts: [ {path: 'modelHome>allCassa'}], formatter: '.formatter.StatoTrue' }" color="{ parts: [ {path: 'modelHome>allCassa'}], formatter: '.formatter.ColorTrue' }" size="1.5em" />
+										
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table> -->
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+				<f:content>
+					<Page enableScrolling="true" class="sapUiNoContentPadding" showFooter="false" showHeader="false" backgroundDesign="Transparent">
+						
+						<uxap:ObjectPageHeaderContent class="sapUiTinyMarginBegin">
+							<uxap:content>
+								<!-- <layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIDesc}"
+										text="0,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIDesc}"
+										text="0,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIDesc}"
+										text="0,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIVDesc}"
+										text="0,00"/>
+								</layout:VerticalLayout> -->
+								<!-- <layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIDesc}"
+										text="1.992.355,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIDesc}"
+										text="1.992.355,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIDesc}"
+										text="1.992.355,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIVDesc}"
+										text="1.992.355,00"/>
+								</layout:VerticalLayout> -->
+							<!-- 	<layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIAcc}"
+										text="70.000,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIAcc}"
+										text="80.000,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIAcc}"
+										text="90.000,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIAcc}"
+										text="90.000,00"/>
+								</layout:VerticalLayout> -->
+						
+
+
+
+								<!-- LINEARE -->
+
+								<!-- <layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIDesc}"
+										text="0,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIDesc}"
+										text="0,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIDesc}"
+										text="0,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIVDesc}"
+										text="0,00"/>
+								</layout:VerticalLayout> -->
+
+								<!-- <layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIDesc}"
+										text="1.992.355"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIDesc}"
+										text="1.992.355"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIDesc}"
+										text="1.992.355"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIVDesc}"
+										text="1.992.355"/>
+								</layout:VerticalLayout> -->
+
+								<layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIDesc}"
+										text="1.949.451,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIDesc}"
+										text="1.949.451,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIDesc}"
+										text="1.949.451,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIVDesc}"
+										text="1.949.451,00"/>
+								</layout:VerticalLayout>
+
+								<layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIAcc}"
+										text="194.945,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIAcc}"
+										text="292.418,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIAcc}"
+										text="389.890,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIAcc}"
+										text="0,00"/>
+								</layout:VerticalLayout>
+
+								<layout:VerticalLayout>
+									<ObjectStatus title="Tot. Calato a Bilancio 2023"
+										text="194.517,00"/>
+									<ObjectStatus title="Tot. Calato a Bilancio 2024"
+										text="291.777,00"/>
+									<ObjectStatus title="Tot. Calato a Bilancio 2025"
+										text="389.035,00"/>
+									<ObjectStatus title="Tot. Calato a Bilancio 2026"
+										text="0,00"/>
+								</layout:VerticalLayout>
+
+
+								<!-- PLURIENNALE -->
+
+								<!-- <layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIDesc}"
+										text="0,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIDesc}"
+										text="0,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIDesc}"
+										text="0,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIVDesc}"
+										text="0,00"/>
+								</layout:VerticalLayout> -->
+
+								 <!-- <layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIDesc}"
+										text="1.992.355,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIDesc}"
+										text="1.992.355,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIDesc}"
+										text="1.992.355,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIVDesc}"
+										text="1.992.355,00"/>
+								</layout:VerticalLayout> -->
+
+								<!-- <layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIAcc}"
+										text="1.949.451,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIAcc}"
+										text="1.949.451,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIAcc}"
+										text="1.949.451,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIAcc}"
+										text="1.949.451,00"/>
+								</layout:VerticalLayout> -->
+
+								<!-- <layout:VerticalLayout>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIAcc}"
+										text="6.250,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIAcc}"
+										text="6.250,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIAcc}"
+										text="6.250,00"/>
+									<ObjectStatus title="{modelHome>/HeaderDetail/annoIIIAcc}"
+										text="6.250,00"/>
+								</layout:VerticalLayout> -->
+
+								
+
+							</uxap:content>
+						</uxap:ObjectPageHeaderContent>
+
+						
+
+							<ScrollContainer height="100%" vertical="true">
+								<Table id="TableGestioneDetail"  alternateRowColors="true" inset="false" items="{modelHome>/GestioneAccantonamento}" mode="None" fixedLayout="false"
+									sticky="HeaderToolbar,InfoToolbar,ColumnHeaders">
+									<headerToolbar>
+										<OverflowToolbar design="Transparent">
+											<content>
+												<!--<Title text="{i18n>listaAutoPres}"/>-->
+												<ToolbarSpacer/>
+												<Text text="{i18n>selezPeri}"/>
+												<select id="idSelctYearPre" change="setPeriod" selectedKey="{colonneModel>/periodoSelectedKey}" items="{colonneModel>/periodi}">
+													
+													<core:Item key="{colonneModel>key}" text="{colonneModel>value}"/>
+												</select>
+												
+												<Button text="Genera Base Aggredibile" type="Emphasized" press="onGeneraAlgoritmo" visible="{= ${visibilityModel>/stato} === '1'}"/>
+												<Button text="Refresh Disponibilità" type="Emphasized" press="onGeneraAlgoritmo" visible="{= ${visibilityModel>/stato} === '2'}"/>
+												<Button text="Ricarica Disponibilità" type="Emphasized" press="onGeneraAlgoritmo" visible="{= ${visibilityModel>/stato} === '3' || ${visibilityModel>/stato} === '4'}"/>
+												<Button text="Applica Algoritmo" type="Emphasized" press="onGeneraAlgoritmo" visible="{= ${visibilityModel>/stato} === '3'}"/>
+													<Button text="Valida Tutto" type="Emphasized" press="onValidateAll" visible="{= ${visibilityModel>/stato} === '4'}"/>
+													<!--
+												<Button text="{i18n>prevSpesa}" type="Emphasized" visible="{= ${modelTestata>/Tipologia} === 'Delegata' ? true : false}"
+													press="onPressShowPrevSpesa"/>
+												
+												<Button text="Elimina" type="Emphasized" icon="sap-icon://delete" press="onPressButtonDelete"/>
+												<Button type="Emphasized" text="{i18n>export}" icon="sap-icon://excel-attachment"/> -->
+											</content>
+										</OverflowToolbar>
+									</headerToolbar>
+									<columns>
+										<Column width="auto" visible="{= ${visibilityModel>/stato} === '7' || ${visibilityModel>/stato} === '6' }">
+											<Text text="Calata a Bilancio" class="boldCss"  />
+										</Column>
+										<Column width="auto">
+											<Text text="{i18n>validata}" class="boldCss"  visible="{= ${visibilityModel>/stato} === '4' || ${visibilityModel>/stato} === '5' || ${visibilityModel>/stato} === '6' || ${visibilityModel>/stato} === '7'}"/>
+										</Column>
+										<Column width="auto"  >
+											<Text text="{i18n>comprimibile}" class="boldCss" visible="{= ${visibilityModel>/stato} !== '1'}"/>
+										</Column>
+										<Column width="auto" >
+											<!-- <Text text="{i18n>IelementoCB}" class="boldCss"/> -->
+												<Text text="{i18n>IIelementoCB}" class="boldCss" visible="false"/>
+										</Column>
+										<Column width="auto" hAlign="End">
+											<!-- <Text text="{i18n>IIelementoCB}" class="boldCss"/> -->
+											<Text text="{i18n>PosizioneFinanziaria}" class="boldCss"/>												
+										</Column>
+										<Column width="auto" hAlign="End">
+											<Text text="{i18n>fondoCB}" class="boldCss"/>
+										</Column>
+										<Column width="auto">
+											<HBox>
+												<Button icon="sap-icon://close-command-field" press="onPressChangeArrow" type="Emphasized" class="sapUiSmallMarginEnd" enabled="{colonneModel>/arrows/Initial}">
+													<customData>
+														<core:CustomData key="Arrow" value="Initial" writeToDom="true"/>
+													</customData>
+												</Button>
+												<Button icon="sap-icon://navigation-left-arrow" press="onPressChangeArrow" type="Emphasized" enabled="{colonneModel>/arrows/Sx}">
+													<customData>
+														<core:CustomData key="Arrow" value="Sx" writeToDom="true"/>
+													</customData>
+												</Button>
+											</HBox>
+										</Column>
+										<!-- <Column visible="true" hAlign="Center" width="auto">
+											<Text text="{i18n>disponibilitaAnno} {i18n>annoI}" class="boldCss"/>
+										</Column>
+										<Column visible="true" hAlign="Center" width="auto">
+											<Text text="{i18n>accantonamentoAnno} {i18n>annoI}" class="boldCss"/>
+										</Column>
+										<Column visible="true" hAlign="Center" width="auto">
+											<Text text="{i18n>disponibilitaAnno} {i18n>annoII}" class="boldCss"/>
+										</Column >
+										<Column visible="true" hAlign="Center" width="auto">
+											<Text text="{i18n>accantonamentoAnno} {i18n>annoII}" class="boldCss"/>
+										</Column>
+										<Column visible="true" hAlign="Center" width="auto">
+											<Text text="{i18n>disponibilitaAnno} {i18n>annoIII}" class="boldCss"/>
+										</Column>
+										<Column visible="true" hAlign="Center" width="auto">
+											<Text text="{i18n>accantonamentoAnno} {i18n>annoIII}" class="boldCss"/>
+										</Column>
+										<Column visible="true" hAlign="Center" width="auto">
+											<Text text="{i18n>disponibilitaAnno} {i18n>annoIV}" class="boldCss"/>
+										</Column>
+										<Column visible="true" hAlign="Center" width="auto">
+											<Text text="{i18n>accantonamentoAnno} {i18n>annoIV}" class="boldCss"/>
+										</Column>
+										
+										<Column width="auto">
+											<Button icon="sap-icon://navigation-right-arrow" type="Emphasized"/>
+										</Column> -->
+									</columns>
+									<items>
+										<ColumnListItem id="idColumnListItemsGestione" vAlign="Middle">
+											<customData>
+												<core:CustomData key="backgroundRow" value="{modelHome>Title}" writeToDom="true"/>
+											</customData>
+											<cells>
+
+												
+												<CheckBox selected="{modelHome>calata}"  textAlign="End" 
+													visible="{= ${visibilityModel>/stato} === '7' || ${visibilityModel>/stato} === '6'}"
+													 editable="false"/>
+												<CheckBox selected="{modelHome>validata}"  textAlign="End" select="ricalcolaTotali"
+													visible="{= (${visibilityModel>/stato} === '4' || ${visibilityModel>/stato} === '5' || ${visibilityModel>/stato} === '6' || ${visibilityModel>/stato} === '7')}"
+													 editable="{= (${visibilityModel>/stato} === '4' &amp;&amp; ${modelHome>comprimibile} === true) }"/>
+												<CheckBox selected="{modelHome>comprimibile}"  textAlign="End" select="ricalcolaTotali"
+													visible="{= ${visibilityModel>/stato} !== '1'}" editable="{= ${visibilityModel>/stato} === '2' }"/>
+												<Input value="{modelHome>IelementoCB}" editable="false" textAlign="End"
+													visible="false"/>
+												<Input value="{modelHome>IIelementoCB}" editable="false" textAlign="End"
+													visible="true"/>
+												<Input value="{modelHome>fondoCB}" textAlign="End" editable="false" change="onChangeNumberFormat"/>
+												
+												<Text text=""/>
+												<!-- <Input value="{modelHome>dispAnnoI}" editable="false" textAlign="End" visible="true"/>
+												<Input value="{modelHome>totAccantonamentoAnnoI}" textAlign="End" editable="false" change="onChangeNumberFormat"/>
+												<Input value="{modelHome>dispAnnoII}" editable="false" textAlign="End" visible="true"/>
+												<Input value="{modelHome>totAccantonamentoAnnoII}" textAlign="End" editable="false" change="onChangeNumberFormat"/>
+												<Input value="{modelHome>dispAnnoIII}" editable="false" textAlign="End" visible="true"/>
+												<Input value="{modelHome>totAccantonamentoAnnoIII}" textAlign="End" editable="false" change="onChangeNumberFormat"/>
+												<Input value="{modelHome>dispAnnoIV}" editable="false" textAlign="End" visible="true"/>
+												<Input value="{modelHome>totAccantonamentoAnnoIV}" textAlign="End" editable="false" change="onChangeNumberFormat"/>
+												<Text text=""/> -->
+											</cells>
+										</ColumnListItem>
+									</items>
+									<!-- <infoToolbar >
+										<OverflowToolbar active="false" press="handleInfobarPress" design="Solid">
+											<layout:HorizontalLayout class="sapUiTinyMarginTopBottom sapUiSmallMarginBegin">
+												<ObjectStatus title="{i18n>posFinanziaria}" text="{modelTestata>/PosFin}" active="true" state="Information" class="textBold"
+													press="onPressShowPosFin"/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout class="sapUiTinyMarginTopBottom">
+												<ObjectStatus title="{i18n>struttAmmCen}" text="{modelTestata>/StruttAmmResp}" active="true" state="Information" class="textBold"
+													press="onPressShowStrutCentrale"/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout class="sapUiTinyMarginTopBottom" visible="{= ${modelTestata>/ProvenienzaFondi} === 'Residui' ? true : false}">
+												<ObjectStatus title="{i18n>tcr}" text="4" active="true" state="Information" class="textBold"/>
+											</layout:HorizontalLayout>
+										</OverflowToolbar>
+									</infoToolbar> -->
+								</Table>
+						
+							</ScrollContainer>
+						
+					</Page>
+				</f:content>
+		<f:footer>
+			<OverflowToolbar>
+				<Button text="test" press="test" type="Emphasized" visible="false"/>
+				<Button text="test2" press="test2" type="Emphasized" visible="false"/>
+				<ToolbarSpacer/>
+				<Button text="{i18n>indietro}" press="onNavToDetail" type="Emphasized" visible="false"/>
+				<Button text="{i18n>salva}" press="onNavToDetail" type="Emphasized" visible="true"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</App>
+</mvc:View>

@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:uxap="sap.uxap">
+	<Dialog id="idDialogPosizioneFinanziaria" title="{i18n>titleFragmentAddAccantonamento}" contentWidth="40%" contentHeight="auto">
+		<content>
+			<f:SimpleForm id="formInserimentoPosFin" editable="true" singleContainerFullSize="false" adjustLabelSpan="false"
+				layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" emptySpanXL="2" emptySpanL="0" emptySpanM="2"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1">
+				<f:content>
+					<core:Title/>
+					<Label text="{i18n>nome}" required="true"/>
+					<Input id="idAmmPosizioneFin" value="{modelHome>/form/NomeSessione}" width="70%" showValueHelp="false"/>
+					<Label text="{i18n>esercizio}" required="true"/>
+					<Select id="selEsercizio" forceSelection="false" selectedKey="{modelHome>/form/Esercizio}" width="70%">
+						<items>
+							<core:Item text="2021" key="2021"/>
+							<core:Item text="2022" key="2022"/>
+							<core:Item text="2023" key="2023"/>
+						</items>
+					</Select>
+					<Label text="{i18n>descrizione}"  required="true"/>
+					<Input value="{modelHome>/form/Descrizione}" width="70%" showValueHelp="false" valueHelpRequest="onPressMatchCodeFragment">
+                        <customData>
+                            <core:CustomData key="Miss" value="HelpValueMissioni" writeToDom="false"/>
+                        </customData>
+                    </Input>
+					<Label text="{i18n>statoWF}"   required="true"/>
+					<Input  editable="false" value="{modelHome>/form/statoWf}" width="70%" showValueHelp="false" valueHelpRequest="onPressMatchCodeFragment">
+                        <customData>
+                            <core:CustomData key="Prog" value="HelpValueProgramma" writeToDom="false"/>
+                        </customData>
+                    </Input>					
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		 <beginButton>
+			<Button press="handlecloseAccantonamenti" type="Emphasized" text="{i18n>annulla}"></Button>
+		</beginButton> 
+		<endButton>
+			<Button press="handlecAddAccantonamentoSelected" type="Emphasized" text="{i18n>conferma}"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

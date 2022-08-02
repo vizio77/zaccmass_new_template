@@ -1,0 +1,49 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+    <TableSelectDialog
+        contentHeight=""
+        contentWidth=""
+        growing="true"
+        multiSelect="false"
+        noDataText=""
+        rememberSelections="false"
+        showClearButton="false"
+        title="Cerca"
+        items="{shModel>/ZES_CATEGORIA_SET}"
+        confirm="onPressChoiceStandardlist"
+    >
+        <columns>
+            <Column width="8rem">
+                <Text text="Categoria" />
+            </Column>
+            <Column width="12rem">
+                <Text text="Descr. Categoria"/>
+            </Column>
+            <!-- <Column width="8rem">
+                <Text text="Amm."/>
+            </Column>
+            <Column width="12rem">
+                <Text text="Descr. Ammin."/>
+            </Column> -->
+        </columns>
+        <items>
+            <ColumnListItem type="Active">
+                <cells>          
+                    <Text text="{shModel>CODICE_CATEGORIA}"/>
+                    <Text text="{shModel>DESC_BREVE}"/>
+                    <!-- <Text text="{shModel>AMMINISTRAZIONE}"/>
+                    <Text text="{shModel>DESCR_AMMINISTRAZIONE}"/> -->
+                </cells>
+                <!-- <customData>
+                    <c:CustomData key="{homeModel>VALORE}" value="{homeModel>DESCRIZIONE}" writeToDom="false" />
+                </customData> -->
+            </ColumnListItem>
+        </items>
+         <customData>
+            <c:CustomData key="Property" value="CODICE_CATEGORIA" writeToDom="false" />
+            <c:CustomData key="CATEGORIA" value="DESCR_CATEGORIA" writeToDom="false" />
+        </customData>
+    </TableSelectDialog>
+</c:FragmentDefinition>

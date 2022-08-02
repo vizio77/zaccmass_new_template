@@ -1,0 +1,36 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+    <SelectDialog
+        contentHeight=""
+        contentWidth=""
+        noDataText=""
+        rememberSelections="false"
+        showClearButton="false"
+        title="Cerca"
+        cancel="onCancelFragment"
+        items="{shModel>/ZES_ECONOMICA2_SET}"
+        confirm="onPressChoiceStandardlist"
+    >
+        <items>
+            <StandardListItem
+                activeIcon=""
+                adaptTitleSize="true"
+                description="{shModel>DESC_BREVE}"
+                icon=""
+                iconDensityAware="true"
+                iconInset="true"
+                info=""
+                infoState="None"
+                infoTextDirection="Inherit"
+                title="{shModel>CODICE_CLAECO2}"
+                titleTextDirection="Inherit"
+            />
+        </items>
+        <customData>
+            <c:CustomData key="Property" value="CODICE_CLAECO2" writeToDom="false" />
+            <c:CustomData key="ECONOMICA2" value="DESC_BREVE" writeToDom="false" />
+        </customData>
+    </SelectDialog>
+</c:FragmentDefinition>

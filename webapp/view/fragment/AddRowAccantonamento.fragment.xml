@@ -1,0 +1,149 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:uxap="sap.uxap">
+	<Dialog id="idDialogPosizioneFinanziaria" title="{i18n>titleFragmentAddAccantonamento}" contentWidth="40%" contentHeight="auto">
+		<content>
+			<f:SimpleForm editable="true" singleContainerFullSize="false" adjustLabelSpan="false"
+				layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" emptySpanXL="2" emptySpanL="0" emptySpanM="2"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1">
+				<f:content>
+					<core:Title/>
+					<Label text="{i18n>ammLB}" required="true"/>
+					<Input value="{modelHome>/formRow/Amministrazione}" width="70%" showValueHelp="true" valueHelpRequest="onPressMatchCodeFragment" >
+						<customData>
+							<core:CustomData key="NameSH" 		value="HelpValueAmm"			writeToDom="false"/>	
+							<core:CustomData key="From" 		value="Sh"						writeToDom="false"/>											
+							<core:CustomData key="Property" 	value="Amministrazione"			writeToDom="false"/>	
+							<core:CustomData key="Path" 		value="/formRow"				writeToDom="false"/>	
+							<core:CustomData key="EntitySet" 	value="ZES_AMMINISTRAZIONE_SET"	writeToDom="false"/>
+						</customData>
+					</Input>
+					<Label text="{i18n>catLB}" />
+					<Input value="{modelHome>/formRow/CodiceCategoria}" width="70%" showValueHelp="true" valueHelpRequest="onPressMatchCodeFragment" >
+						<customData>
+							<core:CustomData key="NameSH" 			value="HelpValueCategoria"			writeToDom="false"/>	
+							<core:CustomData key="From" 			value="Sh"							writeToDom="false"/>											
+							<core:CustomData key="Property" 		value="CodiceCategoria"				writeToDom="false"/>	
+							<core:CustomData key="Path" 			value="/formRow"					writeToDom="false"/>
+							<core:CustomData key="Eliminare" 		value="CodiceClaeco2,CodiceClaeco3"	writeToDom="false"/>		
+							<core:CustomData key="EntitySet" 		value="ZES_CATEGORIA_SET"			writeToDom="false"/>
+							<core:CustomData key="CodiceCategoria" 	value="CODICE_CATEGORIA"			writeToDom="false"/>
+						</customData>
+					</Input>
+					<Label text="{i18n>ce2LB}" />
+					<Input value="{modelHome>/formRow/CodiceClaeco2}" width="70%" showValueHelp="true" valueHelpRequest="onPressMatchCodeFragment" >
+						<customData>
+							<core:CustomData key="NameSH" 			value="HelpValueCe2"		writeToDom="false"/>	
+							<core:CustomData key="From" 			value="Sh"					writeToDom="false"/>											
+							<core:CustomData key="Property" 		value="CodiceClaeco2"		writeToDom="false"/>	
+							<core:CustomData key="Path" 			value="/formRow"			writeToDom="false"/>
+							<core:CustomData key="Eliminare" 		value="CodiceClaeco3"	   	writeToDom="false"/>		
+							<core:CustomData key="Filtro" 			value="CodiceCategoria"		writeToDom="false"/>
+							<core:CustomData key="EntitySet" 		value="ZES_ECONOMICA2_SET"	writeToDom="false"/>	
+							<core:CustomData key="CodiceCategoria" 	value="CODICE_CATEGORIA"	writeToDom="false"/>
+							<core:CustomData key="CodiceClaeco2" 	value="CODICE_CLAECO2"		writeToDom="false"/>
+						</customData>
+					</Input>
+					<Label text="{i18n>ce3LB}" />
+					<Input value="{modelHome>/formRow/CodiceClaeco3}" width="70%" showValueHelp="true" valueHelpRequest="onPressMatchCodeFragment" >
+						<customData>
+							<core:CustomData key="NameSH" 		value="HelpValueCe3"					writeToDom="false"/>	
+							<core:CustomData key="From" 		value="Sh"								writeToDom="false"/>											
+							<core:CustomData key="Property" 	value="CodiceClaeco3"					writeToDom="false"/>	
+							<core:CustomData key="Path" 		value="/formRow"						writeToDom="false"/>	
+							<core:CustomData key="Filtro" 		value="CodiceCategoria,CodiceClaeco2"	writeToDom="false"/>	
+							<core:CustomData key="EntitySet" 	value="ZES_ECONOMICA3_SET"				writeToDom="false"/>										
+						</customData>
+					</Input>
+					<Label text="{i18n>classLB}" />
+					<Select  forceSelection="false" width="70%" change="changeSelect" selectedKey="{modelHome>/formRow/ClassAut}"
+							items="{ path: 'modelHome>/selectClass'}">
+							<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE_ESTESA}"/>
+					</Select>
+					<Label text="{i18n>misLB}" />
+					<Input value="{modelHome>/formRow/CodiceMissione}" width="70%" showValueHelp="true" valueHelpRequest="onPressMatchCodeFragment" >
+						<customData>
+							<core:CustomData key="NameSH" 		value="HelpValueMissione"	writeToDom="false"/>	
+							<core:CustomData key="From" 		value="Sh"					writeToDom="false"/>											
+							<core:CustomData key="Property" 	value="CodiceMissione"		writeToDom="false"/>	
+							<core:CustomData key="Path" 		value="/formRow"			writeToDom="false"/>
+							<core:CustomData key="Eliminare" 	value="prog,azi"	   		writeToDom="false"/>							
+							<core:CustomData key="EntitySet" 	value="ZES_MISSIONE_SET"	writeToDom="false"/>		
+						</customData>
+					</Input>
+					<Label text="{i18n>progLB}" />
+					<Input value="{modelHome>/formRow/CodiceProgramma}" width="70%" showValueHelp="true" valueHelpRequest="onPressMatchCodeFragment" >
+						<customData>
+							<core:CustomData key="NameSH" 			value="HelpValueProgramma"	writeToDom="false"/>	
+							<core:CustomData key="From" 			value="Sh"					writeToDom="false"/>											
+							<core:CustomData key="Property" 		value="CodiceProgramma"		writeToDom="false"/>	
+							<core:CustomData key="Path" 			value="/formRow"			writeToDom="false"/>
+							<core:CustomData key="Eliminare" 		value="CodiceAzione"	   	writeToDom="false"/>	
+							<core:CustomData key="Filtro" 			value="CodiceMissione"		writeToDom="false"/>	
+							<core:CustomData key="EntitySet" 		value="ZES_PROGRAMMA_SET"	writeToDom="false"/>
+							<core:CustomData key="CodiceMissione"	value="CODICE_MISSIONE"		writeToDom="false"/>
+						</customData>
+					</Input>			
+					<Label text="{i18n>aziLB}" />
+					<Input value="{modelHome>/formRow/CodiceAzione}" width="70%" showValueHelp="true" valueHelpRequest="onPressMatchCodeFragment" >
+						<customData>
+							<core:CustomData key="NameSH" 			value="HelpValueAzione"					writeToDom="false"/>	
+							<core:CustomData key="From" 			value="Sh"								writeToDom="false"/>											
+							<core:CustomData key="Property" 		value="CodiceAzione"					writeToDom="false"/>	
+							<core:CustomData key="Path" 			value="/formRow"						writeToDom="false"/>	
+							<core:CustomData key="Filtro" 			value="CodiceMissione,CodiceProgramma"	writeToDom="false"/>										
+							<core:CustomData key="EntitySet" 		value="ZES_AZIONE_SET"					writeToDom="false"/>
+							<core:CustomData key="CodiceMissione" 	value="CODICE_MISSIONE"					writeToDom="false"/>
+							<core:CustomData key="CodiceProgramma" 	value="CODICE_PROGRAMMA"				writeToDom="false"/>
+						</customData>
+					</Input>
+					<Label text="{i18n>cpCsLB}" required="true"/>
+					<Select  forceSelection="false" width="70%" change="changeSelect" selectedKey="{modelHome>/formRow/CpCs}"
+							items="{ path: 'modelHome>/selectCpCs'}">
+							<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE_ESTESA}"/>
+					</Select>
+					<Label text="{i18n>obbLinLB}" required="true"/>
+					
+					<Select  forceSelection="false" width="70%" change="changeSelect" selectedKey="{modelHome>/formRow/Taglio}"
+							items="{ path: 'modelHome>/selectObbLin'}">
+							<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE_ESTESA}"/>
+					</Select>
+					<Label text="{i18n>da}" />
+					<DatePicker width="70%" xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoDa}" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}"/>	
+					<Label text="{i18n>a}" />
+					<DatePicker width="70%" xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoA}" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}"/>
+
+					<Label text="{i18n>importo}" />
+					<Input value="{modelHome>/formRow/Obiettivo}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
+					<Label text="{i18n>importo1}" />
+					<Input value="{modelHome>/formRow/PrimoAnno}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>					
+					<Label text="{i18n>importo2}" />
+					<Input value="{modelHome>/formRow/SecondoAnno}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
+					<Label text="{i18n>importo3}" />
+					<Input value="{modelHome>/formRow/TerzoAnno}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
+
+					<!-- <Label text="{i18n>importo}" />
+					<Input value="{modelHome>/formRow/importo3}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/> -->
+
+					<Label text="{i18n>percent1}" />
+					<Input value="{modelHome>/formRow/PercPrimoAnno}" maxLength="3" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'LIN'}"/>
+					<Label text="{i18n>percent2}" />
+					<Input value="{modelHome>/formRow/PercSecondoAnno}" maxLength="3" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'LIN'}"/>
+					<Label text="{i18n>percent3}" />
+					<Input value="{modelHome>/formRow/PercTerzoAnno}" maxLength="3" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'LIN'}"/>
+
+					<Label text="{i18n>aDecorrereLB}" />
+					<CheckBox selected="{modelHome>/formRow/ADecorrere}" />
+					<Label text="{i18n>allCassaLB}" />
+					<CheckBox selected="{modelHome>/formRow/AllaCassa}"  visible="{= ${modelHome>/formRow/CpCs} === 'CP'}"/>
+
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<beginButton>
+			<Button press="handlecloseRowAccantonamento" type="Emphasized" text="{i18n>annulla}"></Button>
+		</beginButton> 
+		<endButton>
+			<Button press="handlecAddRowAccantonamento" type="Emphasized" text="{i18n>conferma}"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

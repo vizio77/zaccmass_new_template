@@ -60,18 +60,21 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "rootView": {
+			"viewName": "zsap.com.mef.bilancio.formazione.accmass.view.App",
+			"type": "XML"
+		},
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.71.13",
       "libs": {
-        "sap.m": {},
-        "sap.ui.core": {},
-        "sap.f": {},
-        "sap.suite.ui.generic.template": {},
-        "sap.ui.comp": {},
-        "sap.ui.generic.app": {},
-        "sap.ui.table": {},
-        "sap.ushell": {}
+        "sap.collaboration": {},
+				"sap.m": {},
+				"sap.ui.comp": {},
+				"sap.ui.core": {},
+				"sap.ui.layout": {},
+				"sap.ushell": {},
+				"sap.uxap": {}
       }
     },
     "contentDensities": {
@@ -113,30 +116,62 @@
         "controlId": "app",
         "clearControlAggregation": false
       },
-      "routes": [
-        {
-          "name": "RouteHome",
-          "pattern": ":?query:",
-          "target": [
-            "TargetHome"
-          ]
-        }
-      ],
-      "targets": {
-        "TargetHome": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "Home",
-          "viewName": "Home"
-        }
+			"routes": [
+				{
+					"name": "RouteView",
+					"pattern": "",
+					"target": [
+						"TargetView"
+					]
+				},
+				{
+					"name": "Home",
+					"pattern": "Home",
+					"target": [
+						"Home"
+					]
+				},
+				{
+					"name": "Detail",
+					"pattern": "Detail",
+					"target": [
+						"Detail"
+					]
+				},
+				{
+					"name": "Gestione",
+					"pattern": "Gestione",
+					"target": [
+						"Gestione"
+					]
+				}
+			],
+      "targets": {        
+        "TargetView": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "Home"
+				},
+				"Home": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "Home"
+				},
+				"Detail": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "Detail"
+				},
+				"Gestione": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "Gestione"
+				}
       }
-    },
-    "rootView": {
-      "viewName": "zsap.com.mef.bilancio.formazione.accmass.view.App",
-      "type": "XML",
-      "async": true,
-      "id": "App"
     }
   }
 }

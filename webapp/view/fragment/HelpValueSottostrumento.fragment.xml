@@ -1,0 +1,34 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+<Dialog  title="{i18n>cercaSottostrumento}" contentWidth="50%" contentHeight="50%">
+    <content>
+        <f:SimpleForm id="formInserimentoSottoStrumento" editable="true" singleContainerFullSize="false" adjustLabelSpan="false"
+            layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" emptySpanXL="2" emptySpanL="0" emptySpanM="2"
+            emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1">
+            <f:content>               
+                <Label text="{i18n>TipoSottoStr}" />
+				<Input value="{associaSottostrumento>/tipologia}" width="70%" showValueHelp="false" editable="false"/> 
+                <Label text="{i18n>esercizio}" />
+                <Input  value="{associaSottostrumento>/esercizio}" width="70%" showValueHelp="false" editable="false"/>            
+                <Label text="{i18n>progressivo}" />
+				<Input value="{associaSottostrumento>/progressivo}" width="70%"/>                
+              
+            </f:content>
+        </f:SimpleForm>
+    </content>
+    <!-- <beginButton>
+        <Button press="onClose" type="Emphasized" text="{i18n>close}"></Button>
+    </beginButton>
+    <endButton>
+        <Button press="onPressConfSottoStrumento" type="Emphasized" text="{i18n>conf}"/>
+    </endButton> -->
+    <buttons>
+        <Button press="onClose" type="Emphasized" text="{i18n>close}"></Button>
+        <Button press="onClose" type="Emphasized" text="{i18n>Resetta}"></Button>
+        <Button press="onSottostrumento" type="Emphasized" text="{i18n>Cerca}"/>
+    </buttons>
+</Dialog>
+</c:FragmentDefinition>

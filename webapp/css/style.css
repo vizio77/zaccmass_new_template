@@ -1,1 +1,146 @@
 /* Enter your custom styles here */
+
+
+.sapUiMedia-Std-Desktop .sapUxAPObjectPageHeaderContent.noMarginLeftUxap {
+    padding-left: 1rem;
+}
+
+.noMarginTest>.sapMPanelContent {
+    padding: 0rem;
+    box-sizing: border-box;
+    overflow: auto;
+    white-space: normal; 
+}
+
+.sapUxAPObjectPageHeaderContent .sapUiHLayoutChildWrapper,
+.textInLine>.sapUxAPObjectPageHeaderSeparatorContainer .sapUiHLayoutChildWrapper,
+.sapUxAPObjectPageHeaderContent>.sapUxAPObjectPageHeaderWidthContainer .sapUiHLayoutChildWrapper {
+    min-height: 0rem !important;
+    min-width: 0rem !important;
+}
+
+.textBold>.sapMObjStatusTitle {
+    padding-right: .25rem !important;
+    font-weight: bold !important;
+}
+
+.showTextAll .sapMITBText {
+    display: inline;
+    max-height: 3rem;
+    max-width: 4rem;
+    overflow: initial !Important;
+    text-align: left;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: normal;
+    width: auto;
+    color: #333333;
+    text-shadow: 0 0 0.125rem #ffffff;
+}
+[data-textSpaceBegin="di cui Obbligazioni assunte" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="di cui Obbligazioni da assumere" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Gennaio" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Febbraio" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Marzo" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Aprile" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Maggio" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Giugno" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Luglio" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Agosto" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Settembre" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Ottobre" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Novembre" ] {
+     margin-left: 3rem!important;
+}
+[data-textSpaceBegin="Dicembre" ] {
+     margin-left: 3rem!important;
+}
+
+
+[data-textBoldTable="Disponibilità dell'amministrazione" ]  {
+    font-size: 0.875rem !important;
+    ;
+    font-weight: bold !important;
+}
+
+[data-textBoldTable="Importo associato ad impegni" ]  {
+    font-size: 0.875rem !important;
+    ;
+    font-weight: bold !important;
+}
+
+[data-textBoldTable="Importo Programmato" ] {
+    font-size: 0.875rem !important;
+    ;
+    font-weight: bold !important;
+}
+
+[data-textBoldTable="importo associabile ad impegni" ] {
+    font-size: 0.875rem !important;
+    ;
+    font-weight: bold !important;
+}
+[data-textBoldTable="Importo Programmato" ] {
+    font-size: 0.875rem !important;
+    ;
+    font-weight: bold !important;
+}
+[data-textBoldTable="Totale Previsto" ] {
+    font-size: 0.875rem !important;
+    ;
+    font-weight: bold !important;
+}
+[data-textBoldTable="Totale" ] {
+    font-size: 0.875rem !important;
+    ;
+    font-weight: bold !important;
+}
+
+tr[data-backgroundRow="Importo Programmato"] {
+    background-color: #e5e5e5 !Important;
+}
+tr[data-backgroundRow="Totale Previsto"] {
+    background-color: #e5e5e5 !Important;
+}
+tr[data-backgroundRow="Totale"] {
+    background-color: #e5e5e5 !Important;
+}
+tr[data-backgroundRow="Importo Programmato"] {
+    background-color: #e5e5e5 !Important;
+}
+
+
+.boldCss {
+    font-weight: bold !important;
+}
+
+.provaTabCentrali {
+    display: inherit;
+    position: relative;
+    text-align: -webkit-center;
+    vertical-align: top;
+}

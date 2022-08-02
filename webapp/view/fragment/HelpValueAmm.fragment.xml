@@ -1,0 +1,36 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+    <SelectDialog
+        contentHeight=""
+        contentWidth=""
+        noDataText=""
+        rememberSelections="false"
+        showClearButton="false"
+        title="Cerca"
+        cancel="onCancelFragment"
+        items="{shModel>/ZES_AMMINISTRAZIONE_SET}"
+        confirm="onPressChoiceStandardlist"
+    >
+        <items>
+            <StandardListItem
+                activeIcon=""
+                adaptTitleSize="true"
+                description="{shModel>DESC_BREVE}"
+                icon=""
+                iconDensityAware="true"
+                iconInset="true"
+                info=""
+                infoState="None"
+                infoTextDirection="Inherit"
+                title="{shModel>PRCTR}"
+                titleTextDirection="Inherit"
+            />
+        </items>
+        <customData>
+            <c:CustomData key="Property" value="PRCTR" writeToDom="false" />
+            <c:CustomData key="AMMINISTRAZIONE" value="DESCRIZIONE_AMM" writeToDom="false" />
+        </customData>
+    </SelectDialog>
+</c:FragmentDefinition>
