@@ -39,8 +39,8 @@ sap.ui.define([
 							"tiles": [{
 								"tileType": "sap.ushell.ui.tile.StaticTile",
 								"properties": {
-									"title": "App Title",
-									"targetURL": "#zsapcommefbilancioformazioneaccmass-display"
+									"title": "Accantonamenti Massivi",
+									"targetURL": "#zsapcomr3cobis4accantonamentimassivi-display"
 								}
 							}]
 						}]
@@ -51,8 +51,8 @@ sap.ui.define([
 				"adapter": {
 					"config": {
 						"inbounds": {
-							"zsapcommefbilancioformazioneaccmass-display": {
-								"semanticObject": "zsapcommefbilancioformazioneaccmass",
+							"zsapcomr3cobis4accantonamentimassivi-display": {
+								"semanticObject": "zsapcomr3cobis4accantonamentimassivi",
 								"action": "display",
 								"description": "A Fiori application.",
 								"title": "App Title",
@@ -61,8 +61,8 @@ sap.ui.define([
 								},
 								"resolutionResult": {
 									"applicationType": "SAPUI5",
-									"additionalInformation": "SAPUI5.Component=zsap.com.mef.bilancio.formazione.accmass",
-									"url": sap.ui.require.toUrl("zsap/com/mef/bilancio/formazione/accmass")
+									"additionalInformation": "SAPUI5.Component=zsap.com.r3.cobi.s4.accantonamentimassivi",
+									"url": sap.ui.require.toUrl("zsap/com/r3/cobi/s4/accantonamentimassivi")
 								}
 							}
 						}

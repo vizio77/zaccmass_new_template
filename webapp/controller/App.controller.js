@@ -3,7 +3,7 @@ sap.ui.define([
 ], function(Controller) {
 	"use strict";
 
-	return Controller.extend("zsap.com.mef.bilancio.formazione.accmass.controller.App", {
+	return Controller.extend("zsap.com.r3.cobi.s4.accantonamentimassivi.controller.App", {
 //prova
 // prova 2
 	});

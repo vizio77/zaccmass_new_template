@@ -1,4 +1,4 @@
-<mvc:View controllerName="zsap.com.mef.bilancio.formazione.accmass.controller.Home" 
+<mvc:View controllerName="zsap.com.r3.cobi.s4.accantonamentimassivi.controller.Home" 
 xmlns:html="http://www.w3.org/1999/xhtml" 
 xmlns:semantic="sap.f.semantic" 
 xmlns:layout="sap.ui.layout" 

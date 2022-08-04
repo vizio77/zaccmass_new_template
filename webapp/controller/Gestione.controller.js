@@ -18,7 +18,7 @@ sap.ui.define([
 	TextArea, Label, Button) {
 	"use strict";
 
-	return Controller.extend("zsap.com.mef.bilancio.formazione.accmass.controller.Gestione", {
+	return Controller.extend("zsap.com.r3.cobi.s4.accantonamentimassivi.controller.Gestione", {
 		formatter: formatter,
 
 		onInit: function () {
@@ -455,7 +455,7 @@ sap.ui.define([
                 "AllaCassa": ""
 			})
 			if (!this._handleAddRow) {
-				this._handleAddRow = sap.ui.xmlfragment("zsap.com.mef.bilancio.formazione.accmass.view.fragment.AddRowAccantonamento", this);
+				this._handleAddRow = sap.ui.xmlfragment("zsap.com.r3.cobi.s4.accantonamentimassivi.view.fragment.AddRowAccantonamento", this);
 				this.getView().addDependent(this._handleAddRow);
 			}
 			this._handleAddRow.open();

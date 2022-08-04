@@ -1,4 +1,4 @@
-<mvc:View  controllerName="zsap.com.mef.bilancio.formazione.accmass.controller.Gestione"
+<mvc:View  controllerName="zsap.com.r3.cobi.s4.accantonamentimassivi.controller.Gestione"
 xmlns:html="http://www.w3.org/1999/xhtml" xmlns:semantic="sap.f.semantic" xmlns:layout="sap.ui.layout" xmlns:f="sap.f"
 xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
  displayBlock="true" xmlns:commons="sap.suite.ui.commons" xmlns:uxap="sap.uxap">
@@ -364,10 +364,10 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 												<!--<Title text="{i18n>listaAutoPres}"/>-->
 												<ToolbarSpacer/>
 												<Text text="{i18n>selezPeri}"/>
-												<select id="idSelctYearPre" change="setPeriod" selectedKey="{colonneModel>/periodoSelectedKey}" items="{colonneModel>/periodi}">
+												<Select id="idSelctYearPre" change="setPeriod" selectedKey="{colonneModel>/periodoSelectedKey}" items="{colonneModel>/periodi}">
 													
 													<core:Item key="{colonneModel>key}" text="{colonneModel>value}"/>
-												</select>
+												</Select>
 												
 												<Button text="Genera Base Aggredibile" type="Emphasized" press="onGeneraAlgoritmo" visible="{= ${visibilityModel>/stato} === '1'}"/>
 												<Button text="Refresh Disponibilità" type="Emphasized" press="onGeneraAlgoritmo" visible="{= ${visibilityModel>/stato} === '2'}"/>

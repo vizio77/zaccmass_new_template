@@ -2,7 +2,7 @@
 
 specVersion: "2.5"
 metadata:
-  name: zsap.com.mef.bilancio.formazione.accmass
+  name: zsap.com.r3.cobi.s4.accantonamentimassivi
 type: application
 server:
   customMiddleware:
