@@ -85,7 +85,7 @@ sap.ui.define([
 
 			}
 			
-			MessageBox.success(this.getText("cambioStatoOk") + " " +  statoNuovo[0].Descrizione);
+			MessageBox.success(this.getText("cambioStatoOk") + "" +  statoNuovo[0].Descrizione);
 
 			
 		},

@@ -54,8 +54,8 @@ sap.ui.define([
 				obj[yearSelect.toString()] = false;
 				anni.push({
 					anno : yearSelect,
-					col1 : this.getText("disponibilitaAnno") + " " + yearSelect.toString(),
-					col2 : this.getText("accantonamentoAnno") + " " + yearSelect.toString(), 
+					col1 : this.getText("disponibilitaAnno") + "" + yearSelect.toString(),
+					col2 : this.getText("accantonamentoAnno") + "" + yearSelect.toString(), 
 				});								
 			
 				for (let z = 0; z < gestioneAccantonamento.length; z++) {

@@ -41,16 +41,14 @@ sap.ui.define([
 			
 			this.setModel(new JSONModel({faseRicerca: true, infoSottoStrumento: {}}),"modelHome");
 			this.setModel(new JSONModel({Esercizio: 2023}),"modelFilterHome");
-			let itemsMock = await this.loadJSONTest("/model/data_mock.json");
-			//let itemsMock = await this.loadJSONTest("/webapp/model/data_mock_lineare.json");
-
-			//let itemsMock = await this.loadJSONTest("/webapp/model/data_mock_pluri.json");
-			
+			this.getModel("modelHome").setProperty("/form",{})
 			//lt setto un modello per gestire la visualizzazione dei vari 
 			this.setModel(new JSONModel({}),"sessionModel");
+
+			this.setModel(models.createMockUpModel(), "modelHome");
+			/* let itemsMock = await this.loadJSONTest("/model/data_mock.json");
+			this.getModel("modelHome").setProperty("/",itemsMock) */
 			
-			this.getModel("modelHome").setProperty("/",itemsMock)
-			this.getModel("modelHome").setProperty("/form",{})
 			
 		},
 
