@@ -3,17 +3,17 @@ xmlns:html="http://www.w3.org/1999/xhtml" xmlns:semantic="sap.f.semantic" xmlns:
 xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
  displayBlock="true" xmlns:commons="sap.suite.ui.commons" xmlns:uxap="sap.uxap">
 <App id="app">
-	<Page id="dynamicPageId" showFooter="true" enableScrolling="false"  class="sapUiNoContentPadding">
-		<!-- <f:title>
+	<f:DynamicPage id="dynamicPageId" showFooter="true"  preserveHeaderStateOnScroll="true" class="sapUiNoContentPadding">
+		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
 				<Title text="{modelHome>/HeaderDetail/status}"/>
 				</f:heading>
 			</f:DynamicPageTitle>
-		</f:title>  -->
-		
-			<uxap:ObjectPageHeaderContent class="noMarginLeftUxap">
-				<uxap:content>
+		</f:title> 
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>
 					<FlexBox alignItems="Center" justifyContent="SpaceBetween">
 						<layout:VerticalLayout class="sapUiTinyMargin">
 							<VBox direction='Row' visible="true">
@@ -202,9 +202,10 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 								</ColumnListItem>
 							</items>
 						</Table> -->
-				</uxap:content>
-			</uxap:ObjectPageHeaderContent>
-				
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+				<f:content>
 					<Page enableScrolling="true" class="sapUiNoContentPadding" showFooter="false" showHeader="false" backgroundDesign="Transparent">
 						
 						<uxap:ObjectPageHeaderContent class="sapUiTinyMarginBegin">
@@ -501,8 +502,8 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 							</ScrollContainer>
 						
 					</Page>
-				
-		<footer>
+				</f:content>
+		<f:footer>
 			<OverflowToolbar>
 				<Button text="test" press="test" type="Emphasized" visible="false"/>
 				<Button text="test2" press="test2" type="Emphasized" visible="false"/>
@@ -510,7 +511,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 				<Button text="{i18n>indietro}" press="onNavToDetail" type="Emphasized" visible="false"/>
 				<Button text="{i18n>salva}" press="onNavToDetail" type="Emphasized" visible="true"/>
 			</OverflowToolbar>
-		</footer>
-	</Page>
+		</f:footer>
+	</f:DynamicPage>
 </App>
 </mvc:View>

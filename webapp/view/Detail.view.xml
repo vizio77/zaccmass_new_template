@@ -3,22 +3,10 @@ xmlns:html="http://www.w3.org/1999/xhtml" xmlns:semantic="sap.f.semantic" xmlns:
 xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
  displayBlock="true" xmlns:commons="sap.suite.ui.commons" xmlns:uxap="sap.uxap">
 <App id="app">
-<!-- <f:DynamicPage id="dynamicPageId" showFooter="true"  preserveHeaderStateOnScroll="true"  class="sapUiNoContentPadding">
-		<f:title>
-			<f:DynamicPageTitle>
-				<f:heading>
-				<Title text="Dettaglio Sessione Lavoro"/>
-				</f:heading>
-			</f:DynamicPageTitle>
-		</f:title> 
-		<f:header>
-			<f:DynamicPageHeader pinnable="true">
-				<f:content> -->				
-
 	<Page id="paginaDettaglioContratto" title="{i18n>title}" showHeader="false" showNavButton="true" navButtonPress="goToPage1">
-						<content>
-							<uxap:ObjectPageHeaderContent class="noMarginLeftUxap">
-								<uxap:content>
+		<content>
+			<uxap:ObjectPageHeaderContent class="noMarginLeftUxap">
+				<uxap:content>
 						<FlexBox alignItems="Center" justifyContent="SpaceBetween">
 							<layout:VerticalLayout class="sapUiTinyMargin">
 								<VBox direction='Row' visible="true">
@@ -44,83 +32,67 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 								</VBox>
 							</layout:VerticalLayout>
 						</FlexBox>
-					
-					</uxap:content>
-				</uxap:ObjectPageHeaderContent>
-<!-- </f:content>
-		</f:DynamicPageHeader>
-			</f:header>
-				<f:content> 
-					<Page enableScrolling="false" class="sapUiNoContentPadding" showFooter="false" showHeader="false" backgroundDesign="Transparent">-->
-						<IconTabBar
-						        select="onSelectIconTab"
-							    backgroundDesign="Transparent"
-								id="itb1"
-								selectedKey="1"
-								upperCase="false"
-								class="sapUiNoContentPadding">
-								<items >
-									<IconTabFilter
-										key="1"
-										icon="sap-icon://accounting-document-verification"
-										text="{i18n>Elementi}">
-										<OverflowToolbar design="Solid">
-											<ToolbarSpacer />
-											<Button type="Emphasized" icon="sap-icon://detail-view" text="{i18n>gestisciRiga}" press="onNavToGestione" enabled="true"/>
-											<Button type="Emphasized" icon="sap-icon://delete" text="{i18n>deleteRow}" press="handlecDeleteRow" enabled="true"/>
-											<Button type="Emphasized" icon="sap-icon://add" text="{i18n>addRow}" press="handleAddRowAccantonamento" enabled="true"/>
-									</OverflowToolbar>
-									</IconTabFilter>
-									<IconTabFilter
-										key="2"
-										icon="sap-icon://history"
-										text="{i18n>cronologia}"
-										count="{ ${modelHome>/WorkFlow}.length}"
-										>
-										<ScrollContainer
-											height="100%"
-											width="100%"
-											horizontal="false"
-											vertical="true"
-											focusable="true">									
-										<Panel id="idPanel" height="800px">
-											<!-- <commons:Timeline id="idTimeline" enableDoubleSided="false" growingThreshold="0" height="auto" 
-												content="{ path: 'modelHome>/WorkFlow', sorter: { path: 'FASE' ,descending: false} }" showHeaderBar="false" enableSocial="false"
-												alignment="Right" axisOrientation="Vertical" sortOldestFirst="true" sort="false" enableScroll="true" >
-												<commons:content>
-													<commons:TimelineItem id="idTimelineItem" text="{i18n>OpCompBy} '{modelHome>TEXT}'" dateTime="{modelHome>DATETIME}"
-														icon="{modelHome>ICON}" userName="{modelHome>TITLE}" userNameClickable="true" status="{modelHome>STATUS}" class="classePerEvidenziareStatoFondo"/>
-												</commons:content>
-											</commons:Timeline> -->
-											<!-- lt modifiche WF con oData Real -->
-											<commons:Timeline id="idTimeline" enableDoubleSided="false" growingThreshold="0" height="auto" 
-												content="{ path: 'modelHome>/AccantonamentoSelected/SessioneLav_StatiSessioni', sorter: { path: 'FASE' ,descending: false} }" showHeaderBar="false" enableSocial="false"
-												alignment="Right" axisOrientation="Vertical" sortOldestFirst="true" sort="false" enableScroll="true" >
-												<commons:content>
-													<commons:TimelineItem id="idTimelineItem" text="{i18n>OpCompBy} '{modelHome>Utente}'" dateTime="{ parts: [ {path: 'modelHome>DataStato'}], formatter: '.formatter.formatDataWorkFlow' } - {modelHome>OraStato}"
-														icon="{ parts: [ {path: 'modelHome>Stato'}], formatter: '.formatter.iconWf' }" userName="{modelHome>Descrizione}" userNameClickable="true" status="{ parts: [ {path: 'modelHome>Stato'}], formatter: '.formatter.statusWf' }" class="classePerEvidenziareStatoFondo"/>
-												</commons:content>
-											</commons:Timeline>
-										</Panel>
-									</ScrollContainer>
-								 
-									</IconTabFilter>
-									
-								</items>
-							</IconTabBar>
+				</uxap:content>
+			</uxap:ObjectPageHeaderContent>
+					<IconTabBar
+						select="onSelectIconTab"
+						backgroundDesign="Transparent"
+						id="itb1"
+						selectedKey="1"
+						upperCase="false"
+						class="sapUiNoContentPadding">
+						<items >
+							<IconTabFilter
+								key="1"
+								icon="sap-icon://accounting-document-verification"
+								text="{i18n>Elementi}">
+								<OverflowToolbar design="Solid">
+									<ToolbarSpacer />
+									<Button type="Emphasized" icon="sap-icon://detail-view" text="{i18n>gestisciRiga}" press="onNavToGestione" enabled="true"/>
+									<Button type="Emphasized" icon="sap-icon://delete" text="{i18n>deleteRow}" press="handlecDeleteRow" enabled="true"/>
+									<Button type="Emphasized" icon="sap-icon://add" text="{i18n>addRow}" press="handleAddRowAccantonamento" enabled="true"/>
+							</OverflowToolbar>
+							</IconTabFilter>
+							<IconTabFilter
+								key="2"
+								icon="sap-icon://history"
+								text="{i18n>cronologia}"
+								count="{ ${modelHome>/WorkFlow}.length}"
+								>
+								<ScrollContainer
+									height="100%"
+									width="100%"
+									horizontal="false"
+									vertical="true"
+									focusable="true">									
+								<Panel id="idPanel" height="800px">
+									<!-- <commons:Timeline id="idTimeline" enableDoubleSided="false" growingThreshold="0" height="auto" 
+										content="{ path: 'modelHome>/WorkFlow', sorter: { path: 'FASE' ,descending: false} }" showHeaderBar="false" enableSocial="false"
+										alignment="Right" axisOrientation="Vertical" sortOldestFirst="true" sort="false" enableScroll="true" >
+										<commons:content>
+											<commons:TimelineItem id="idTimelineItem" text="{i18n>OpCompBy} '{modelHome>TEXT}'" dateTime="{modelHome>DATETIME}"
+												icon="{modelHome>ICON}" userName="{modelHome>TITLE}" userNameClickable="true" status="{modelHome>STATUS}" class="classePerEvidenziareStatoFondo"/>
+										</commons:content>
+									</commons:Timeline> -->
+									<!-- lt modifiche WF con oData Real -->
+									<commons:Timeline id="idTimeline" enableDoubleSided="false" growingThreshold="0" height="auto" 
+										content="{ path: 'modelHome>/AccantonamentoSelected/SessioneLav_StatiSessioni', sorter: { path: 'FASE' ,descending: false} }" showHeaderBar="false" enableSocial="false"
+										alignment="Right" axisOrientation="Vertical" sortOldestFirst="true" sort="false" enableScroll="true" >
+										<commons:content>
+											<commons:TimelineItem id="idTimelineItem" text="{i18n>OpCompBy} '{modelHome>Utente}'" dateTime="{ parts: [ {path: 'modelHome>DataStato'}], formatter: '.formatter.formatDataWorkFlow' } - {modelHome>OraStato}"
+												icon="{ parts: [ {path: 'modelHome>Stato'}], formatter: '.formatter.iconWf' }" userName="{modelHome>Descrizione}" userNameClickable="true" status="{ parts: [ {path: 'modelHome>Stato'}], formatter: '.formatter.statusWf' }" class="classePerEvidenziareStatoFondo"/>
+										</commons:content>
+									</commons:Timeline>
+								</Panel>
+							</ScrollContainer>
+							</IconTabFilter>
+						</items>
+				</IconTabBar>
 						
-				<!--<subHeader> -->
-								
-				<!--</subHeader> -->
 						<ScrollContainer height="auto" vertical="true"> 
 						<Table id="TableDetail" alternateRowColors="true" mode="SingleSelectLeft" 
 										items="{ path: 'modelHome>/AccantonamentoSelected/items'}"
 										itemPress="onItemPress"  ><!-- class="sapUiTinyMargin" -->
-				<!-- <headerToolbar>
-							<Toolbar >
-									
-							</Toolbar>
-					</headerToolbar> -->
 							<columns>
 								<Column  width="6rem">
 									<Text text="{i18n>amm}" class="boldCss"/>
@@ -290,10 +262,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 							</items>
 						</Table>
 					 </ScrollContainer>			 			
-			<!-- </Page>
-			</f:content>
-		<f:footer> -->
-		</content>
+				</content>
 			<footer>
 			<OverflowToolbar>
 				<!-- <Button text="Test Creazione Entry WF" press="setEntryWorkFlow" type="Emphasized" visible="true"/> -->
@@ -311,9 +280,6 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 				</Button>
 			</OverflowToolbar>
 		</footer>
-	<!-- </f:footer>
-	</f:DynamicPage> -->
-
 	</Page>
 </App>
 </mvc:View>
