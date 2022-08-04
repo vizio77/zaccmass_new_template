@@ -3,7 +3,7 @@ sap.ui.define([
 ], function(Controller) {
 	"use strict";
 
-	return Controller.extend("zsap.com.r3.cobi.s4.accantonamentimassivi.controller.App", {
+	return Controller.extend("zsap.com.r3.cobi.s4.accmass.controller.App", {
 //prova
 // prova 2
 	});

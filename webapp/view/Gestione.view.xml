@@ -1,4 +1,4 @@
-<mvc:View  controllerName="zsap.com.r3.cobi.s4.accantonamentimassivi.controller.Gestione"
+<mvc:View  controllerName="zsap.com.r3.cobi.s4.accmass.controller.Gestione"
 xmlns:html="http://www.w3.org/1999/xhtml" xmlns:semantic="sap.f.semantic" xmlns:layout="sap.ui.layout" xmlns:f="sap.f"
 xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
  displayBlock="true" xmlns:commons="sap.suite.ui.commons" xmlns:uxap="sap.uxap">

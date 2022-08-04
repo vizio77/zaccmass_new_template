@@ -9,7 +9,7 @@ sap.ui.define([
 ], function(Controller, JSONModel, formatter, Filter, FilterOperator, Fragment,MessageBox) {
 	"use strict";
 
-	return Controller.extend("zsap.com.r3.cobi.s4.accantonamentimassivi.controller.Home", {
+	return Controller.extend("zsap.com.r3.cobi.s4.accmass.controller.Home", {
 		formatter: formatter,
 		onInit: async function() {
 
@@ -42,7 +42,7 @@ sap.ui.define([
 				Stato: "1"
 			});
 			if (!this._handleAddAccantonamenti) {
-				this._handleAddAccantonamenti = sap.ui.xmlfragment("zsap.com.r3.cobi.s4.accantonamentimassivi.view.fragment.AddAccantonamenti", this);
+				this._handleAddAccantonamenti = sap.ui.xmlfragment("zsap.com.r3.cobi.s4.accmass.view.fragment.AddAccantonamenti", this);
 				this.getView().addDependent(this._handleAddAccantonamenti);
 			}
 			this._handleAddAccantonamenti.open();

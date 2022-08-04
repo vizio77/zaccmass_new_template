@@ -20,7 +20,7 @@ sap.ui.define([
 	TextArea, Label, Button, DateFormat, Fragment) {
 	"use strict";
 
-	return Controller.extend("zsap.com.r3.cobi.s4.accantonamentimassivi.controller.Detail", {
+	return Controller.extend("zsap.com.r3.cobi.s4.accmass.controller.Detail", {
 		formatter: formatter,
 
 		onInit: function () {
@@ -222,7 +222,7 @@ sap.ui.define([
                 "AllaCassa": false
 			})
 			if (!this._handleAddRow) {
-				this._handleAddRow = sap.ui.xmlfragment("zsap.com.r3.cobi.s4.accantonamentimassivi.view.fragment.AddRowAccantonamento", this);
+				this._handleAddRow = sap.ui.xmlfragment("zsap.com.r3.cobi.s4.accmass.view.fragment.AddRowAccantonamento", this);
 				this.getView().addDependent(this._handleAddRow);
 			}
 			this._handleAddRow.open();
@@ -330,7 +330,7 @@ sap.ui.define([
 			var value = data.NameSH;
 			if(!this[value]) {
 				Fragment.load({
-					name:"zsap.com.r3.cobi.s4.accantonamentimassivi.view.fragment." + value,
+					name:"zsap.com.r3.cobi.s4.accmass.view.fragment." + value,
 					controller: this
 				}).then(oDialog => {
 					this[value] = oDialog;
@@ -483,7 +483,7 @@ sap.ui.define([
 			if(!this.oDialogHVSottoStrumento) {
 				
 				Fragment.load({
-					name:"zsap.com.r3.cobi.s4.accantonamentimassivi.view.fragment.HelpValueSottostrumento",
+					name:"zsap.com.r3.cobi.s4.accmass.view.fragment.HelpValueSottostrumento",
 					controller: this
 				}).then(oDialog => {
 					this.oDialogHVSottoStrumento = oDialog;
@@ -562,7 +562,7 @@ sap.ui.define([
 			});
 			if(!this._oDialog){
 				this._oDialog = sap.ui.xmlfragment(
-					"zsap.com.r3.cobi.s4.accantonamentimassivi.view.fragment.Sottostrumento",
+					"zsap.com.r3.cobi.s4.accmass.view.fragment.Sottostrumento",
 					this);
 				this._oDialog.setModel("sottostrumentiModel");
 				this.getView().addDependent(this._oDialog);

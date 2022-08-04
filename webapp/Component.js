@@ -1,13 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"zsap/com/r3/cobi/s4/accantonamentimassivi/model/models",
+	"zsap/com/r3/cobi/s4/accmass/model/models",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox"
 ], function(UIComponent, Device , models, JSONModel, MessageBox) {
 	"use strict";
 
-	return UIComponent.extend("zsap.com.r3.cobi.s4.accantonamentimassivi.Component", {
+	return UIComponent.extend("zsap.com.r3.cobi.s4.accmass.Component", {
 
 		metadata: {
 			manifest: "json",

@@ -1,7 +1,7 @@
 {
   "_version": "1.17.0",
   "sap.app": {
-    "id": "zsap.com.r3.cobi.s4.accantonamentimassivi",
+    "id": "zsap.com.r3.cobi.s4.accmass",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -61,7 +61,7 @@
   },
   "sap.ui5": {
     "rootView": {
-			"viewName": "zsap.com.r3.cobi.s4.accantonamentimassivi.view.App",
+			"viewName": "zsap.com.r3.cobi.s4.accmass.view.App",
 			"type": "XML"
 		},
     "flexEnabled": false,
@@ -85,7 +85,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "zsap.com.r3.cobi.s4.accantonamentimassivi.i18n.i18n"
+          "bundleName": "zsap.com.r3.cobi.s4.accmass.i18n.i18n"
         }
       },
 			"odataSH": {
@@ -111,7 +111,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
-        "viewPath": "zsap.com.r3.cobi.s4.accantonamentimassivi.view",
+        "viewPath": "zsap.com.r3.cobi.s4.accmass.view",
         "controlAggregation": "pages",
         "controlId": "app",
         "clearControlAggregation": false
