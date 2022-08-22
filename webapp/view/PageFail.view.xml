@@ -1,0 +1,9 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="zsap.com.r3.cobi.s4.accmass.controller.PageFail" xmlns:html="http://www.w3.org/1999/xhtml">
+	<MessagePage id="errPage" showHeader="false" text="{i18n>errorPageFail}" enableFormattedText="true" description="" icon="sap-icon://error">
+		<buttons>
+			<Button text="{i18n>reloadPage}" type="Ghost" press="reloadPage" id="btnReload"/>
+            <Button text="{i18n>goToHome}"   type="Ghost" press="goBack"  id="btnGotoHome"/>
+		</buttons>
+	</MessagePage>
+</mvc:View>

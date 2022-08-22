@@ -27,6 +27,14 @@ sap.ui.define([
 					
 		},
 
+		onNavToPath: function (item) {		
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.navTo("DetailFromPath", {
+				NomeSessione: item.NomeSessione,
+				Esercizio: item.Esercizio
+			});					
+		},
+
 		onReset: function () {
 			this.getOwnerComponent().setModel(new JSONModel({Esercizio: 2023}),"modelFilterHome");
 		},
@@ -176,7 +184,7 @@ sap.ui.define([
 			});
 			accantonamento.items = itemsAccantonamento; */
 
-			var arr = accantonamento.SessioneLav_ElementoSessione.results;
+			/* var arr = accantonamento.SessioneLav_ElementoSessione.results;
 			arr = arr.concat(arr);
 			accantonamento.items = arr;
 			//accantonamento.items = accantonamento.SessioneLav_ElementoSessione.results;
@@ -202,10 +210,12 @@ sap.ui.define([
 			//se è diverso da null allora lo faccio  vedere
 			accantonamento.STAC !== "" && accantonamento.STAC !== undefined ? visibility.STAC = true : visibility.STAC = false;
 			
-			this.getOwnerComponent().setModel(new JSONModel(visibility),"visibilityModel");
+			this.getOwnerComponent().setModel(new JSONModel(visibility),"visibilityModel"); */
 
 			table.removeSelections(true);
-			this.onNavTo();
+			this.onNavToPath(accantonamento);
+			//this.onNavTo();
+
 		},
 		onSalva: function(oEvent){
 			var table = this.getView().byId("TableAccantonamenti");

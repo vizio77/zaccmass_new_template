@@ -24,16 +24,73 @@ sap.ui.define([
 		formatter: formatter,
 
 		onInit: function () {
-			
-			
-			
-
-
+			this.getOwnerComponent().getRouter().getRoute("DetailFromPath").attachPatternMatched(this._onObjectMatched, this);
         },
 
         _onObjectMatched: function (oEvent) {
+			var nomeSessione = oEvent.getParameters().arguments.NomeSessione;
+			var esercizio = oEvent.getParameters().arguments.Esercizio;
+
+			this.getOwnerComponent().getModel("accantonamenti").metadataLoaded().then(function () {
+				var sObjectPath = this.getOwnerComponent().getModel("accantonamenti").createKey("SessioneLavoroSet", {
+					NomeSessione: nomeSessione,
+					Esercizio: esercizio
+				});
+				/* var oggettoRecuperato = this.getOwnerComponent().getModel("accantonamenti").getProperty("/" + sObjectPath);
+
+				var oggettoRecuperatoExt = {};
+				var oggettoRecuperatoClonato = jQuery.extend(true, oggettoRecuperatoExt, oggettoRecuperato); */
+				
+
+				var that = this;
+				this.getOwnerComponent().getModel("accantonamenti").read("/" + sObjectPath, {
+					/* filters: aFilters,*/
+					urlParameters: {$expand: "SessioneLav_StatiSessioni,SessioneLav_ElementoSessione" }, 
+					success: function(oData, response) {
+						that.initView(response.data);
+						
+					},
+					error: function(error) {
+						console.log(error);	
+						that.go2PageFail(error.statusText);
+					}
+				});
+
+				//var sessione = this.getOwnerComponent().getModel("accantonamenti").getObject("/" + sObjectPath);
+				
+			}.bind(this));
         
         },
+		go2PageFail: function (message) {
+            sap.ui.core.BusyIndicator.hide();
+            message = message ? message : this.getResourceBundle().getText("error");
+            this.getOwnerComponent().getRouter().getTargets().display("PageFail", message);
+        },
+
+		initView: function(sessione){
+			var accantonamento = sessione;
+			var arr = accantonamento.SessioneLav_ElementoSessione.results;
+			//lt per aggiungere un po' di record all'array
+			//arr = arr.concat(arr);
+			accantonamento.items = arr;
+			
+			var listaStati = $.grep(this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/TipoStatiSet"), function (n, i) {
+				return n.Stato.toString() === accantonamento.Stato.toString();
+			});
+			accantonamento.statoWf = listaStati[0].Descrizione;
+			accantonamento.SessioneLav_StatiSessioni = accantonamento.SessioneLav_StatiSessioni.results
+			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected", accantonamento);
+			//controllo se è un numero... in caso lo passo converto a stringa per la visibilità...
+			!isNaN(accantonamento.Stato) ? accantonamento.Stato = accantonamento.Stato.toString() : accantonamento.Stato;
+
+			var visibility = {
+					stato : accantonamento.Stato
+			};
+			//se è diverso da null allora lo faccio  vedere
+			accantonamento.STAC !== "" && accantonamento.STAC !== undefined ? visibility.STAC = true : visibility.STAC = false;
+			
+			this.getOwnerComponent().setModel(new JSONModel(visibility),"visibilityModel");
+		},
 
 		onCambiaStato: async function(oEvent, sottoStrumento){
 

@@ -143,6 +143,13 @@
 					]
 				},
 				{
+					"name": "DetailFromPath",
+					"pattern": "Detail/{NomeSessione}/{Esercizio}",
+					"target": [
+						"Detail"
+					]
+				},
+				{
 					"name": "Gestione",
 					"pattern": "Gestione",
 					"target": [
@@ -174,6 +181,12 @@
 					"transition": "slide",
 					"clearControlAggregation": false,
 					"viewName": "Gestione"
+				},
+				"PageFail": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "PageFail"
 				}
       }
     }
