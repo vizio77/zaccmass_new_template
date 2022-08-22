@@ -58,27 +58,91 @@ sap.ui.define([
 		handlecAddAccantonamentoSelected: function(oEvent){
 			var form = this.getOwnerComponent().getModel("modelHome").getProperty("/form");
 			var accantonamenti = this.getOwnerComponent().getModel("modelHome").getProperty("/ListaAccantonamenti");
+			//lt controllare che la creazione della sessione
 
-			this.addAccantonamento(form);
+			//this.checkSessione(form);
+
+			this.addSessione(form);
 
 			//accantonamenti.push(form);
 			//this.getOwnerComponent().getModel("modelHome").setProperty("/ListaAccantonamenti", accantonamenti);
 			//this.handlecloseAccantonamenti();
 		},
 
-		addAccantonamento: function(form){
-			var oModel = this.getOwnerComponent().getModel("accantonamenti");					
-			
-			var that = this;
+		addSessione: function(form){			
+			var oModel = this.getOwnerComponent().getModel("accantonamenti");
+			//recupero gli stati della sessione per impostare il primo stato (che sarà stato iniziato)
+			var stati = this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/TipoStatiSet");
 
+			//setto la chiamata batch per creare lo stato (si potrebbe spostare su back-end)
+			var scpDeferredGroups = oModel.getDeferredGroups();
+			scpDeferredGroups = scpDeferredGroups.concat(["scpGroup"]);
+			oModel.setDeferredGroups(scpDeferredGroups);				
+			
 			var formExt = jQuery.extend(true, {}, form);
 
-			//formExt.Esercizio = parseInt(formExt.Esercizio);
 			formExt.Stato = parseInt(formExt.Stato);
 			delete formExt.statoWf;
 			delete formExt.STAC;
 
-			oModel.create("/SessioneLavoroSet" , formExt, {				
+			var today = new Date();
+			var stato = {
+				"NomeSessione" : formExt.NomeSessione,
+				"Esercizio" : formExt.Esercizio,
+				"Descrizione": stati[0].Descrizione,
+				"Utente": "L.TARTAGGIA",
+				"DataStato": today,
+				"OraStato" : today.toTimeString().substr(0, 8),
+				"Stato": parseInt(stati[0].Stato)
+			};
+
+			var that = this;
+			oModel.create("/SessioneLavoroSet",	formExt, {groupId: "scpGroup"});
+			oModel.create("/StatoSessioneSet",	stato, {groupId: "scpGroup"});
+
+			var entities = ["Sessione","Stato"];
+
+			oModel.submitChanges({
+				success: function (batchCallRel) {
+					var errore = false;
+					var entitiesInError = "";
+					if (batchCallRel.__batchResponses && batchCallRel.__batchResponses.length === 1){
+						var responseBatch = batchCallRel.__batchResponses[0].__changeResponses;
+						for (let i = 0;responseBatch && i < responseBatch.length; i++) {
+							const element = responseBatch[i];
+							if (element.statusCode !== "200" && element.statusCode !== "201") {
+								errore = true;
+								entitiesInError = entitiesInError + this[i] +"\n";
+							}							
+						}
+						if(errore){
+							sap.ui.core.BusyIndicator.hide();
+							MessageBox.error("Errore Creazione");
+							//return;
+						}else{
+							var sessioniPresenti = that.getOwnerComponent().getModel("accantonamentiModel").getProperty("/SessioneLavoroSet");
+							sessioniPresenti.push(this);
+							that.getOwnerComponent().getModel("accantonamentiModel").setProperty("/SessioneLavoroSet", sessioniPresenti);
+							console.log("creato con successo l'elemento della sessione");
+							MessageBox.success("Accantonamento Creato con successo.");
+							that.handlecloseAccantonamenti();
+						}
+					}else{
+						sap.ui.core.BusyIndicator.hide();
+						MessageBox.error("Errore Creazione");
+					}				
+					sap.ui.core.BusyIndicator.hide();
+				}.bind(entities),
+				error: function (oError) {
+					//console.log("errore")
+					sap.ui.core.BusyIndicator.hide();
+					MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("erroreAggiornamentoStato"));
+					return;
+				}.bind(entities)
+			}); 
+			
+
+			/* oModel.create("/SessioneLavoroSet" , formExt, {				
 				success: function(oData, response) {
 					var sessioniPresenti = that.getOwnerComponent().getModel("accantonamentiModel").getProperty("/SessioneLavoroSet");
 					sessioniPresenti.push(this);
@@ -90,7 +154,7 @@ sap.ui.define([
 				error: function(error) {
 					console.log(error);	
 				}
-			});
+			}); */
 
 
 		},
@@ -112,7 +176,10 @@ sap.ui.define([
 			});
 			accantonamento.items = itemsAccantonamento; */
 
-			accantonamento.items = accantonamento.SessioneLav_ElementoSessione.results;
+			var arr = accantonamento.SessioneLav_ElementoSessione.results;
+			arr = arr.concat(arr);
+			accantonamento.items = arr;
+			//accantonamento.items = accantonamento.SessioneLav_ElementoSessione.results;
 
 			//recupero la descrizione degli stati
 			var listaStati = $.grep(this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/TipoStatiSet"), function (n, i) {

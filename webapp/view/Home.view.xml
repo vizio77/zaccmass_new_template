@@ -28,12 +28,12 @@ xmlns:zcontrol="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfin.controls"
 						 showFilterConfiguration="true"  showRestoreButton="true" showClearButton="true" showClearOnFB="true" clear="onReset">
 						<fb:filterGroupItems >
 							<!-- Nome -->							
-							<fb:FilterGroupItem mandatory="false" groupName="Essential" groupTitle="{i18n>Essential}" id="filtroPosFin" name="filtroPosFinA1" label="{i18n>testPosFin}"
+							<!-- <fb:FilterGroupItem mandatory="false" groupName="Essential" groupTitle="{i18n>Essential}" id="filtroPosFin" name="filtroPosFinA1" label="{i18n>testPosFin}"
 								visibleInFilterBar="true">
 								<fb:control>
 									<zcontrol:InputPosizioneFinanziaria id="filterBarPosFin" semanticObject="ESAMINAMODIFICA" maxSuggestionWidth="60%"/>
 								</fb:control>
-							</fb:FilterGroupItem>
+							</fb:FilterGroupItem> -->
 							
 						<!-- Nome -->							
 							<fb:FilterGroupItem mandatory="false" groupName="Essential" groupTitle="{i18n>Essential}" id="filtroSottostrumento" name="A1" label="{i18n>nome}"
@@ -73,108 +73,48 @@ xmlns:zcontrol="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfin.controls"
 				</f:content>
 			</f:DynamicPageHeader>
 		</f:header>
-				<f:content>
-					<!-- <Table id="TableAccantonamenti" width="auto" mode="SingleSelectLeft" 
-										items="{ path: 'modelHome>/ListaAccantonamenti', filters : [
-																									{ path : 'Stato', operator : 'NE', value1 : '7'}
-																								] , sorter: { path: 'NomeSessione' } }"
-										>
-										<headerToolbar>
-											<Toolbar id="_IDEGen_toolbar5">
-												<ToolbarSpacer />
-												<Button type="Emphasized" icon="sap-icon://detail-view" text="{i18n>btnDettaglioAccantonamento}" press="navToDetail" enabled="true"/>
-												<Button type="Emphasized" icon="sap-icon://add" text="{i18n>btnAddRow}" press="handleAddAccantonamenti" enabled="true"/>
-											</Toolbar>
-										</headerToolbar>
-										<columns>
-											<Column width="auto">
-												<Text text="{i18n>nome}"/>
-											</Column>
-											<Column width="auto">
-												<Text text="{i18n>esercizio}"/>
-											</Column>
-											<Column width="auto">
-												<Text text="{i18n>descrizione}"/>
-											</Column>
-											<Column width="auto">
-												<Text text="{i18n>statoWF}"/>
-											</Column>
-											<Column width="auto">
-												<Text text="{i18n>STAC}"/>
-											</Column>
-										</columns>
-										<items>
-											<ColumnListItem >
-												<cells>
-													<ObjectIdentifier title="{modelHome>NomeSessione}"/>
-													<ObjectIdentifier title="{modelHome>Esercizio}"/>
-													<ObjectIdentifier title="{modelHome>Descrizione}"/>
-													<ObjectIdentifier title="{path: 'modelHome>statoWf'}"/>
-													<ObjectIdentifier title="{modelHome>STAC}"/>
-												</cells>
-											</ColumnListItem>
-										</items>
-									</Table> -->
-
-
-
-									<Table id="TableAccantonamenti" width="auto" mode="SingleSelectLeft" 
-										items="{ path: 'accantonamentiModel>/SessioneLavoroSet', filters : [
-																									{ path : 'Stato', operator : 'NE', value1 : '7'}
-																								] , sorter: { path: 'NomeSessione' } }"
-										>
-										<headerToolbar>
-											<Toolbar>
-												<ToolbarSpacer />
-												<Button type="Emphasized" icon="sap-icon://detail-view" text="{i18n>btnDettaglioAccantonamento}" press="navToDetail" enabled="true"/>
-												<Button type="Emphasized" icon="sap-icon://add" text="{i18n>btnAddRow}" press="handleAddAccantonamenti" enabled="true"/>
-											</Toolbar>
-										</headerToolbar>
-										<columns>
-											<Column width="auto">
-												<Text text="{i18n>nome}"/>
-											</Column>
-											<Column width="auto">
-												<Text text="{i18n>esercizio}"/>
-											</Column>
-											<Column width="auto">
-												<Text text="{i18n>descrizione}"/>
-											</Column>
-											<Column width="auto">
-												<Text text="{i18n>statoWF}"/>
-											</Column>
-											<Column width="auto">
-												<Text text="{i18n>STAC}"/>
-											</Column>
-										</columns>
-										<items>
-											<ColumnListItem >
-												<cells>
-													<ObjectIdentifier title="{accantonamentiModel>NomeSessione}"/>
-													<ObjectIdentifier title="{accantonamentiModel>Esercizio}"/>
-													<ObjectIdentifier title="{accantonamentiModel>Descrizione}"/>
-													<ObjectIdentifier title="{path:'accantonamentiModel>Stato', formatter: '.formatter.takeStatusDescription' }"/>
-													<ObjectIdentifier title="{accantonamentiModel>STAC}"/>
-												</cells>
-											</ColumnListItem>
-										</items>
-									</Table>
-			
-					<!-- <VBox visible="{modelHome>/initialDetail}" id="DetailInitial" height="100%"/>
-					<VBox visible="true"  height="100%">
-						<Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
-							<headerToolbar>
-								<OverflowToolbar>
-									<Title text="Accantonamenti Massivi"/>
-								</OverflowToolbar>
-							</headerToolbar>
-							<content>
-							
-								
-							</content>
-						</Panel>					
-					</VBox> -->
-				</f:content>
+			<f:content>
+				<Table id="TableAccantonamenti" width="auto" mode="SingleSelectLeft" 
+					items="{ path: 'accantonamentiModel>/SessioneLavoroSet', 
+							 filters : [{ path : 'Stato', operator : 'NE', value1 : '7'}],
+							 sorter: { path: 'NomeSessione' } }">
+					<headerToolbar>
+						<Toolbar>
+							<ToolbarSpacer />
+							<Button type="Emphasized" icon="sap-icon://detail-view" text="{i18n>btnDettaglioAccantonamento}" press="navToDetail" enabled="true"/>
+							<Button type="Emphasized" icon="sap-icon://add" text="{i18n>btnAddRow}" press="handleAddAccantonamenti" enabled="true"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column width="auto">
+							<Text text="{i18n>nome}"/>
+						</Column>
+						<Column width="auto">
+							<Text text="{i18n>esercizio}"/>
+						</Column>
+						<Column width="auto">
+							<Text text="{i18n>descrizione}"/>
+						</Column>
+						<Column width="auto">
+							<Text text="{i18n>statoWF}"/>
+						</Column>
+						<Column width="auto">
+							<Text text="{i18n>STAC}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem >
+							<cells>
+								<ObjectIdentifier title="{accantonamentiModel>NomeSessione}"/>
+								<ObjectIdentifier title="{accantonamentiModel>Esercizio}"/>
+								<ObjectIdentifier title="{accantonamentiModel>Descrizione}"/>
+								<ObjectIdentifier title="{path:'accantonamentiModel>Stato', formatter: '.formatter.takeStatusDescription' }"/>
+								<ObjectIdentifier title="{accantonamentiModel>STAC}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</f:content>
 		<f:footer>
 			<OverflowToolbar>
 				<!-- <Button text="Test" press="onNavTo" type="Emphasized" visible="true"/>  -->

@@ -114,7 +114,7 @@ sap.ui.define([
 				"DataStato": today,
 				"OraStato" : today.toTimeString().substr(0, 8),
 				"Stato": parseInt(statoNuovo.Stato)
-			  }
+			  };
 
 			this.getOwnerComponent().getModel("visibilityModel").setProperty("/stato", statoNuovo.Stato.toString());
 
@@ -312,7 +312,7 @@ sap.ui.define([
 				}
 			}
 			//lt filtri mandatory
-			filtri.push(new Filter({path: "FASE" ,operator: FilterOperator.EQ,	value1: "FORM"}));
+			filtri.push(new Filter({path: "FASE" ,operator: FilterOperator.EQ,	value1: "DLB"}));
 			filtri.push(new Filter({path: "ANNO" ,operator: FilterOperator.EQ,	value1: "2023"}));
 			
 
@@ -424,10 +424,13 @@ sap.ui.define([
 			}
 
 			var itemSelected = context[0].getObject();
+
+			
 			
 			this.getOwnerComponent().getModel("modelHome").setProperty("/ItemHeader", itemSelected);
-
-			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected/Item", [itemSelected]);
+			var arr = [itemSelected] 
+			arr =  arr.concat(arr);
+			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected/Item", arr);
 
 			var titolo;
 			var intro;

@@ -3,7 +3,7 @@ xmlns:html="http://www.w3.org/1999/xhtml" xmlns:semantic="sap.f.semantic" xmlns:
 xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
  displayBlock="true" xmlns:commons="sap.suite.ui.commons" xmlns:uxap="sap.uxap">
 <App id="app">
-	<Page id="paginaDettaglioContratto" title="{i18n>title}" showHeader="false" showNavButton="true" navButtonPress="goToPage1">
+	<Page id="paginaDettaglioContratto" enableScrolling="true" title="{i18n>title}" showHeader="false" showNavButton="true" navButtonPress="goToPage1">
 		<content>
 			<uxap:ObjectPageHeaderContent class="noMarginLeftUxap">
 				<uxap:content>
@@ -35,12 +35,14 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 				</uxap:content>
 			</uxap:ObjectPageHeaderContent>
 					<IconTabBar
+						stretchContentHeight="false"
 						select="onSelectIconTab"
 						backgroundDesign="Transparent"
 						id="itb1"
 						selectedKey="1"
 						upperCase="false"
-						class="sapUiNoContentPadding">
+						
+						>
 						<items >
 							<IconTabFilter
 								key="1"
@@ -51,7 +53,182 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 									<Button type="Emphasized" icon="sap-icon://detail-view" text="{i18n>gestisciRiga}" press="onNavToGestione" enabled="true"/>
 									<Button type="Emphasized" icon="sap-icon://delete" text="{i18n>deleteRow}" press="handlecDeleteRow" enabled="true"/>
 									<Button type="Emphasized" icon="sap-icon://add" text="{i18n>addRow}" press="handleAddRowAccantonamento" enabled="true"/>
-							</OverflowToolbar>
+								</OverflowToolbar>
+							<VBox height="auto"> 
+								<ScrollContainer height="100%" vertical="true"> 
+								<Table id="TableDetail" alternateRowColors="true" mode="SingleSelectLeft" popinLayout="GridSmall"
+												items="{ path: 'modelHome>/AccantonamentoSelected/items'}"
+												itemPress="onItemPress"  ><!-- class="sapUiTinyMargin" -->
+									<columns>
+										<Column  width="auto" >
+											<Text text="{i18n>amm}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true">
+											<Text text="{i18n>cat}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true">
+											<Text text="{i18n>ce2Smart}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true">
+											<Text text="{i18n>ce3Smart}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true">
+											<Text text="{i18n>class}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true">
+											<Text text="{i18n>mis}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true">
+											<Text text="{i18n>prog}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true">
+											<Text text="{i18n>azi}" class="boldCss"/>
+										</Column>
+										<Column width="auto">
+											<Text text="{i18n>cpCs}" class="boldCss"/>
+										</Column>
+										<Column width="auto">
+											<Text text="{i18n>obbLin}" class="boldCss"/>
+										</Column>
+										<Column width="auto">
+											<Text text="{i18n>da}" class="boldCss" />
+										</Column>
+										<Column width="auto">
+											<Text text="{i18n>a}" class="boldCss"/>
+										</Column>
+										<Column width="auto">
+											<Text text="{i18n>importo}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true"  minScreenWidth="1281px" >
+											<Text text="{i18n>importo1}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true" minScreenWidth="1281px" >
+											<Text text="{i18n>importo2}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true" minScreenWidth="1281px" >
+											<Text text="{i18n>importo3}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
+											<Text text="{i18n>percent1}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
+											<Text text="{i18n>percent2}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
+											<Text text="{i18n>percent3}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true" minScreenWidth="1681px" >
+											<Text text="{i18n>aDecorrere}" class="boldCss"/>
+										</Column>
+										<Column width="auto" demandPopin="true" minScreenWidth="1681px" >
+											<Text text="{i18n>allCassa}" class="boldCss"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem >
+											<cells>
+												<Input textAlign="Right" value="{modelHome>Amministrazione}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+													<customData>
+														<core:CustomData key="NameSH" 		value="HelpValueAmm"			writeToDom="false"/>	
+														<core:CustomData key="From" 		value="Row"						writeToDom="false"/>											
+														<core:CustomData key="Property" 	value="Amministrazione"			writeToDom="false"/>	
+														<core:CustomData key="EntitySet" 	value="ZES_AMMINISTRAZIONE_SET"	writeToDom="false"/>
+													</customData>
+												</Input>
+												<Input textAlign="Right" value="{modelHome>CodiceCategoria}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+													<customData>
+														<core:CustomData key="NameSH" 		value="HelpValueCategoria"			writeToDom="false"/>	
+														<core:CustomData key="From" 		value="Row"							writeToDom="false"/>
+														<core:CustomData key="Property" 	value="CodiceCategoria"			   	writeToDom="false"/>	
+														<core:CustomData key="Eliminare" 	value="CodiceClaeco2,CodiceClaeco3"	writeToDom="false"/>	
+														<core:CustomData key="EntitySet" 	value="ZES_CATEGORIA_SET"			writeToDom="false"/>																							
+													</customData>
+												</Input>
+												<Input textAlign="Right" value="{modelHome>CodiceClaeco2}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+													<customData>
+														<core:CustomData key="NameSH" 			value="HelpValueCe2"		writeToDom="false"/>	
+														<core:CustomData key="From" 			value="Row"					writeToDom="false"/>
+														<core:CustomData key="Property" 		value="CodiceClaeco2"		writeToDom="false"/>	
+														<core:CustomData key="Eliminare" 		value="CodiceClaeco3"		writeToDom="false"/>
+														<core:CustomData key="Filtro" 			value="CodiceCategoria"		writeToDom="false"/>
+														<core:CustomData key="EntitySet" 		value="ZES_ECONOMICA2_SET"	writeToDom="false"/>
+														<core:CustomData key="CodiceCategoria" 	value="CODICE_CATEGORIA"	writeToDom="false"/>												
+													</customData>
+												</Input>
+												<Input textAlign="Right" value="{modelHome>CodiceClaeco3}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+													<customData>
+														<core:CustomData key="NameSH" 			value="HelpValueCe3"					writeToDom="false"/>	
+														<core:CustomData key="From" 			value="Row"								writeToDom="false"/>
+														<core:CustomData key="Property" 		value="CodiceClaeco3"			   		writeToDom="false"/>
+														<core:CustomData key="Filtro" 			value="CodiceCategoria,CodiceClaeco2"	writeToDom="false"/>		
+														<core:CustomData key="EntitySet" 		value="ZES_ECONOMICA3_SET"				writeToDom="false"/>	
+														<core:CustomData key="CodiceCategoria" 	value="CODICE_CATEGORIA"				writeToDom="false"/>
+														<core:CustomData key="CodiceClaeco2" 	value="CODICE_CLAECO2"					writeToDom="false"/>								
+													</customData>
+												</Input>
+												<Select  forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>ClassAut}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
+												items="{ path: 'modelHome>/selectClass'}">
+													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
+												</Select>
+												<Input textAlign="Right" value="{path: 'modelHome>CodiceMissione'}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+													<customData>
+														<core:CustomData key="NameSH" 		value="HelpValueMissione"				writeToDom="false"/>	
+														<core:CustomData key="From" 		value="Row"								writeToDom="false"/>
+														<core:CustomData key="Property" 	value="CodiceMissione"			   		writeToDom="false"/>
+														<core:CustomData key="Eliminare" 	value="CodiceProgramma,CodiceAzione"	writeToDom="false"/>	
+														<core:CustomData key="EntitySet" 	value="ZES_MISSIONE_SET"				writeToDom="false"/>												
+													</customData>
+												</Input>
+												<Input textAlign="Right" value="{modelHome>CodiceProgramma}"  valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+													<customData>
+														<core:CustomData key="NameSH" 			value="HelpValueProgramma"	writeToDom="false"/>	
+														<core:CustomData key="From" 			value="Row"					writeToDom="false"/>
+														<core:CustomData key="Property" 		value="CodiceProgramma"		writeToDom="false"/>	
+														<core:CustomData key="Eliminare" 		value="CodiceAzione"	 	writeToDom="false"/>
+														<core:CustomData key="Filtro" 			value="CodiceMissione"		writeToDom="false"/>	
+														<core:CustomData key="EntitySet" 		value="ZES_PROGRAMMA_SET"	writeToDom="false"/>											
+														<core:CustomData key="CodiceMissione" 	value="CODICE_MISSIONE"		writeToDom="false"/>
+													</customData>
+												</Input>
+												<Input textAlign="Right" value="{modelHome>CodiceAzione}"  valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+													<customData>
+														<core:CustomData key="NameSH" 			value="HelpValueAzione"					writeToDom="false"/>	
+														<core:CustomData key="From" 			value="Row"								writeToDom="false"/>
+														<core:CustomData key="Property" 		value="CodiceAzione"			   		writeToDom="false"/>	
+														<core:CustomData key="Filtro" 			value="CodiceMissione,CodiceProgramma"	writeToDom="false"/>
+														<core:CustomData key="EntitySet" 		value="ZES_AZIONE_SET"					writeToDom="false"/>
+														<core:CustomData key="CodiceMissione" 	value="CODICE_MISSIONE"					writeToDom="false"/>
+														<core:CustomData key="CodiceProgramma" 	value="CODICE_PROGRAMMA"				writeToDom="false"/>											
+													</customData>
+												</Input>
+												<Select  forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>CpCs}"  editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
+												items="{ path: 'modelHome>/selectCpCs'}">
+													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
+												</Select>
+												<Select  forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>Taglio}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
+												items="{ path: 'modelHome>/selectObbLin'}">
+													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
+												</Select>
+												<DatePicker xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoDa}" editable="{= ${modelHome>Taglio} === 'PLUR' &amp;&amp; (${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2')}" />										
+												<DatePicker xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoA}"  editable="{= ${modelHome>Taglio} === 'PLUR'}" />
+												<Input width="auto" textAlign="Right" value="{modelHome>Obiettivo}"  enabled="{= ${modelHome>Taglio} === 'PLUR'}" change=".onChangeNumberFormat($event, 'modelHome')"/><!-- .checkInput($event, 'num')" -->
+												
+												<Input width="auto" textAlign="Right" value="{modelHome>PrimoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
+												<Input width="auto" textAlign="Right" value="{modelHome>SecondoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
+												<Input width="auto" textAlign="Right" value="{modelHome>TerzoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
+		
+												<Input width="auto" textAlign="Right" value="{modelHome>PercPrimoAnno}" maxLength="3" editable="{= ${modelHome>Taglio} === 'LIN'}"/>
+												<Input width="auto" textAlign="Right" value="{modelHome>PercSecondoAnno}" maxLength="3" editable="{= ${modelHome>Taglio} === 'LIN'}"/>
+												<Input width="auto" textAlign="Right" value="{modelHome>PercTerzoAnno}" maxLength="3" editable="{= ${modelHome>Taglio} === 'LIN'}"/>
+												<CheckBox selected="{path: 'modelHome>ADecorrere'}"/>
+												<CheckBox selected="{modelHome>AllaCassa}" editable="{= ${modelHome>CpCs} === 'CP'}"/>
+												
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+						</ScrollContainer>	
+							 	</VBox>
 							</IconTabFilter>
 							<IconTabFilter
 								key="2"
@@ -88,180 +265,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 							</IconTabFilter>
 						</items>
 				</IconTabBar>
-						
-						<ScrollContainer height="auto" vertical="true"> 
-						<Table id="TableDetail" alternateRowColors="true" mode="SingleSelectLeft" 
-										items="{ path: 'modelHome>/AccantonamentoSelected/items'}"
-										itemPress="onItemPress"  ><!-- class="sapUiTinyMargin" -->
-							<columns>
-								<Column  width="6rem">
-									<Text text="{i18n>amm}" class="boldCss"/>
-								</Column>
-								<Column width="5rem" demandPopin="true">
-									<Text text="{i18n>cat}" class="boldCss"/>
-								</Column>
-								<Column width="5rem" demandPopin="true">
-									<Text text="{i18n>ce2Smart}" class="boldCss"/>
-								</Column>
-								<Column width="5rem" demandPopin="true">
-									<Text text="{i18n>ce3Smart}" class="boldCss"/>
-								</Column>
-								<Column width="6rem" demandPopin="true">
-									<Text text="{i18n>class}" class="boldCss"/>
-								</Column>
-								<Column width="5rem" demandPopin="true">
-									<Text text="{i18n>mis}" class="boldCss"/>
-								</Column>
-								<Column width="5rem" demandPopin="true">
-									<Text text="{i18n>prog}" class="boldCss"/>
-								</Column>
-								<Column width="5rem" demandPopin="true">
-									<Text text="{i18n>azi}" class="boldCss"/>
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>cpCs}" class="boldCss"/>
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>obbLin}" class="boldCss"/>
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>da}" class="boldCss" />
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>a}" class="boldCss"/>
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>importo}" class="boldCss"/>
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>importo1}" class="boldCss"/>
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>importo2}" class="boldCss"/>
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>importo3}" class="boldCss"/>
-								</Column>
-								<Column width="4rem">
-									<Text text="{i18n>percent1}" class="boldCss"/>
-								</Column>
-								<Column width="4rem">
-									<Text text="{i18n>percent2}" class="boldCss"/>
-								</Column>
-								<Column width="4rem">
-									<Text text="{i18n>percent3}" class="boldCss"/>
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>aDecorrere}" class="boldCss"/>
-								</Column>
-								<Column width="6rem">
-									<Text text="{i18n>allCassa}" class="boldCss"/>
-								</Column>
-							</columns>
-							<items>
-								<ColumnListItem >
-									<cells>
-										<Input textAlign="Right" value="{modelHome>Amministrazione}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
-											<customData>
-												<core:CustomData key="NameSH" 		value="HelpValueAmm"			writeToDom="false"/>	
-												<core:CustomData key="From" 		value="Row"						writeToDom="false"/>											
-												<core:CustomData key="Property" 	value="Amministrazione"			writeToDom="false"/>	
-												<core:CustomData key="EntitySet" 	value="ZES_AMMINISTRAZIONE_SET"	writeToDom="false"/>
-											</customData>
-										</Input>
-										<Input textAlign="Right" value="{modelHome>CodiceCategoria}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
-											<customData>
-												<core:CustomData key="NameSH" 		value="HelpValueCategoria"			writeToDom="false"/>	
-												<core:CustomData key="From" 		value="Row"							writeToDom="false"/>
-												<core:CustomData key="Property" 	value="CodiceCategoria"			   	writeToDom="false"/>	
-												<core:CustomData key="Eliminare" 	value="CodiceClaeco2,CodiceClaeco3"	writeToDom="false"/>	
-												<core:CustomData key="EntitySet" 	value="ZES_CATEGORIA_SET"			writeToDom="false"/>																							
-											</customData>
-										</Input>
-										<Input textAlign="Right" value="{modelHome>CodiceClaeco2}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
-											<customData>
-												<core:CustomData key="NameSH" 			value="HelpValueCe2"		writeToDom="false"/>	
-												<core:CustomData key="From" 			value="Row"					writeToDom="false"/>
-												<core:CustomData key="Property" 		value="CodiceClaeco2"		writeToDom="false"/>	
-												<core:CustomData key="Eliminare" 		value="CodiceClaeco3"		writeToDom="false"/>
-												<core:CustomData key="Filtro" 			value="CodiceCategoria"		writeToDom="false"/>
-												<core:CustomData key="EntitySet" 		value="ZES_ECONOMICA2_SET"	writeToDom="false"/>
-												<core:CustomData key="CodiceCategoria" 	value="CODICE_CATEGORIA"	writeToDom="false"/>												
-											</customData>
-										</Input>
-										<Input textAlign="Right" value="{modelHome>CodiceClaeco3}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
-											<customData>
-												<core:CustomData key="NameSH" 			value="HelpValueCe3"					writeToDom="false"/>	
-												<core:CustomData key="From" 			value="Row"								writeToDom="false"/>
-												<core:CustomData key="Property" 		value="CodiceClaeco3"			   		writeToDom="false"/>
-												<core:CustomData key="Filtro" 			value="CodiceCategoria,CodiceClaeco2"	writeToDom="false"/>		
-												<core:CustomData key="EntitySet" 		value="ZES_ECONOMICA3_SET"				writeToDom="false"/>	
-												<core:CustomData key="CodiceCategoria" 	value="CODICE_CATEGORIA"				writeToDom="false"/>
-												<core:CustomData key="CodiceClaeco2" 	value="CODICE_CLAECO2"					writeToDom="false"/>								
-											</customData>
-										</Input>
-										<Select  forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>ClassAut}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
-										items="{ path: 'modelHome>/selectClass'}">
-											<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
-										</Select>
-										<Input textAlign="Right" value="{path: 'modelHome>CodiceMissione'}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
-											<customData>
-												<core:CustomData key="NameSH" 		value="HelpValueMissione"				writeToDom="false"/>	
-												<core:CustomData key="From" 		value="Row"								writeToDom="false"/>
-												<core:CustomData key="Property" 	value="CodiceMissione"			   		writeToDom="false"/>
-												<core:CustomData key="Eliminare" 	value="CodiceProgramma,CodiceAzione"	writeToDom="false"/>	
-												<core:CustomData key="EntitySet" 	value="ZES_MISSIONE_SET"				writeToDom="false"/>												
-											</customData>
-										</Input>
-										<Input textAlign="Right" value="{modelHome>CodiceProgramma}"  valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
-											<customData>
-												<core:CustomData key="NameSH" 			value="HelpValueProgramma"	writeToDom="false"/>	
-												<core:CustomData key="From" 			value="Row"					writeToDom="false"/>
-												<core:CustomData key="Property" 		value="CodiceProgramma"		writeToDom="false"/>	
-												<core:CustomData key="Eliminare" 		value="CodiceAzione"	 	writeToDom="false"/>
-												<core:CustomData key="Filtro" 			value="CodiceMissione"		writeToDom="false"/>	
-												<core:CustomData key="EntitySet" 		value="ZES_PROGRAMMA_SET"	writeToDom="false"/>											
-												<core:CustomData key="CodiceMissione" 	value="CODICE_MISSIONE"		writeToDom="false"/>
-											</customData>
-										</Input>
-										<Input textAlign="Right" value="{modelHome>CodiceAzione}"  valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
-											<customData>
-												<core:CustomData key="NameSH" 			value="HelpValueAzione"					writeToDom="false"/>	
-												<core:CustomData key="From" 			value="Row"								writeToDom="false"/>
-												<core:CustomData key="Property" 		value="CodiceAzione"			   		writeToDom="false"/>	
-												<core:CustomData key="Filtro" 			value="CodiceMissione,CodiceProgramma"	writeToDom="false"/>
-												<core:CustomData key="EntitySet" 		value="ZES_AZIONE_SET"					writeToDom="false"/>
-												<core:CustomData key="CodiceMissione" 	value="CODICE_MISSIONE"					writeToDom="false"/>
-												<core:CustomData key="CodiceProgramma" 	value="CODICE_PROGRAMMA"				writeToDom="false"/>											
-											</customData>
-										</Input>
-										<Select  forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>CpCs}"  editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
-										items="{ path: 'modelHome>/selectCpCs'}">
-											<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
-										</Select>
-										<Select  forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>Taglio}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
-										items="{ path: 'modelHome>/selectObbLin'}">
-											<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
-										</Select>
-										<DatePicker xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoDa}" editable="{= ${modelHome>Taglio} === 'PLUR' &amp;&amp; (${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2')}" />										
-										<DatePicker xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoA}"  editable="{= ${modelHome>Taglio} === 'PLUR'}" />
-										<Input textAlign="Right" value="{modelHome>Obiettivo}"  enabled="{= ${modelHome>Taglio} === 'PLUR'}" change=".onChangeNumberFormat($event, 'modelHome')"/><!-- .checkInput($event, 'num')" -->
-										
-										<Input textAlign="Right" value="{modelHome>PrimoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
-										<Input textAlign="Right" value="{modelHome>SecondoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
-										<Input textAlign="Right" value="{modelHome>TerzoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
-
-										<Input textAlign="Right" value="{modelHome>PercPrimoAnno}" maxLength="3" editable="{= ${modelHome>Taglio} === 'LIN'}"/>
-										<Input textAlign="Right" value="{modelHome>PercSecondoAnno}" maxLength="3" editable="{= ${modelHome>Taglio} === 'LIN'}"/>
-										<Input textAlign="Right" value="{modelHome>PercTerzoAnno}" maxLength="3" editable="{= ${modelHome>Taglio} === 'LIN'}"/>
-										<CheckBox selected="{path: 'modelHome>ADecorrere'}"/>
-										<CheckBox selected="{modelHome>AllaCassa}" editable="{= ${modelHome>CpCs} === 'CP'}"/>
-										
-									</cells>
-								</ColumnListItem>
-							</items>
-						</Table>
-					 </ScrollContainer>			 			
+						 			
 				</content>
 			<footer>
 			<OverflowToolbar>
