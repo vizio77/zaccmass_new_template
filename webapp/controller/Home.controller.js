@@ -226,7 +226,7 @@ sap.ui.define([
 		onPressAvvio: function (oEvent) {
 			var oTable = this.getView().byId("TableAccantonamenti");
 			//var mParams = oEvent.getParameters();
-			var oBinding = oTable.getBinding("items");
+			//var oBinding = oTable.getBinding("items");
 			var aFilters = [];
 
 			var modelFilterHome = this.getOwnerComponent().getModel("modelFilterHome").getData();

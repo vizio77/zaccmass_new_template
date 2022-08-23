@@ -92,6 +92,7 @@ sap.ui.define([
 		onCambiaStato: async function(oEvent, sottoStrumento){
 
 			var statoDiPartenza = oEvent.getSource().data().Stato;
+			!isNaN(statoDiPartenza) ? statoDiPartenza = statoDiPartenza.toString() : statoDiPartenza;
 			var arrayStati = ["1","2","3","4","5","6"];
 			
 			if(arrayStati.indexOf(statoDiPartenza) !== -1){
@@ -145,8 +146,8 @@ sap.ui.define([
 
 		setEntryWorkFlow: async function(statoNuovo){
 			var accantonamento = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected");
-			var workFlowSession = this.getOwnerComponent().getModel("modelHome").getProperty("/WorkFlow");
-
+			//var workFlowSession = this.getOwnerComponent().getModel("modelHome").getProperty("/WorkFlow");
+			var workFlowSession = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected/SessioneLav_StatiSessioni");
 
 			const dt = DateFormat.getDateTimeInstance({ pattern: "dd.MM.yyyy HH.mm" });
 			const dateFormatted = dt.format(new Date()); // returns: "01/08/2020"
@@ -172,8 +173,8 @@ sap.ui.define([
 			this.getOwnerComponent().getModel("visibilityModel").setProperty("/stato", statoNuovo.Stato.toString());
 
 			workFlowSession.push(entry);
-			this.getOwnerComponent().getModel("modelHome").setProperty("/WorkFlow", workFlowSession);
-			
+			//this.getOwnerComponent().getModel("modelHome").setProperty("/WorkFlow", workFlowSession);
+			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected/SessioneLav_StatiSessioni" , workFlowSession);
 
 			  // decommentare per portare le modifiche a livello oData
 			/* var oModel = this.getOwnerComponent().getModel("accantonamenti");

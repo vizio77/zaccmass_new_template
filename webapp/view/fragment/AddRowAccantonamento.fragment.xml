@@ -62,12 +62,12 @@
 					<Label text="{i18n>misLB}" />
 					<Input value="{modelHome>/formRow/CodiceMissione}" width="70%" showValueHelp="true" valueHelpRequest="onPressMatchCodeFragment" >
 						<customData>
-							<core:CustomData key="NameSH" 		value="HelpValueMissione"	writeToDom="false"/>	
-							<core:CustomData key="From" 		value="Sh"					writeToDom="false"/>											
-							<core:CustomData key="Property" 	value="CodiceMissione"		writeToDom="false"/>	
-							<core:CustomData key="Path" 		value="/formRow"			writeToDom="false"/>
-							<core:CustomData key="Eliminare" 	value="prog,azi"	   		writeToDom="false"/>							
-							<core:CustomData key="EntitySet" 	value="ZES_MISSIONE_SET"	writeToDom="false"/>		
+							<core:CustomData key="NameSH" 		value="HelpValueMissione"				writeToDom="false"/>	
+							<core:CustomData key="From" 		value="Sh"								writeToDom="false"/>											
+							<core:CustomData key="Property" 	value="CodiceMissione"					writeToDom="false"/>	
+							<core:CustomData key="Path" 		value="/formRow"						writeToDom="false"/>
+							<core:CustomData key="Eliminare" 	value="CodiceProgramma,CodiceAzione"	writeToDom="false"/>							
+							<core:CustomData key="EntitySet" 	value="ZES_MISSIONE_SET"				writeToDom="false"/>		
 						</customData>
 					</Input>
 					<Label text="{i18n>progLB}" />
