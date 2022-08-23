@@ -127,7 +127,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 									<items>
 										<ColumnListItem >
 											<cells>
-												<Input textAlign="Right" value="{modelHome>Amministrazione}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+												<Input textAlign="Right" value="{modelHome>Amministrazione}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' }"> <!-- || ${visibilityModel>/stato} === '2' -->
 													<customData>
 														<core:CustomData key="NameSH" 		value="HelpValueAmm"			writeToDom="false"/>	
 														<core:CustomData key="From" 		value="Row"						writeToDom="false"/>											
@@ -135,7 +135,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 														<core:CustomData key="EntitySet" 	value="ZES_AMMINISTRAZIONE_SET"	writeToDom="false"/>
 													</customData>
 												</Input>
-												<Input textAlign="Right" value="{modelHome>CodiceCategoria}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+												<Input textAlign="Right" value="{modelHome>CodiceCategoria}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' }">
 													<customData>
 														<core:CustomData key="NameSH" 		value="HelpValueCategoria"			writeToDom="false"/>	
 														<core:CustomData key="From" 		value="Row"							writeToDom="false"/>
@@ -144,7 +144,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 														<core:CustomData key="EntitySet" 	value="ZES_CATEGORIA_SET"			writeToDom="false"/>																							
 													</customData>
 												</Input>
-												<Input textAlign="Right" value="{modelHome>CodiceClaeco2}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+												<Input textAlign="Right" value="{modelHome>CodiceClaeco2}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' }">
 													<customData>
 														<core:CustomData key="NameSH" 			value="HelpValueCe2"		writeToDom="false"/>	
 														<core:CustomData key="From" 			value="Row"					writeToDom="false"/>
@@ -155,7 +155,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 														<core:CustomData key="CodiceCategoria" 	value="CODICE_CATEGORIA"	writeToDom="false"/>												
 													</customData>
 												</Input>
-												<Input textAlign="Right" value="{modelHome>CodiceClaeco3}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+												<Input textAlign="Right" value="{modelHome>CodiceClaeco3}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1'}">
 													<customData>
 														<core:CustomData key="NameSH" 			value="HelpValueCe3"					writeToDom="false"/>	
 														<core:CustomData key="From" 			value="Row"								writeToDom="false"/>
@@ -166,11 +166,11 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 														<core:CustomData key="CodiceClaeco2" 	value="CODICE_CLAECO2"					writeToDom="false"/>								
 													</customData>
 												</Input>
-												<Select  forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>ClassAut}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
+												<Select textAlign="End" forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>ClassAut}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
 												items="{ path: 'modelHome>/selectClass'}">
 													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
 												</Select>
-												<Input textAlign="Right" value="{path: 'modelHome>CodiceMissione'}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+												<Input textAlign="Right" value="{path: 'modelHome>CodiceMissione'}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1'}">
 													<customData>
 														<core:CustomData key="NameSH" 		value="HelpValueMissione"				writeToDom="false"/>	
 														<core:CustomData key="From" 		value="Row"								writeToDom="false"/>
@@ -179,7 +179,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 														<core:CustomData key="EntitySet" 	value="ZES_MISSIONE_SET"				writeToDom="false"/>												
 													</customData>
 												</Input>
-												<Input textAlign="Right" value="{modelHome>CodiceProgramma}"  valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+												<Input textAlign="Right" value="{modelHome>CodiceProgramma}"  valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1'}">
 													<customData>
 														<core:CustomData key="NameSH" 			value="HelpValueProgramma"	writeToDom="false"/>	
 														<core:CustomData key="From" 			value="Row"					writeToDom="false"/>
@@ -190,7 +190,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 														<core:CustomData key="CodiceMissione" 	value="CODICE_MISSIONE"		writeToDom="false"/>
 													</customData>
 												</Input>
-												<Input textAlign="Right" value="{modelHome>CodiceAzione}"  valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}">
+												<Input textAlign="Right" value="{modelHome>CodiceAzione}"  valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1'}">
 													<customData>
 														<core:CustomData key="NameSH" 			value="HelpValueAzione"					writeToDom="false"/>	
 														<core:CustomData key="From" 			value="Row"								writeToDom="false"/>
@@ -201,16 +201,16 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 														<core:CustomData key="CodiceProgramma" 	value="CODICE_PROGRAMMA"				writeToDom="false"/>											
 													</customData>
 												</Input>
-												<Select  forceSelection="false" width="auto" change="changeSelect" selectedKey="{modelHome>CpCs}"  editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
+												<Select textAlign="End" forceSelection="false" width="auto" change="changeSelect" selectedKey="{modelHome>CpCs}"  editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
 												items="{ path: 'modelHome>/selectCpCs'}">
 													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
 												</Select>
-												<Select  forceSelection="false" width="auto" change="changeSelect" selectedKey="{modelHome>Taglio}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
+												<Select textAlign="End" forceSelection="false" width="auto" change="changeSelect" selectedKey="{modelHome>Taglio}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
 												items="{ path: 'modelHome>/selectObbLin'}">
 													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
 												</Select>
-												<DatePicker xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoDa}" editable="{= ${modelHome>Taglio} === 'PLUR' &amp;&amp; (${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2')}" />										
-												<DatePicker xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoA}"  editable="{= ${modelHome>Taglio} === 'PLUR'}" />
+												<DatePicker xmlns="sap.m" textAlign="End" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoDa}" editable="{= ${modelHome>Taglio} === 'PLUR' &amp;&amp; (${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2')}" />										
+												<DatePicker xmlns="sap.m" textAlign="End" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoA}"  editable="{= ${modelHome>Taglio} === 'PLUR'}" />
 												<Input width="auto" textAlign="Right" value="{modelHome>Obiettivo}"  enabled="{= ${modelHome>Taglio} === 'PLUR'}" change=".onChangeNumberFormat($event, 'modelHome')"/><!-- .checkInput($event, 'num')" -->
 												
 												<Input width="auto" textAlign="Right" value="{modelHome>PrimoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
@@ -234,7 +234,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 								key="2"
 								icon="sap-icon://history"
 								text="{i18n>cronologia}"
-								count="{ ${modelHome>/WorkFlow}.length}"
+								count="{visibilityModel>/weEntry}"
 								>
 								<ScrollContainer
 									height="100%"
@@ -261,7 +261,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 										</commons:content>
 									</commons:Timeline>
 								</Panel>
-							</ScrollContainer>
+								</ScrollContainer>
 							</IconTabFilter>
 						</items>
 				</IconTabBar>

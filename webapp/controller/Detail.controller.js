@@ -81,7 +81,8 @@ sap.ui.define([
 			!isNaN(accantonamento.Stato) ? accantonamento.Stato = accantonamento.Stato.toString() : accantonamento.Stato;
 
 			var visibility = {
-					stato : accantonamento.Stato
+					stato : accantonamento.Stato,
+					weEntry : accantonamento.SessioneLav_StatiSessioni.length
 			};
 			//se è diverso da null allora lo faccio  vedere
 			accantonamento.STAC !== "" && accantonamento.STAC !== undefined ? visibility.STAC = true : visibility.STAC = false;
@@ -173,6 +174,7 @@ sap.ui.define([
 			this.getOwnerComponent().getModel("visibilityModel").setProperty("/stato", statoNuovo.Stato.toString());
 
 			workFlowSession.push(entry);
+			this.getOwnerComponent().getModel("visibilityModel").setProperty("/weEntry", workFlowSession.length);
 			//this.getOwnerComponent().getModel("modelHome").setProperty("/WorkFlow", workFlowSession);
 			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected/SessioneLav_StatiSessioni" , workFlowSession);
 
@@ -366,13 +368,13 @@ sap.ui.define([
 				}
 			}
 			//lt filtri mandatory
-			filtri.push(new Filter({path: "FASE" ,operator: FilterOperator.EQ,	value1: "DLB"}));
-			filtri.push(new Filter({path: "ANNO" ,operator: FilterOperator.EQ,	value1: "2023"}));
-			
-
+			filtri.push(new Filter({path: "FASE"  		, operator: FilterOperator.EQ,	 value1: "DLB"}));
+			filtri.push(new Filter({path: "ANNO"  		, operator: FilterOperator.EQ,	 value1: "2023"}));
+			filtri.push(new Filter({path: "ATTIVO"		, operator: FilterOperator.EQ, 	 value1: "X"}));
+			filtri.push(new Filter({path: "REALE" 		, operator: FilterOperator.EQ,	 value1: "R"}));
+			filtri.push(new Filter({path: "VERSIONE" 	, operator: FilterOperator.EQ,	 value1: "D"}));
 
 			this.onSearchTipologiche(filtri, data.EntitySet);
-
 			this.getOwnerComponent().setModel(new JSONModel({
 				pathObject : pathObject,
 				from : data.From,
