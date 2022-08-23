@@ -511,13 +511,21 @@ sap.ui.define([
 		},
 
 		onNavToDetail: function () {
+			var accantonamento = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected");
+			this.onNavToPath(accantonamento);
 			
-			//this.resetTable();
-
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			/* var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected/Item", []);
-			oRouter.navTo("Detail");
+			oRouter.navTo("Detail"); */
 					
+		},
+
+		onNavToPath: function (item) {		
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.navTo("DetailFromPath", {
+				NomeSessione: item.NomeSessione,
+				Esercizio: item.Esercizio
+			});					
 		},
 		//lt ricalcolo ogni volta che modifico il modello per la visualizzazione dei totali nell'header...
 		

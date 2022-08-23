@@ -1,6 +1,7 @@
 /* global nv:true */
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
+	//"sap/ui/core/mvc/Controller",
+	"zsap/com/r3/cobi/s4/accmass/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",	
 	"sap/ui/model/Filter",
@@ -16,14 +17,15 @@ sap.ui.define([
 	"sap/m/Button",
 	"sap/ui/core/format/DateFormat",
 	"sap/ui/core/Fragment"
-], function (Controller, JSONModel, History,  Filter, FilterOperator, formatter, MessageBox, MessageToast, Dialog, Text, MaskInput,
+], function (BaseController ,JSONModel, History,  Filter, FilterOperator, formatter, MessageBox, MessageToast, Dialog, Text, MaskInput,
 	TextArea, Label, Button, DateFormat, Fragment) {
 	"use strict";
 
-	return Controller.extend("zsap.com.r3.cobi.s4.accmass.controller.Detail", {
+	return BaseController.extend("zsap.com.r3.cobi.s4.accmass.controller.Detail", {
 		formatter: formatter,
 
 		onInit: function () {
+			//lt recupero le info dall'oData quando navigo così se per caso si arriva da altre app ho sempre info aggiornate
 			this.getOwnerComponent().getRouter().getRoute("DetailFromPath").attachPatternMatched(this._onObjectMatched, this);
         },
 
@@ -40,38 +42,33 @@ sap.ui.define([
 
 				var oggettoRecuperatoExt = {};
 				var oggettoRecuperatoClonato = jQuery.extend(true, oggettoRecuperatoExt, oggettoRecuperato); */
-				
-
 				var that = this;
 				this.getOwnerComponent().getModel("accantonamenti").read("/" + sObjectPath, {
 					/* filters: aFilters,*/
 					urlParameters: {$expand: "SessioneLav_StatiSessioni,SessioneLav_ElementoSessione" }, 
 					success: function(oData, response) {
-						that.initView(response.data);
-						
+						that.initView(response.data);						
 					},
 					error: function(error) {
 						console.log(error);	
 						that.go2PageFail(error.statusText);
 					}
 				});
-
 				//var sessione = this.getOwnerComponent().getModel("accantonamenti").getObject("/" + sObjectPath);
-				
 			}.bind(this));
         
         },
-		go2PageFail: function (message) {
-            sap.ui.core.BusyIndicator.hide();
-            message = message ? message : this.getResourceBundle().getText("error");
-            this.getOwnerComponent().getRouter().getTargets().display("PageFail", message);
-        },
+		
 
 		initView: function(sessione){
 			var accantonamento = sessione;
 			var arr = accantonamento.SessioneLav_ElementoSessione.results;
 			//lt per aggiungere un po' di record all'array
-			//arr = arr.concat(arr);
+			/* arr = arr.concat(arr);
+			arr = arr.concat(arr);
+			arr = arr.concat(arr);
+			arr = arr.concat(arr);
+			arr = arr.concat(arr); */
 			accantonamento.items = arr;
 			
 			var listaStati = $.grep(this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/TipoStatiSet"), function (n, i) {
@@ -95,7 +92,6 @@ sap.ui.define([
 		onCambiaStato: async function(oEvent, sottoStrumento){
 
 			var statoDiPartenza = oEvent.getSource().data().Stato;
-
 			var arrayStati = ["1","2","3","4","5","6"];
 			
 			if(arrayStati.indexOf(statoDiPartenza) !== -1){

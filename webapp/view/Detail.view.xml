@@ -55,12 +55,12 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 									<Button type="Emphasized" icon="sap-icon://add" text="{i18n>addRow}" press="handleAddRowAccantonamento" enabled="true"/>
 								</OverflowToolbar>
 							<VBox height="auto"> 
-								<ScrollContainer height="100%" vertical="true"> 
+								<!-- <ScrollContainer height="100%" vertical="true">  -->
 								<Table id="TableDetail" alternateRowColors="true" mode="SingleSelectLeft" popinLayout="GridSmall"
 												items="{ path: 'modelHome>/AccantonamentoSelected/items'}"
 												itemPress="onItemPress"  ><!-- class="sapUiTinyMargin" -->
 									<columns>
-										<Column  width="auto" >
+										<Column  width="6rem" >
 											<Text text="{i18n>amm}" class="boldCss"/>
 										</Column>
 										<Column width="auto" demandPopin="true">
@@ -99,7 +99,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 										<Column width="auto">
 											<Text text="{i18n>importo}" class="boldCss"/>
 										</Column>
-										<Column width="auto" demandPopin="true"  minScreenWidth="1281px" >
+										<Column width="auto" demandPopin="true" minScreenWidth="1281px" >
 											<Text text="{i18n>importo1}" class="boldCss"/>
 										</Column>
 										<Column width="auto" demandPopin="true" minScreenWidth="1281px" >
@@ -201,11 +201,11 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 														<core:CustomData key="CodiceProgramma" 	value="CODICE_PROGRAMMA"				writeToDom="false"/>											
 													</customData>
 												</Input>
-												<Select  forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>CpCs}"  editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
+												<Select  forceSelection="false" width="auto" change="changeSelect" selectedKey="{modelHome>CpCs}"  editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
 												items="{ path: 'modelHome>/selectCpCs'}">
 													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
 												</Select>
-												<Select  forceSelection="false" width="50%" change="changeSelect" selectedKey="{modelHome>Taglio}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
+												<Select  forceSelection="false" width="auto" change="changeSelect" selectedKey="{modelHome>Taglio}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
 												items="{ path: 'modelHome>/selectObbLin'}">
 													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
 												</Select>
@@ -227,7 +227,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 										</ColumnListItem>
 									</items>
 								</Table>
-						</ScrollContainer>	
+						<!-- </ScrollContainer>	 -->
 							 	</VBox>
 							</IconTabFilter>
 							<IconTabFilter
