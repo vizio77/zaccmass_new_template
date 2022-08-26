@@ -20,6 +20,15 @@ sap.ui.define([
                 return oModel;
         },
 
+        createIframeModel: function () {
+            var oModel = new JSONModel({
+                gestioneSac : "https://initsac-svil.eu10.hcs.cloud.sap/sap/fpa/ui/tenants/f23bc/app.html#/analyticapp&/aa/98A01C039904DAFCEACE9DF3C5F74492/?url_api=true&mode=present&view_id=appBuilding"                
+                //gestioneSac : "http://www.youtube.com/embed/cS1l_HzZMOg"
+            });
+            
+            return oModel;
+        },
+
             createMockUpModel: function () {
                 var oModel = new JSONModel({   
                     "WorkFlow" : [        

@@ -30,12 +30,14 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+			this.setModel(models.createIframeModel(), "iframe");
 			this.setModel(new JSONModel({}),"shModel");
 			this.initModel();
 			//console.log("entro in sh")
 			//this.initSH();
 			this.initAccantonamenti();
 		},
+		
 
 		initModel: async function (){
 			

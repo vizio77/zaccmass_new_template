@@ -25,11 +25,28 @@ sap.ui.define([
 			//così parte ogni volta la preparazione dei modelli
 			this.getOwnerComponent().getRouter().getRoute("Gestione").attachPatternMatched(function () {
 				
-				this.ricalcolaTotali();
+				//this.ricalcolaTotali();
+
+				this.loadIframe("gestioneSac");
 
 			}.bind(this), this);
-			this.preparaModello();
+			//this.preparaModello();
     	},
+
+		loadIframe: function(typeSac){
+			//lt prova recupero iframe
+			var that = this;
+			var oFrame = that.getView().byId(typeSac);
+			var url = this.getOwnerComponent().getModel("iframe").getProperty("/" + typeSac);
+			that.urlSac = url;
+			var oFrameContent = oFrame.$()[0];
+			oFrameContent.setAttribute("src", that.urlSac);
+			that._refresh();
+		},
+		_refresh: function() {
+			var urlSac = this.urlSac;
+			window.frames[0].location = urlSac + (new Date());
+		},
 
 		onAfterRendering: function() {
 			//this.functionTemp();			
@@ -596,7 +613,7 @@ sap.ui.define([
         },
 
 		test: function(){
-            this.resetTable();
+            this.loadIframe("gestioneSac");
         },
 
 		test2: function(){
