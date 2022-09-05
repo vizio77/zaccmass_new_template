@@ -29,9 +29,19 @@ sap.ui.define([
 			this.getOwnerComponent().getRouter().getRoute("DetailFromPath").attachPatternMatched(this._onObjectMatched, this);
         },
 
-        _onObjectMatched: function (oEvent) {
-			var nomeSessione = oEvent.getParameters().arguments.NomeSessione;
-			var esercizio = oEvent.getParameters().arguments.Esercizio;
+        _onObjectMatched: function (oEvent, toRefresh) {
+			var nomeSessione,
+			esercizio;
+			if(!toRefresh){
+			  nomeSessione = oEvent.getParameters().arguments.NomeSessione;
+			  esercizio = oEvent.getParameters().arguments.Esercizio;
+			}else{
+				nomeSessione = this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/nomeSessione");
+				esercizio = this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/esercizio");
+			}	
+			
+			this.getOwnerComponent().getModel("accantonamentiModel").setProperty("/nomeSessione", nomeSessione);
+			this.getOwnerComponent().getModel("accantonamentiModel").setProperty("/esercizio", esercizio);
 
 			this.getOwnerComponent().getModel("accantonamenti").metadataLoaded().then(function () {
 				var sObjectPath = this.getOwnerComponent().getModel("accantonamenti").createKey("SessioneLavoroSet", {
@@ -308,11 +318,30 @@ sap.ui.define([
 		},
 
 		adaptRow: function(row){
+			row.Obiettivo 	= this.adaptNumber(row.Obiettivo);
 
+			row.PrimoAnno 	= this.adaptNumber(row.PrimoAnno);
+			row.SecondoAnno = this.adaptNumber(row.SecondoAnno);
+			row.TerzoAnno 	= this.adaptNumber(row.TerzoAnno);
+
+			row.PercPrimoAnno 	= this.adaptNumber(row.PercPrimoAnno);
+			row.PercSecondoAnno = this.adaptNumber(row.PercSecondoAnno);
+			row.PercTerzoAnno 	= this.adaptNumber(row.PercTerzoAnno);
 			return row;
 		},
+		adaptNumber: function(number, isPercent){
+			if(number.indexOf(".") !== -1 && parseFloat(number) > 0){
+			//salvo i numeri inseriti come vuole SAP
+				number = number.replace(".","");
+				number = number.replace(",",".");
+			}else if(number.indexOf(",") !== -1 && parseFloat(number) > 0){
+				number = number.replace(",",".");
+			}
 
-		modifyRowToDb: function(row){
+			return number;
+		},
+
+		modifyRowToDb: function(arrayRows){
 			var oModel = this.getOwnerComponent().getModel("accantonamenti");	
 			
 			var scpDeferredGroups = oModel.getDeferredGroups();
@@ -321,14 +350,32 @@ sap.ui.define([
 			
 			var that = this;
 
-			var rowExt = jQuery.extend(true, {}, row);	
-			
-			//imposto i valori di default
-			rowExt = this.adaptRow(rowExt);
+			for (let i = 0; i < arrayRows.length; i++) {
+				const rowExt = arrayRows[i];				
+				oModel.update("/ElementoSessioneSet(NomeSessione='" + rowExt.NomeSessione + "',Esercizio='" + rowExt.Esercizio + "',ProgSessLavoro=" + rowExt.ProgSessLavoro + ")" , rowExt, {				
+					groupId: "modifyRows"
+				});
+			}
 
-			oModel.update("/ElementoSessioneSet(NomeSessione='" + rowExt.NomeSessione + "',Esercizio='" + rowExt.Esercizio + "',ProgSessLavoro=" + rowExt.ProgSessLavoro + ")" , rowExt, {				
-				groupId: "modifyRows"
-			});
+			this.executeBatchCall();
+			
+		},
+
+		validateRow:function(row){
+
+			var error = false;
+			if(parseFloat(row.PercPrimoAnno) > 100 || !row.PercPrimoAnno){
+				error = true;
+			}	
+			if(parseFloat(row.PercSecondoAnno) > 100 || !row.PercSecondoAnno){
+				error = true;
+			}
+			if(parseFloat(row.PercTerzoAnno) > 100 || !row.PercTerzoAnno){
+				error = true;
+			}	
+			
+			return error;
+
 		},
 		
 		addRowToDb: function(row){
@@ -499,8 +546,13 @@ sap.ui.define([
 						actions: [MessageBox.Action.YES, MessageBox.Action.NO],
 						onClose: function (oAction) { / * do something * / 
 						if(oAction === "YES"){
+							//valido prima le righe
+							//se sono tutte ok allora posso scrivere quelle cambiate
+
+
 							//ripristino l'odata da string
 							var submitChanges = false;
+							var arrayRowToModify = [];
 							for (let i = 0;rows && i < rows.length; i++) {
 								const element = rows[i];
 								//lt controllo se la riga è stata modificata
@@ -509,16 +561,19 @@ sap.ui.define([
 								});
 								//confronto le due righe in stringa se sono =
 								if(JSON.stringify(element) !== JSON.stringify(rigaOriginale[0])){
-									this.modifyRowToDb(element);
-									submitChanges = true;
+									arrayRowToModify.push(element);											
+								}
+							}
+							if(arrayRowToModify.length> 0){
+								//dentro le funzioni creo le righe adattate alle chiamate
+								var righeValidate = this.validateArrayRow(arrayRowToModify);
+								if(righeValidate && righeValidate.length > 0){
+									this.modifyRowToDb(righeValidate);
+								}else{
+									MessageBox.warning("Ci sono delle righe incomplete o con errori. Controllare");
 								}
 							}
 
-							if(submitChanges){
-								console.log("faccio la chiamata");
-								//eseguo la chiamata
-								this.executeBatchCall();
-							}
 						}
 					}.bind(this)
 				});						
@@ -529,23 +584,57 @@ sap.ui.define([
 			
 		},
 
+		validateArrayRow: function (array){
+			var righeValidate = [];
+			for (let i = 0; i < array.length; i++) {
+				const element = array[i];										
+				var rowExt = jQuery.extend(true, {}, element);
+				//imposto i valori di default
+				rowExt = this.adaptRow(rowExt);
+				var validation = this.validateRow(rowExt);
+				if(validation){
+					//non effettuo la chiamata
+					return false;
+				}else{
+					righeValidate.push(rowExt)
+				}			
+			}
+
+			return righeValidate;
+		},
+
 		executeBatchCall: function (){
 
 			var oModel = this.getOwnerComponent().getModel("accantonamenti");	
 			oModel.submitChanges({
 				success: function (batchCallRel) {
-
+					var err = false;
 					var response = batchCallRel.__batchResponses
+
+					
 					for (let i = 0; i < response.length; i++) {
 						const res = response[i];
-						if(res.response && response.response.statusCode !== 201 || response.response.statusCode !== 204){
-							console.log("errore batch");
-						}
+						if(res.__changeResponses){
+							for (let z = 0; z < res.__changeResponses.length; z++) {
+								const changeResponse = res.__changeResponses[z];
+								if(changeResponse.statusCode !== "204"){
+									err = true;
+								}								
+							}
+							
+						}else{
+							if(res.response && res.response.statusCode !== "201" || res.response.statusCode !== "204"){
+								err = true;
+							}
+						}						
 					}
-					console.log("success batch call");
+
+					err !== true ? console.log("errore batch") : console.log("No errori");				
+					var stringa = err !== true ? this.getText("successoBatch") : this.getText("erroreBatch");
+					err !== true ? MessageBox.information(stringa) : MessageBox.error(stringa);
 					
-					
-					
+					if(!err) this._onObjectMatched(null, true);
+
 				}.bind(this),
 				error: function (oError) {
 					console.log(oError);

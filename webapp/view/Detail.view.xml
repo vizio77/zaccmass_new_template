@@ -223,9 +223,9 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 												<Input width="auto" textAlign="Right" value="{modelHome>SecondoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
 												<Input width="auto" textAlign="Right" value="{modelHome>TerzoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
 		
-												<Input width="auto" textAlign="Right" value="{modelHome>PercPrimoAnno}" maxLength="3" editable="{= ${modelHome>Taglio} === 'LIN'}"/>
-												<Input width="auto" textAlign="Right" value="{modelHome>PercSecondoAnno}" maxLength="3" editable="{= ${modelHome>Taglio} === 'LIN'}"/>
-												<Input width="auto" textAlign="Right" value="{modelHome>PercTerzoAnno}" maxLength="3" editable="{= ${modelHome>Taglio} === 'LIN'}"/>
+												<Input width="auto" textAlign="Right" value="{modelHome>PercPrimoAnno}" editable="{= ${modelHome>Taglio} === 'LIN'}" change=".onChangeNumberFormat($event, 'modelHome')"/> <!-- maxLength="3" -->
+												<Input width="auto" textAlign="Right" value="{modelHome>PercSecondoAnno}" editable="{= ${modelHome>Taglio} === 'LIN'}"/> <!-- maxLength="3" -->
+												<Input width="auto" textAlign="Right" value="{modelHome>PercTerzoAnno}" editable="{= ${modelHome>Taglio} === 'LIN'}"/> <!-- maxLength="3" -->
 												<CheckBox selected="{path: 'modelHome>ADecorrere'}"/>
 												<CheckBox selected="{modelHome>AllaCassa}" editable="{= ${modelHome>CpCs} === 'CP'}"/>
 												
