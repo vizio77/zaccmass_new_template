@@ -171,7 +171,8 @@ sap.ui.define([
 			var table = this.getView().byId("TableAccantonamenti");
 			var context = table.getSelectedContexts();
 
-			if(context.length === 0){			
+			if(context.length === 0){	
+				MessageBox.warning("Seleziona prima una sessione di lavoro");		
 				return;
 			}
 

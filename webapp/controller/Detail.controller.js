@@ -70,7 +70,8 @@ sap.ui.define([
 			arr = arr.concat(arr);
 			arr = arr.concat(arr); */
 			accantonamento.items = arr;
-			
+			var appModelStringify      = JSON.stringify(arr);
+			this.getOwnerComponent().getModel("accantonamentiModel").setProperty("/Stringify", appModelStringify);
 			var listaStati = $.grep(this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/TipoStatiSet"), function (n, i) {
 				return n.Stato.toString() === accantonamento.Stato.toString();
 			});
@@ -306,15 +307,37 @@ sap.ui.define([
 			this.handlecloseRowAccantonamento(); */
 		},
 
-		addRowToDb: function(row){
-			var oModel = this.getOwnerComponent().getModel("accantonamenti");					
+		adaptRow: function(row){
+
+			return row;
+		},
+
+		modifyRowToDb: function(row){
+			var oModel = this.getOwnerComponent().getModel("accantonamenti");	
+			
+			var scpDeferredGroups = oModel.getDeferredGroups();
+			scpDeferredGroups = scpDeferredGroups.concat(["modifyRows"]);
+			oModel.setDeferredGroups(scpDeferredGroups);				
 			
 			var that = this;
 
 			var rowExt = jQuery.extend(true, {}, row);	
 			
 			//imposto i valori di default
+			rowExt = this.adaptRow(rowExt);
 
+			oModel.update("/ElementoSessioneSet(NomeSessione='" + rowExt.NomeSessione + "',Esercizio='" + rowExt.Esercizio + "',ProgSessLavoro=" + rowExt.ProgSessLavoro + ")" , rowExt, {				
+				groupId: "modifyRows"
+			});
+		},
+		
+		addRowToDb: function(row){
+			var oModel = this.getOwnerComponent().getModel("accantonamenti");			
+
+			var that = this;
+			var rowExt = jQuery.extend(true, {}, row);	
+			
+			//imposto i valori di default
 
 			oModel.create("/ElementoSessioneSet" , rowExt, {				
 				success: function(oData, response) {
@@ -447,22 +470,138 @@ sap.ui.define([
 				return;
 			}
 
-			var item = context[0].getObject();			
-			
+			var item = context[0].getObject();	
 			var accantonamentoSelected = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected");
-
 			for (let i = 0;accantonamentoSelected.items && i < accantonamentoSelected.items.length; i++) {
 				const element = accantonamentoSelected.items[i];
 				//if(element.nome === accantonamentoSelected.nome){
 				 if(element === item){
-					accantonamentoSelected.items.splice(i, 1);
+					//accantonamentoSelected.items.splice(i, 1);
+					accantonamentoSelected.items[i].Cancellato = true;					
 					break;
 				} 				
 			}
 
 			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected/items", accantonamentoSelected.items);
-
+			this.getOwnerComponent().getModel("modelHome").refresh(true);
+			//table.getModel().refresh(true)
 			table.removeSelections(true);
+		},
+
+		onSave: function(){
+			var that = this;
+			var rows = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected/items");
+			var rowsStringify = JSON.stringify(rows);
+			var bk = this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/Stringify");
+			var bkNoStringify = JSON.parse(bk);
+			if(rowsStringify !== bk){
+					MessageBox.warning(this.getText("messageDetailSave"), {
+						actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+						onClose: function (oAction) { / * do something * / 
+						if(oAction === "YES"){
+							//ripristino l'odata da string
+							var submitChanges = false;
+							for (let i = 0;rows && i < rows.length; i++) {
+								const element = rows[i];
+								//lt controllo se la riga è stata modificata
+								var rigaOriginale = $.grep(bkNoStringify, function (n) {
+									return n.ProgSessLavoro === element.ProgSessLavoro;
+								});
+								//confronto le due righe in stringa se sono =
+								if(JSON.stringify(element) !== JSON.stringify(rigaOriginale[0])){
+									this.modifyRowToDb(element);
+									submitChanges = true;
+								}
+							}
+
+							if(submitChanges){
+								console.log("faccio la chiamata");
+								//eseguo la chiamata
+								this.executeBatchCall();
+							}
+						}
+					}.bind(this)
+				});						
+					
+			} else{
+				MessageBox.information("Non sono state fatte modifiche");
+			}
+			
+		},
+
+		executeBatchCall: function (){
+
+			var oModel = this.getOwnerComponent().getModel("accantonamenti");	
+			oModel.submitChanges({
+				success: function (batchCallRel) {
+
+					var response = batchCallRel.__batchResponses
+					for (let i = 0; i < response.length; i++) {
+						const res = response[i];
+						if(res.response && response.response.statusCode !== 201 || response.response.statusCode !== 204){
+							console.log("errore batch");
+						}
+					}
+					console.log("success batch call");
+					
+					
+					
+				}.bind(this),
+				error: function (oError) {
+					console.log(oError);
+				}.bind(this)
+			});
+		},
+
+		changeSelectTaglio: function(oEvent){
+			var log = "luca";
+
+			var from = oEvent.getSource().data().From;
+			var selection = oEvent.getSource().getSelectedItem().getBindingContext("modelHome").getObject().VALORE;
+			
+			if(from === "table"){
+				
+			}
+			var path = oEvent.getSource().getParent().getBindingContext("modelHome").getPath();
+			var object = this.getOwnerComponent().getModel("modelHome").getProperty(path);
+
+			var valDefPercent = "0.0";
+			var valDefAnno = "0000";
+			var valDefImporti = "0.00";
+
+
+			switch (selection) {
+				case "LIN":
+					object.PrimoAnno = valDefImporti;
+					object.SecondoAnno = valDefImporti;
+					object.TerzoAnno = valDefImporti;
+					object.Obiettivo = valDefImporti;
+					object.AnnoDa = valDefAnno;
+					object.AnnoA = valDefAnno;
+					break;
+				case "OBC":
+					object.PercPrimoAnno = valDefPercent;
+					object.PercSecondoAnno = valDefPercent;
+					object.PercTerzoAnno = valDefPercent;
+					object.Obiettivo = valDefImporti;
+					object.AnnoDa = valDefAnno;
+					object.AnnoA = valDefAnno;
+					
+					break;
+				case "PLUR":
+					object.PrimoAnno = valDefImporti;
+					object.SecondoAnno = valDefImporti;
+					object.TerzoAnno = valDefImporti;
+					object.PercPrimoAnno = valDefPercent;
+					object.PercSecondoAnno = valDefPercent;
+					object.PercTerzoAnno = valDefPercent;
+					
+					break;
+			
+				default:
+					break;
+			}
+			// recuerp l'oggetto this.getOwnerComponent().getModel("modelHome")
 		},
 
 		onNavToRoot: function () {		
@@ -475,7 +614,8 @@ sap.ui.define([
 			var table = this.getView().byId("TableDetail");
 			var context = table.getSelectedContexts();
 
-			if(context.length === 0){			
+			if(context.length === 0){	
+				MessageBox.warning("Seleziona prima una riga di dettaglio");		
 				return;
 			}
 

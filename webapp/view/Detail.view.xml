@@ -57,8 +57,10 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 							<VBox height="auto"> 
 								<!-- <ScrollContainer height="100%" vertical="true">  -->
 								<Table id="TableDetail" alternateRowColors="true" mode="SingleSelectLeft" popinLayout="GridSmall"
-												items="{ path: 'modelHome>/AccantonamentoSelected/items'}"
-												itemPress="onItemPress"  ><!-- class="sapUiTinyMargin" -->
+												items="{ path: 'modelHome>/AccantonamentoSelected/items', 
+												filters : [{ path : 'Cancellato', operator : 'EQ', value1 : false}],
+												sorter: { path: 'ProgSessLavoro' }}"
+												itemPress="onItemPress"  ><!-- class="sapUiTinyMargin" items="{ path: 'modelHome>/AccantonamentoSelected/items'}" --> 
 									<columns>
 										<Column  width="6rem" >
 											<Text text="{i18n>amm}" class="boldCss"/>
@@ -205,9 +207,13 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 												items="{ path: 'modelHome>/selectCpCs'}">
 													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
 												</Select>
-												<Select textAlign="End" forceSelection="false" width="auto" change="changeSelect" selectedKey="{modelHome>Taglio}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
+												<Select textAlign="End" forceSelection="false" width="auto" change="changeSelectTaglio" selectedKey="{modelHome>Taglio}" editable="{= ${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2'}"
 												items="{ path: 'modelHome>/selectObbLin'}">
 													<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE}"/>
+														<customData>
+															<core:CustomData key="From" value="table" writeToDom="true"/>
+															<core:CustomData key="Model" value="modelHome" writeToDom="true"/>															
+														</customData>
 												</Select>
 												<DatePicker xmlns="sap.m" textAlign="End" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoDa}" editable="{= ${modelHome>Taglio} === 'PLUR' &amp;&amp; (${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2')}" />										
 												<DatePicker xmlns="sap.m" textAlign="End" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoA}"  editable="{= ${modelHome>Taglio} === 'PLUR'}" />
@@ -282,6 +288,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 						<core:CustomData key="Stato" value="{modelHome>/AccantonamentoSelected/Stato}" writeToDom="true"/>
 					</customData>
 				</Button>
+				<Button text="Salva" press="onSave" type="Emphasized" visible="true"/>
 			</OverflowToolbar>
 		</footer>
 	</Page>
