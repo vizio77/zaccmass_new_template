@@ -103,7 +103,7 @@
 					</Select>
 					<Label text="{i18n>obbLinLB}" required="true"/>
 					
-					<Select  forceSelection="false" width="70%" change="changeSelect" selectedKey="{modelHome>/formRow/Taglio}"
+					<Select  forceSelection="false" width="70%" change="changeSelectTaglio" selectedKey="{modelHome>/formRow/Taglio}"
 							items="{ path: 'modelHome>/selectObbLin'}">
 							<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE_ESTESA}"/>
 					</Select>

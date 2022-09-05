@@ -643,16 +643,17 @@ sap.ui.define([
 		},
 
 		changeSelectTaglio: function(oEvent){
-			var log = "luca";
-
+			
+			var object;
 			var from = oEvent.getSource().data().From;
 			var selection = oEvent.getSource().getSelectedItem().getBindingContext("modelHome").getObject().VALORE;
 			
 			if(from === "table"){
-				
-			}
-			var path = oEvent.getSource().getParent().getBindingContext("modelHome").getPath();
-			var object = this.getOwnerComponent().getModel("modelHome").getProperty(path);
+				var path = oEvent.getSource().getParent().getBindingContext("modelHome").getPath();
+				object = this.getOwnerComponent().getModel("modelHome").getProperty(path);
+			}		
+
+			object = this.getOwnerComponent().getModel("modelHome").getProperty("/formRow");
 
 			var valDefPercent = "0.0";
 			var valDefAnno = "0000";
@@ -690,6 +691,8 @@ sap.ui.define([
 				default:
 					break;
 			}
+
+			if(from === "table")this.getOwnerComponent().getModel("modelHome").setProperty("/formRow", object);
 			// recuerp l'oggetto this.getOwnerComponent().getModel("modelHome")
 		},
 
