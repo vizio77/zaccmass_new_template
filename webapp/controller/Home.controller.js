@@ -1,15 +1,16 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
+	"zsap/com/r3/cobi/s4/accmass/controller/BaseController",
+	// "sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"../model/formatter",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/core/Fragment",
 	"sap/m/MessageBox"
-], function(Controller, JSONModel, formatter, Filter, FilterOperator, Fragment,MessageBox) {
+], function(BaseController, JSONModel, formatter, Filter, FilterOperator, Fragment,MessageBox) {
 	"use strict";
 
-	return Controller.extend("zsap.com.r3.cobi.s4.accmass.controller.Home", {
+	return BaseController.extend("zsap.com.r3.cobi.s4.accmass.controller.Home", {
 		formatter: formatter,
 		onInit: async function() {
 

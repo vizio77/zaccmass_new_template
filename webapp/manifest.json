@@ -25,22 +25,30 @@
           "odataVersion": "2.0"
         }
       },
-			"accantonamenti": {
-				"uri": "/sap/opu/odata/sap/ZSS4_COBI_ACCANTONAM_FORM_SRV/",
-				"type": "OData",
-				"settings": {
-					"odataVersion": "2.0",
-					"localUri": "localService/accantonamenti.xml"
-				}
-			},
-			"odataSH": {
-				"uri": "/sap/opu/odata/sap/ZSS4_CO_GEST_TIPOLOGICHE_SRV/",
-				"type": "OData",
-				"settings": {
-					"odataVersion": "2.0",
-					"localUri": "localService/odataSH.xml"
-				}
+		"accantonamenti": {
+			"uri": "/sap/opu/odata/sap/ZSS4_COBI_ACCANTONAM_FORM_SRV/",
+			"type": "OData",
+			"settings": {
+				"odataVersion": "2.0",
+				"localUri": "localService/accantonamenti.xml"
 			}
+		},
+		"odataSH": {
+			"uri": "/sap/opu/odata/sap/ZSS4_CO_GEST_TIPOLOGICHE_SRV/",
+			"type": "OData",
+			"settings": {
+				"odataVersion": "2.0",
+				"localUri": "localService/odataSH.xml"
+			}
+		},
+		"sapHanaS2Notif": {
+    	    "uri": "/sap/opu/odata/sap/ZSS4_GESTIONE_NOTIFICHE_SRV/",
+    	    "type": "OData",
+    	    "settings": {
+    	        "odataVersion": "2.0",
+    	        "annotations": []
+    	    }
+    	}
     }
   },
   "sap.ui": {
@@ -101,6 +109,9 @@
 			,
 			"accantonamenti": {
 				"dataSource": "accantonamenti"
+			},
+			"sapHanaS2Notif": {
+				"dataSource": "sapHanaS2Notif"
 			}
     },
     "resources": {
