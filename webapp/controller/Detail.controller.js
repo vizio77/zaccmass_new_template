@@ -108,7 +108,7 @@ sap.ui.define([
 			var arrayStati = ["1","2","3","4","5","6"];
 			
 			if(arrayStati.indexOf(statoDiPartenza) !== -1){
-				this.cambiaStato((parseInt(statoDiPartenza) + 1).toString(), sottoStrumento);
+				this.cambiaStato((parseInt(statoDiPartenza) + 1).toString(), sottoStrumento, );
 			}else{
 				//inserire dettaglio errore
 				MessageBox.warning(this.getText("cambioStatoKo"));
@@ -130,6 +130,15 @@ sap.ui.define([
 
 			accantonamento.Stato = Stato;
 			accantonamento.statoWf = statoNuovo[0].Descrizione;
+
+
+			var titolo = "Avanzamento Aprovazione Accantonamenti";
+			var destinatario = "L.TARTAGGIA";
+			var messaggio = "La sessione lavoro " + accantonamento.NomeSessione + " dell'accantonamento è passata in stato: " + statoNuovo[0].Descrizione
+			//var messaggio = this.getText("textNotif", [accantonamento.NomeSessione,statoNuovo[0].Descrizione]);
+
+			
+			await this.onPressSend(titolo, destinatario, messaggio);
 
 			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected", accantonamento);
 			
@@ -401,6 +410,9 @@ sap.ui.define([
 			});
 
 
+		},
+		onMenuAction: function(oEvent){
+			console.log("ciaoRenzo");
 		},
 
 		onPressMatchCodeFragment: function (oEvent) {
@@ -764,8 +776,10 @@ sap.ui.define([
 					
 		},
 
-		getText: function(label) {
-
+		getText: function(label, array) {
+			if(array && array.length > 0){
+				return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(label, array);
+			}
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(label);
 		},
 

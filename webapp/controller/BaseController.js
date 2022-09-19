@@ -13,7 +13,9 @@ sap.ui.define([
             this.getOwnerComponent().getRouter().getTargets().display("PageFail", message);
         },
 
-		onPressSend: async function() {
+		
+
+		onPressSend: async function(titolo, destinatario, messaggio ) {
 
 			/* var oTupla = {
 				Titolo: this.getView().byId("idTitoloNotifica").getValue(),
@@ -23,7 +25,7 @@ sap.ui.define([
 				TypeVersion: "1.0",
 				Oggetto: this.getView().byId("idTitoloNotifica").getValue(),
 				Semobj: "DASSWF"				
-			}; */
+			}; 
 			var oTupla = {
 				Titolo: "Avanzamento Aprovazione Accantonamenti",
 				Destinatario: "L.TARTAGGIA", //this.getView().byId("idUtenza").getValue().toUpperCase()
@@ -31,6 +33,15 @@ sap.ui.define([
 				TypeKey: "TESTMESS",
 				TypeVersion: "1.0",
 				Oggetto: "Avanzamento Aprovazione Accantonamenti",
+				Semobj: "DASSWF"				
+			};*/
+			var oTupla = {
+				Titolo:  titolo,
+				Destinatario: destinatario, //this.getView().byId("idUtenza").getValue().toUpperCase()
+				Messaggio: messaggio,
+				TypeKey: "TESTMESS",
+				TypeVersion: "1.0",
+				Oggetto: titolo,
 				Semobj: "DASSWF"				
 			};
 
