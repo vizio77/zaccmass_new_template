@@ -13,6 +13,38 @@ sap.ui.define([
             this.getOwnerComponent().getRouter().getTargets().display("PageFail", message);
         },
 
+		writeAndRetrive: async function(item){
+
+			var accantonamentoSelected = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected");
+			var payload = {
+				"SchedaSac" : "GESTIONE",
+				"Zuser": "L.TARTAGGIA",
+				"Esercizio": item.Esercizio,
+				"Stato": parseInt(accantonamentoSelected.Stato),
+				"ProgSessLavoro" : parseInt(item.ProgSessLavoro),
+				"NomeSessione" : item.NomeSessione,
+				"SemObj" : "ACCMASS"
+				};
+
+			return new Promise((resolve, reject) => {
+			//lt creo il payload
+				var oModel = this.getOwnerComponent().getModel("accantonamenti");
+				var that = this;
+				oModel.create("/UrlSacSet", payload, {
+					success: function(oData, response) {
+
+						//salvo il link che mi ritorna dalla funzione
+						that.creaModelloLinkSAC(oData.Url);
+						resolve();
+					},
+					error: function(error) {
+						console.log(error);	
+						reject(error);
+					}
+				});
+			});
+		},
+
 		
 
 		onPressSend: async function(titolo, destinatario, messaggio ) {

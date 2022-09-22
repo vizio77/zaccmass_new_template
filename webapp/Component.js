@@ -3,8 +3,10 @@ sap.ui.define([
 	"sap/ui/Device",
 	"zsap/com/r3/cobi/s4/accmass/model/models",
 	"sap/ui/model/json/JSONModel",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
 	"sap/m/MessageBox"
-], function(UIComponent, Device , models, JSONModel, MessageBox) {
+], function(UIComponent, Device , models, JSONModel, Filter, FilterOperator,MessageBox) {
 	"use strict";
 
 	return UIComponent.extend("zsap.com.r3.cobi.s4.accmass.Component", {
@@ -34,7 +36,7 @@ sap.ui.define([
 			this.setModel(new JSONModel({}),"shModel");
 			this.initModel();
 			//console.log("entro in sh")
-			//this.initSH();
+			this.initSH();
 			this.initAccantonamenti();
 		},
 		
@@ -72,22 +74,19 @@ sap.ui.define([
 			odataSh.setDeferredGroups(scpDeferredGroups);
 			var that = this;
 			var entityArray = [
-				"/ZES_AMMINISTRAZIONE_SET",
-				"/ZES_CATEGORIA_SET",
-				"/ZES_ECONOMICA2_SET",
-				"/ZES_ECONOMICA3_SET",
-				"/ZES_MISSIONE_SET",
-				"/ZES_PROGRAMMA_SET",				
-				"/ZES_AZIONE_SET"
-				/* ,
-				"/ZES_PG_SET",
-				"/ZES_CAPITOLO_SET"	 */			
+				"/ZES_CAL_FIN_SET" // anno fase 
 			];
 			
 			for (var i=0; i<entityArray.length; i++) {
 				var entity = entityArray[i];
 				var urlParam = {};
-				odataSh.read(entity,	  {groupId: "scpGroup", urlParameters: urlParam });
+				var aFilters = []; 
+				if(entity === "/ZES_CAL_FIN_SET") {
+					var year = new Date().getFullYear() + 1;
+					aFilters.push(new Filter({path: "ANNO" ,operator: FilterOperator.EQ,	value1: year.toString()}));
+				}		
+					odataSh.read(entity,	  {groupId: "scpGroup", urlParameters: urlParam, filters: aFilters });
+		
         	}
         	
 			//console.log("provo la chiamata")
@@ -152,7 +151,7 @@ sap.ui.define([
 				accantonamenti.read(entity,	  {groupId: "scpGroup", urlParameters: urlParam });
         	}
         	
-			//console.log("provo la chiamata")
+		
 
 			accantonamenti.submitChanges({
 				success: function (batchCallRel) {
