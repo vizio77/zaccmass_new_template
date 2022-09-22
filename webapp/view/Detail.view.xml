@@ -129,40 +129,6 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 									<items>
 										<ColumnListItem >
 											<cells>
-												<MenuButton text="{i18n>aggiungiDiametro}" defaultAction="onDefaultAction" useDefaultActionOnly="true"
-													enabled="{generalModel>/Editable/editaPompa}">
-													<menu>
-														<Menu itemSelected="onMenuAction">
-															<items>
-																<MenuItem text="Nuovo" icon="sap-icon://add">
-																	<customData>
-																		<core:CustomData key="tipo" value="nuovo" writeToDom="true"/>
-																	</customData>
-																</MenuItem>
-																<MenuItem text="Interpolato" icon="sap-icon://combine">
-																	<customData>
-																		<core:CustomData key="tipo" value="combinato" writeToDom="true"/>
-																	</customData>
-																</MenuItem>
-																<MenuItem text="Per massiva interp." icon="sap-icon://combine" visible="{= ${generalModel>/Multistage} === false}">
-																	<customData>
-																		<core:CustomData key="tipo" value="combinatomassiva" writeToDom="true"/>
-																	</customData>
-																</MenuItem>
-																<MenuItem text="Per affinità" icon="sap-icon://two-keys">
-																	<customData>
-																		<core:CustomData key="tipo" value="affinita" writeToDom="true"/>
-																	</customData>
-																</MenuItem>
-																<MenuItem text="Per massiva affinità" icon="sap-icon://two-keys" visible="{= ${generalModel>/Multistage} === false}">
-																	<customData>
-																		<core:CustomData key="tipo" value="affinitamassiva" writeToDom="true"/>
-																	</customData>
-																</MenuItem>
-															</items>
-														</Menu>
-													</menu>
-												</MenuButton>
 												<Input textAlign="Right" value="{modelHome>Amministrazione}" valueHelpRequest="onPressMatchCodeFragment" showValueHelp="true" editable="{= ${visibilityModel>/stato} === '1' }"> <!-- || ${visibilityModel>/stato} === '2' -->
 													<customData>
 														<core:CustomData key="NameSH" 		value="HelpValueAmm"			writeToDom="false"/>	

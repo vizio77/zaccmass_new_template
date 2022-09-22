@@ -137,8 +137,8 @@ sap.ui.define([
 			var messaggio = "La sessione lavoro " + accantonamento.NomeSessione + " dell'accantonamento è passata in stato: " + statoNuovo[0].Descrizione
 			//var messaggio = this.getText("textNotif", [accantonamento.NomeSessione,statoNuovo[0].Descrizione]);
 
-			
-			await this.onPressSend(titolo, destinatario, messaggio);
+			//lt commento l'invio delle notifiche 
+			//await this.onPressSend(titolo, destinatario, messaggio);
 
 			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected", accantonamento);
 			
@@ -714,7 +714,54 @@ sap.ui.define([
 					
 		},
 
-		onNavToGestione: function () {	
+		writeAndRetrive: async function(item){
+
+			var accantonamentoSelected = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected");
+
+
+			var payload = {
+				"SchedaSac" : "GESTIONE",
+				"Zuser": "L.TARTAGGIA",
+				"Esercizio": item.Esercizio,
+				"Stato": parseInt(accantonamentoSelected.Stato),
+				"ProgSessLavoro" : parseInt(item.ProgSessLavoro),
+				"NomeSessione" : item.NomeSessione,
+				"SemObj" : "ACCMASS"
+				};
+
+			return new Promise((resolve, reject) => {
+			//lt creo il payload
+			
+
+				var oModel = this.getOwnerComponent().getModel("accantonamenti");
+				var that = this;
+				oModel.create("/UrlSacSet", payload, {
+					success: function(oData, response) {
+
+						//salvo il link che mi ritorna dalla funzione
+						that.creaModelloLinkSAC(oData.Url);
+						resolve();
+					},
+					error: function(error) {
+						console.log(error);	
+						reject(error);
+					}
+				});
+
+			});
+
+
+		},
+
+		creaModelloLinkSAC: function (url) {
+            var oModel = new JSONModel({
+                gestioneSac : url
+            });
+            this.getOwnerComponent().setModel(oModel, "iframe");
+            
+        },
+
+		onNavToGestione: async function  () {	
 			var table = this.getView().byId("TableDetail");
 			var context = table.getSelectedContexts();
 
@@ -724,6 +771,9 @@ sap.ui.define([
 			}
 
 			var itemSelected = context[0].getObject();
+
+			
+			var scrittura = await this.writeAndRetrive(itemSelected);
 
 			
 			
