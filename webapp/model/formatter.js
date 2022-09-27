@@ -71,6 +71,34 @@ sap.ui.define(["sap/ui/core/format/NumberFormat","sap/ui/core/format/DateFormat"
 			}
 			return oFloatFormatReturn;
 		},
+		formatterNumberOnInit: function(sNum) {
+			var oLocale = new sap.ui.core.Locale("it-IT");
+			var oFormatOptions = {
+				"minIntegerDigits": 1,
+				"maxIntegerDigits": 20,
+				"minFractionDigits": 2,
+				"maxFractionDigits": 2
+			};
+			var oFloatFormat = NumberFormat.getFloatInstance(oFormatOptions, oLocale);
+			var oFloatFormatReturn;
+			if (sNum.includes(".")) {
+
+				/* var aTemp = sNum.split(".");
+				var sIntergerPart = aTemp[0].replace(".", "");
+				var sDecimalPart = aTemp[1];
+				if (sIntergerPart === "") {
+					sIntergerPart = "0";
+				}
+				if (sDecimalPart === "") {
+					sDecimalPart = "0";
+				}
+				oFloatFormatReturn = sIntergerPart + "." + sDecimalPart; */
+				oFloatFormatReturn = oFloatFormat.format(sNum);
+			} else {
+				oFloatFormatReturn = oFloatFormat.format(sNum);
+			}
+			return oFloatFormatReturn;
+		},
 		iconWf: function (valore) {
 			if (valore === 1) {
 				return "sap-icon://favorite";

@@ -69,6 +69,23 @@ sap.ui.define([
         
         },
 		
+		modifyNumber: function(array){
+			var arr = [];
+			for (let i = 0; i < array.length; i++) {
+				var row = array[i];
+				row.Obiettivo 	= formatter.formatterNumberOnInit(row.Obiettivo);
+
+				row.PrimoAnno 	= formatter.formatterNumberOnInit(row.PrimoAnno);
+				row.SecondoAnno = formatter.formatterNumberOnInit(row.SecondoAnno);
+				row.TerzoAnno 	= formatter.formatterNumberOnInit(row.TerzoAnno);
+
+				row.PercPrimoAnno 	= formatter.formatterNumberOnInit(row.PercPrimoAnno);
+				row.PercSecondoAnno = formatter.formatterNumberOnInit(row.PercSecondoAnno);
+				row.PercTerzoAnno 	= formatter.formatterNumberOnInit(row.PercTerzoAnno);
+				arr.push(row);
+			}
+			return arr;
+		},
 
 		initView: function(sessione){
 			var accantonamento = sessione;
@@ -79,7 +96,12 @@ sap.ui.define([
 			arr = arr.concat(arr);
 			arr = arr.concat(arr);
 			arr = arr.concat(arr); */
+
+
+			arr = this.modifyNumber(arr);
 			accantonamento.items = arr;
+			
+
 			var appModelStringify      = JSON.stringify(arr);
 			this.getOwnerComponent().getModel("accantonamentiModel").setProperty("/Stringify", appModelStringify);
 			var listaStati = $.grep(this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/TipoStatiSet"), function (n, i) {
@@ -366,6 +388,8 @@ sap.ui.define([
 				number = number.replace(",",".");
 			}else if(number.indexOf(",") !== -1 && parseFloat(number) > 0){
 				number = number.replace(",",".");
+			}else if(parseFloat(number) === 0){
+				number = "0.00";
 			}
 
 			return number;

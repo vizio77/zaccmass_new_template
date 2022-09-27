@@ -218,7 +218,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 												<DatePicker xmlns="sap.m" textAlign="End" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoDa}" editable="{= ${modelHome>Taglio} === 'PLUR' &amp;&amp; (${visibilityModel>/stato} === '1' || ${visibilityModel>/stato} === '2')}" />										
 												<DatePicker xmlns="sap.m" textAlign="End" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoA}"  editable="{= ${modelHome>Taglio} === 'PLUR'}" />
 												<Input width="auto" textAlign="Right" value="{modelHome>Obiettivo}"  enabled="{= ${modelHome>Taglio} === 'PLUR'}" change=".onChangeNumberFormat($event, 'modelHome')"/><!-- .checkInput($event, 'num')" -->
-												
+													<!-- { parts: [ {path: 'modelHome>PrimoAnno'}], formatter: '.formatter.formatterNumberOnInit' } -->
 												<Input width="auto" textAlign="Right" value="{modelHome>PrimoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
 												<Input width="auto" textAlign="Right" value="{modelHome>SecondoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
 												<Input width="auto" textAlign="Right" value="{modelHome>TerzoAnno}"  editable="{= ${modelHome>Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
