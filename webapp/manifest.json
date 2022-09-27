@@ -16,16 +16,7 @@
       "toolsId": "1c9c1f5f-09ad-44aa-88f6-b17c37070482"
     },
     "dataSources": {
-      "sapHanaS2": {
-        "uri": "/sap/opu/odata/sap/ZSS4_R3_FORM_003_SRV/",
-        "type": "OData",
-        "settings": {
-          "annotations": [],
-          "localUri": "localService/metadata.xml",
-          "odataVersion": "2.0"
-        }
-      },
-		"accantonamenti": {
+      	"accantonamenti": {
 			"uri": "/sap/opu/odata/sap/ZSS4_COBI_ACCANTONAM_FORM_SRV/",
 			"type": "OData",
 			"settings": {
@@ -48,7 +39,16 @@
     	        "odataVersion": "2.0",
     	        "annotations": []
     	    }
-    	}
+    	},
+		"sapHanaS2": {
+			"uri": "/sap/opu/odata/sap/ZSS4_COBI_ALV_SRV/",
+			"type": "OData",
+			"settings": {
+			  "annotations": [],
+			  "localUri": "localService/metadata.xml",
+			  "odataVersion": "2.0"
+			}
+		  }
     }
   },
   "sap.ui": {

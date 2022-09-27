@@ -2,33 +2,60 @@
 	xmlns="sap.m"
 	xmlns:c="sap.ui.core"
     xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
 >
-<Dialog  title="{i18n>cercaSottostrumento}" contentWidth="50%" contentHeight="50%">
+<Dialog  title="{i18n>cercaSottostrumento}" contentWidth="80%" contentHeight="auto" id="HVSottostrumento">
     <content>
         <f:SimpleForm id="formInserimentoSottoStrumento" editable="true" singleContainerFullSize="false" adjustLabelSpan="false"
-            layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" emptySpanXL="2" emptySpanL="0" emptySpanM="2"
+            layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" emptySpanXL="2" emptySpanL="0" emptySpanM="2"
             emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1">
-            <f:content>               
-                <Label text="{i18n>TipoSottoStr}" />
-				<Input value="{associaSottostrumento>/tipologia}" width="70%" showValueHelp="false" editable="false"/> 
-                <Label text="{i18n>esercizio}" />
-                <Input  value="{associaSottostrumento>/esercizio}" width="70%" showValueHelp="false" editable="false"/>            
-                <Label text="{i18n>progressivo}" />
-				<Input value="{associaSottostrumento>/progressivo}" width="70%"/>                
-              
+            <f:content>
+                <Label text="{i18n>formSottostrumento}" labelFor="idformSottoStr"/>
+				<Input id="idformSottoStr" value="{modelHome>/formSottostrumento/codice_sstr}" width="70%" showValueHelp="false"/>
+                <Label text="{i18n>TipoSottoStr}" labelFor="idformStTipologia" visible="false"/>
+				<!-- <Input id="idformStTipologia" value="{modelHome>/formSottostrumento/tipologia}" width="70%" showValueHelp="true"/> -->
+                <Select id="idformStTipologia"  width="70%"  selectedKey="{modelHome>/formSottostrumento/tipologia}" visible="false" items="{
+                    path: 'modelHome>/formSottostrumento/tipologieSet/'
+                }" change=".onChangeSelect($event)">
+                    <c:Item key="{modelHome>Tipologia}" text="{modelHome>DescrTipologia}" />
+                </Select>
+                <Label text="{i18n>EspContabile}" labelFor="idformStEspCont"/>
+                    <!-- value="{modelHome>/formSottostrumento/esposizione_contabile}" -->
+				<Select id="idformStEspCont"  width="70%"  selectedKey="{modelHome>/formSottostrumento/esposizione_contabile}"  editable="false"
+                    items="{path:'modelHome>/formSottostrumento/esposizione_contabileSet/'}" forceSelection="false" change=".onChangeSelect($event)">
+                    <c:Item key="{modelHome>Esposizione}-{modelHome>Progr}" text="{modelHome>DescrEsposizione}" />
+                </Select>
+                <Label text="{i18n>descrizione}" labelFor="idFormStDescr"/>
+				<Input id="idFormStDescr" value="{modelHome>/formSottostrumento/descrizione_sstr}" width="70%"/>
+                <Label text="{i18n>Visibilita}" labelFor="idFormStVisibilita" visible="false"/>
+                <!-- value="{modelHome>/formSottostrumento/visibilita}" -->
+				<Select id="idFormStVisibilita" selectedKey="{modelHome>/formSottostrumento/visibilita}" width="70%" visible="false" 
+                    items="{
+                        path:'modelHome>/formSottostrumento/visibilitaSet/'}" forceSelection="false" change=".onChangeSelect($event)">
+                    <c:Item key="{modelHome>Reale}" text="{modelHome>DescrReale}" />
+                </Select>
+                <Label text="{i18n>authgiust}" labelFor="id_auth_giust" visible="false"/>
+                <Input id="id_auth_giust" width="70%" value="{modelHome>/formSottostrumento/auth_giust}" visible="false">
+                
+                </Input>
+                <Toolbar visible="false"/>
+                
             </f:content>
         </f:SimpleForm>
     </content>
-    <!-- <beginButton>
-        <Button press="onClose" type="Emphasized" text="{i18n>close}"></Button>
-    </beginButton>
-    <endButton>
-        <Button press="onPressConfSottoStrumento" type="Emphasized" text="{i18n>conf}"/>
-    </endButton> -->
     <buttons>
-        <Button press="onClose" type="Emphasized" text="{i18n>close}"></Button>
-        <Button press="onClose" type="Emphasized" text="{i18n>Resetta}"></Button>
-        <Button press="onSottostrumento" type="Emphasized" text="{i18n>Cerca}"/>
+        <Button press="onClose" type="Emphasized" text="{i18n>close}">
+            <customData>
+                <c:CustomData key="resetFiltri" value="formSottostrumento"/>
+                <c:CustomData key="HVSottostrumento" value="oDialogHVSottoStrumento"/>
+            </customData>
+        </Button>
+        <Button press="onResetVHSstr" type="Emphasized" text="{i18n>Resetta}">
+            <customData>
+                <c:CustomData key="resetFiltri" value="formSottostrumento"/>
+            </customData>
+        </Button>
+        <Button press="onPressConfSottoStrumento" type="Emphasized" text="{i18n>Cerca}"/>
     </buttons>
 </Dialog>
 </c:FragmentDefinition>

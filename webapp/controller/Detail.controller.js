@@ -106,9 +106,28 @@ sap.ui.define([
 			var statoDiPartenza = oEvent.getSource().data().Stato;
 			!isNaN(statoDiPartenza) ? statoDiPartenza = statoDiPartenza.toString() : statoDiPartenza;
 			var arrayStati = ["1","2","3","4","5","6"];
+
+			var that = this;
 			
 			if(arrayStati.indexOf(statoDiPartenza) !== -1){
-				this.cambiaStato((parseInt(statoDiPartenza) + 1).toString(), sottoStrumento, );
+				sap.m.MessageBox.show(
+					this.getText("bodyAvanzamentoStato"), {
+						icon: sap.m.MessageBox.Icon.QUESTION,
+						title: this.getText("headerAvanzamentoStato"),
+						actions: ["Ok","Annulla"],
+						onClose: function (sButton) {
+							if (sButton === "Ok") {
+								//lt forzo il cambio stato e gli mando anche il sottostrumento
+								that.cambiaStato((parseInt(statoDiPartenza) + 1).toString(), sottoStrumento, );
+								
+								
+							} else {
+								return;
+							}
+						},
+						styleClass: "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer"
+					}
+				);
 			}else{
 				//inserire dettaglio errore
 				MessageBox.warning(this.getText("cambioStatoKo"));
@@ -156,6 +175,8 @@ sap.ui.define([
 
 				this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected",accantonamentoSelected);
 				this.getOwnerComponent().getModel("visibilityModel").setProperty("/STAC", true);
+				//chiudo il popup
+				this.onHelpAssociaSTACClose();
 
 
 			}
@@ -794,6 +815,36 @@ sap.ui.define([
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(label);
 		},
 
+		onHelpAssociaSTAC: function () {
+			//this.getOwnerComponent().setModel(new JSONModel({esercizio : 2023, tipologia: "STAC"}), "associaSottostrumento");
+			if(!this.oDialogHVSottoStrumentoSTAC) {
+				
+				Fragment.load({
+					name:"zsap.com.r3.cobi.s4.accmass.view.fragment.HelpValueAssociaSTAC",
+					controller: this
+				}).then(oDialog => {
+					this.oDialogHVSottoStrumentoSTAC = oDialog;
+					this.getView().addDependent(oDialog);
+					this.oDialogHVSottoStrumentoSTAC.open();
+				})
+			} else {
+				this.oDialogHVSottoStrumentoSTAC.open();
+			}
+		},
+
+		onHelpAssociaSTACReset:function (oEvent){
+			this.getOwnerComponent().setModel(new JSONModel({}), "associaSottostrumento");
+
+			//this.oDialogHVSottoStrumentoSTAC.close();
+		},
+		
+
+		onHelpAssociaSTACClose:function (oEvent){
+
+			this.oDialogHVSottoStrumentoSTAC.close();
+		},
+		
+
 		onHelpValueSottoStrumento: function () {
 			this.getOwnerComponent().setModel(new JSONModel({esercizio : 2023, tipologia: "STAC"}), "associaSottostrumento");
 			if(!this.oDialogHVSottoStrumento) {
@@ -803,91 +854,351 @@ sap.ui.define([
 					controller: this
 				}).then(oDialog => {
 					this.oDialogHVSottoStrumento = oDialog;
-					this.getView().addDependent(oDialog);
-					this.oDialogHVSottoStrumento.open();
-				})
+                        this.getView().addDependent(oDialog);
+                        this.oDialogHVSottoStrumento.open();
+                        let oModel = this.getOwnerComponent().getModel("sapHanaS2");
+                        let modelHome = this.getView().getModel("modelHome");
+						//lt fix setto la property altrimenti non trova nulla
+						modelHome.setProperty("/formSottostrumento", {});
+                        this.initDataDomSStr()
+                        // oModel.read("/Gest_PosFin_SH_TiesSet",{
+                        //     filters:[ new Filter("Anno", FilterOperator.EQ, modelHome.getProperty("/formSottostrumento/esercizio")),
+                        //               new Filter("Fase", FilterOperator.EQ, "DLB")],
+                        //     success:  (oData) => {
+                        //         oData.results.unshift({TipoEsposizione: null, Descr: null, Fase: null, Anno: null})
+                        //         modelHome.setProperty("/formSottostrumento/esposizione_contabileSet", oData.results)
+                        //     }
+                        // })
+                        oModel.read("/Gest_PosFin_SH_AmministrazioniSet",{
+                            filters:[new Filter("Fikrs", FilterOperator.EQ, "S001"),
+                                     new Filter("Anno", FilterOperator.EQ, modelHome.getProperty("/formSottostrumento/esercizio")),
+                                     new Filter("Fase", FilterOperator.EQ, "DLB")],
+                            success:  (oData) => {
+                                modelHome.setProperty("/formSottostrumento/dominio_sstrSet", oData.results)
+                            }
+                        })
+                        oModel.read("/TipologiaEsposizioneVisibilitaSet",{
+                            // urlParameters: {
+                            //     $expand: 'ToSHEsposizione,ToSHTipologia,ToSHVisibilita'
+                            // },
+                            filters:[new Filter("Anno", FilterOperator.EQ, "2023"),
+                                    new Filter("Fase", FilterOperator.EQ, "DLB"),
+                                    new Filter("Fikrs", FilterOperator.EQ, "S001")
+                                    // new Filter("TipoSstr", FilterOperator.EQ, "03"),
+                                    // new Filter("TipoEsposizione", FilterOperator.EQ, "2"),
+                                    // new Filter("Reale", FilterOperator.EQ, "R")
+                                ],
+                            success:  (oData) => {
+                                //debugger
+                                //Lista Tipologie
+                                let aTipologia = this.__removeDuplicate(oData.results, "tipologia")
+                                aTipologia.unshift({Esposizione: null, DescrEsposizione: "", Fase: null, Anno: null})
+                                modelHome.setProperty("/formSottostrumento/tipologieSet", aTipologia)
+                                // oData.results[0].ToSHTipologia.results.unshift({ TipoSstr: null, TipoSstrDescr: ""})
+                                // modelHome.setProperty("/formSottostrumento/tipologieSet", oData.results[0].ToSHTipologia.results)
+                                //lista esposizione contabile
+                                let aEsposizioneContabile = this.__removeDuplicate(oData.results, "esposizione")
+                                aEsposizioneContabile.unshift({Esposizione: null, DescrEsposizione: "", Fase: null, Anno: null})
+                                modelHome.setProperty("/formSottostrumento/esposizione_contabileSet", aEsposizioneContabile)
+                                // oData.results[0].ToSHEsposizione.results.unshift({TipoEsposizione: null, TipoEsposizioneDescr: "", Fase: null, Anno: null})
+                                // modelHome.setProperty("/formSottostrumento/esposizione_contabileSet", oData.results[0].ToSHEsposizione.results)
+                                //Lista Visibilità
+                                let aVisibilita = this.__removeDuplicate(oData.results, "visibilita")
+                                aVisibilita.unshift({Reale: null, DescrReale: "", Fase: null, Anno: null})
+                                modelHome.setProperty("/formSottostrumento/visibilitaSet", aVisibilita)
+
+                                modelHome.setProperty("/formSottostrumento/esposizione_contabile" , "0-");
+                                // oData.results[0].ToSHVisibilita.results.unshift({Fase: null, Anno: null})
+                                // modelHome.setProperty("/formSottostrumento/visibilitaSet", oData.results[0].ToSHVisibilita.results)
+                            },
+                            error: function (res) {
+                                debugger
+                            }
+                        })
+                    })
 			} else {
 				this.oDialogHVSottoStrumento.open();
 			}
 		},
-		
-		onSottostrumento: function () {
-			var oModel = this.getOwnerComponent().getModel("sapHanaS2");
-			var Dateto = new Date(new Date().getFullYear(), 11, 31);
-			Dateto.setHours(2);
-			var sottostrumentiModel = new JSONModel();
-			var oView = this.getView();
-			//filtri standard
-			var _filters = [
-				new Filter({
-					path: "Dateto",
-					operator: FilterOperator.EQ,
-					value1: Dateto
-				}),
-				new Filter({
-					path: "Fase",
-					operator: FilterOperator.EQ,
-					value1: "DLB"
-				}),
-				new Filter({
-					path: "TestoTipo",
-					operator: FilterOperator.EQ,
-					value1: "VLV"
-				})
-			];
-			//filtri in da form di sottostrumento
-			let modelHome = this.getOwnerComponent().getModel("modelHome") //.getProperty("/formSottostrumento")
-			if(modelHome.getProperty("/formSottostrumento/esposizione_contabile")){
-				_filters.push(new Filter({
-					path: "StatEsposizione",
-					operator: FilterOperator.EQ,
-					value1: modelHome.getProperty("/formSottostrumento/esposizione_contabile")
-				}),)
-			}
-			if(modelHome.getProperty("/formSottostrumento/sottostrumento")){
-				_filters.push(new Filter({
-					path: "IdSstr",
-					operator: FilterOperator.EQ,
-					value1: modelHome.getProperty("/formSottostrumento/sottostrumento")
-				}),)
-			}
-			if(modelHome.getProperty("/formSottostrumento/descrizione")){
-				_filters.push(new Filter({
-					path: "DescrEstesa",
-					operator: FilterOperator.EQ,
-					value1: modelHome.getProperty("/formSottostrumento/descrizione")
-				}),)
-			}
-			//
-			oModel.read("/Gest_PosFin_SottostrumentoSet", {
-				filters: _filters,
-				success: function(oData, response) {
-					oData.results = oData.results.map((item) => {
-						item.FkEseStrAnnoEse = Number(item.FkEseStrAnnoEse) + 1
-						item.EseAnnoEse = Number(item.EseAnnoEse) + 1
-						item.Stato = "Aperto"
-						return item
-					})
-					sottostrumentiModel.setData(oData.results);
-					sottostrumentiModel.setSizeLimit(2000);
-					oView.setModel(sottostrumentiModel, "sottostrumentiModel");
-				},
-				error: function(e) {
 
-				}
-			});
+		initDataDomSStr: function () {
+			let modelHome = this.getView().getModel("modelHome")
+			let modelHana = this.getOwnerComponent().getModel("sapHanaS2")
+
+			modelHana.read("/Gest_SH1_TitoloSet", {
+			   filters: [new Filter("Fase", FilterOperator.EQ, "DLB"),
+						 new Filter("Anno", FilterOperator.EQ, this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/esercizio"))],
+			   success: (oData, res) => {
+				   //debugger
+				   this.__setPropertyFiltriTitoloDomSStr(oData)
+			   },
+			   error: (err) => {
+				   //debugger
+			   }
+			})
+			modelHana.read("/Gest_SH1_MissioneSet", {
+			   filters: [new Filter("Fase", FilterOperator.EQ, "DLB"),
+						 new Filter("Anno", FilterOperator.EQ, this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/esercizio"))],
+			   success: (oData, res) => {
+				   //debugger
+				   this.__setPropertyFiltriMissioneDomSStr(oData)
+			   },
+			   error: (err) => {
+				   //debugger
+			   }
+			})			
+
+	   	},
+
+		
+		
+		
+		onPressConfSottoStrumento: function (oEvent) {
+			this.onSearchSottostrumento()
+		},
+		onSearchSottostrumento: function () {
+			//var oModel = this.getOwnerComponent().getModel("sapHanaS2");
+			//var oModel = this.getOwnerComponent().getModel("sapHanaS2");
+
+			//var serviceUrl = "/sap/opu/odata/sap/ZSS4_COBI_ALV_SRV/";
+			var serviceUrl = "/sap/opu/odata/sap/ZSS4_COBI_ACCANTONAM_FORM_SRV/";
+			//platformization end
+			var oModel = new sap.ui.model.odata.v2.ODataModel(serviceUrl);
+
+
+			if(this.getView().getModel("sottostrumentiModel") !== undefined){
+				this.getView().getModel("sottostrumentiModel").setProperty("/", [])
+			}
 			if(!this._oDialog){
 				this._oDialog = sap.ui.xmlfragment(
 					"zsap.com.r3.cobi.s4.accmass.view.fragment.Sottostrumento",
 					this);
-				this._oDialog.setModel("sottostrumentiModel");
-				this.getView().addDependent(this._oDialog);
-				this._oDialog.open();
+					this._oDialog.setModel("sottostrumentiModel");
+					this.getView().addDependent(this._oDialog);
+					this._oDialog.open();
 			} else {
 				this._oDialog.open();
 			}
+			sap.ui.getCore().byId("idTableSottostrumento2").setBusy(true)
+			let annoSStr = new Date(new Date().setFullYear(new Date().getFullYear() + 1)) 
+			var sottostrumentiModel = new JSONModel();
+
+			var aFiltersComposeStac = [new Filter("AnnoSstr", FilterOperator.EQ, annoSStr.getFullYear().toString()),
+								   new Filter("FaseSstr", FilterOperator.Contains, "STAC")];
+
+
+			var oView = this.getView();
+			var aFiltersCompose = [new Filter("AnnoSstr", FilterOperator.EQ, annoSStr.getFullYear().toString()),
+								   new Filter("FaseSstr", FilterOperator.Contains, "STAC")];
+
+			let modelHome = this.getView().getModel("modelHome")
+			//Autorizzazione Giustificativa
+			if(modelHome.getProperty("/formSottostrumento/auth_giust")){
+				aFiltersCompose.push(new Filter({
+					path: "DescrGiust",
+					operator: FilterOperator.Contains,
+					value1: modelHome.getProperty("/formSottostrumento/auth_giust").toUpperCase()
+				}),)
+			}
+			//Esposizione Contabile
+			if(modelHome.getProperty("/formSottostrumento/esposizione_contabile") && modelHome.getProperty("/formSottostrumento/esposizione_contabile").length > 1){
+				aFiltersCompose.push(new Filter({
+					path: "TipoEsposizione",
+					operator: FilterOperator.EQ,
+					value1: modelHome.getProperty("/formSottostrumento/esposizione_contabile").split("-")[0]
+				}))
+			} else {
+				let aFilterEspContCompose = []
+				/* modelHome.getProperty("/formSottostrumento/esposizione_contabileSet").map((espCont) => {
+						if (espCont.Esposizione) {
+							aFilterEspContCompose.push(new Filter({
+								path: "TipoEsposizione",
+								operator: FilterOperator.EQ,
+								value1: espCont.Esposizione.split("-")[0]
+							}))
+						}   
+				})
+				let afiltersEspCont = 
+					new Filter({
+						filters: aFilterEspContCompose,
+						and: false,
+						or : true
+						})
+				
+				aFiltersCompose.push(afiltersEspCont) */
+			}
+			//Numero Sottostrumento
+			if(modelHome.getProperty("/formSottostrumento/sottostrumento")){
+				aFiltersCompose.push(new Filter({
+					path: "CodiceSottostrumento",
+					operator: FilterOperator.EQ,
+					value1: modelHome.getProperty("/formSottostrumento/sottostrumento")
+				}),)
+			}
+			//Descrizione Sottostrumento
+			if(modelHome.getProperty("/formSottostrumento/descrizione_sstr")){
+				aFiltersCompose.push(new Filter({
+					path: "DescrEstesa",
+					operator: FilterOperator.Contains,
+					value1: modelHome.getProperty("/formSottostrumento/descrizione_sstr").toUpperCase()
+				}),)
+			}
+			//Tipologia Sottostrumento
+			if(modelHome.getProperty("/formSottostrumento/tipologia")){
+				aFiltersCompose.push(new Filter({
+					path: "TipoSottostrumento",
+					operator: FilterOperator.EQ,
+					value1: modelHome.getProperty("/formSottostrumento/tipologia")
+				}),)
+			} else {
+				if(modelHome.getProperty("/formSottostrumento/tipologieSet")){
+					let aFilterTipologiaCompose = []
+					modelHome.getProperty("/formSottostrumento/tipologieSet").map((tipologie) => {
+						if (tipologie.Tipologia) {
+							aFilterTipologiaCompose.push(new Filter({
+								path: "TipoSottostrumento",
+								operator: FilterOperator.EQ,
+								value1: tipologie.Tipologia
+							}))
+						}   
+					})
+					let afiltersTipologia = 
+						new Filter({
+							filters: aFilterTipologiaCompose,
+							and: false,
+							or : true
+							})
+					
+					aFiltersCompose.push(afiltersTipologia)
+				}
+			}
+
+			//Visibilità
+			if(modelHome.getProperty("/formSottostrumento/visibilita")){
+				aFiltersCompose.push(new Filter({
+					path: "Reale",
+					operator: FilterOperator.EQ,
+					value1: modelHome.getProperty("/formSottostrumento/visibilita")
+				}),)
+			} else {
+				if(modelHome.getProperty("/formSottostrumento/visibilitaSet")){
+					let aFilterVisibilitaCompose = []
+					modelHome.getProperty("/formSottostrumento/visibilitaSet").map((vis) => {
+						if (vis.Reale) {
+							aFilterVisibilitaCompose.push(new Filter({
+								path: "Reale",
+								operator: FilterOperator.EQ,
+								value1: vis.Reale
+							}))
+						}   
+					})
+					let afiltersVisibilita = 
+						new Filter({
+							filters: aFilterVisibilitaCompose,
+							and: false,
+							or : true
+							})
+					
+					aFiltersCompose.push(afiltersVisibilita)
+				}
+			}
+
+			var _filters = [
+				new Filter({
+					filters: aFiltersCompose,
+					and: true
+				  })
+			]
+			_filters = [
+				new Filter({
+					filters: aFiltersComposeStac,
+					and: true
+				  })
+			]
+			oModel.read("/SottostrumentoSet", {
+				urlParameters: {
+			//     $expand: "ToMissione,ToTitolo,ToInterno,ToAmministrazione"
+				},
+				filters: _filters,
+				// sorters: [new sap.ui.model.Sorter("TipoSottostrumento", false),
+				//           new sap.ui.model.Sorter("NumeroSottostrumento", false)],//new sap.ui.model.Sorter("NumeroSottostrumento", false),
+				success: (oData, response) => {
+					//Filtro per Dominio Sottostrumento
+					let arrDataResults = []
+					for(let i =0; i < oData.results.length;  i ++){
+						arrDataResults.push(oData.results[i])
+					}
+
+					/* for(let i =0; i < oData.results.length;  i ++){
+						if(oData.results[i].ToTitolo.results.length === 0 && oData.results[i].ToMissione.results.length === 0 &&
+							 oData.results[i].ToAmministrazione.results.length === 0) {
+							arrDataResults.push(oData.results[i])
+						} else {
+							let oResults = this.__checkDominioSStr(oData.results[i])
+							if(oResults !== null){
+								arrDataResults.push(oData.results[i])
+							}
+						}
+					}
+					if((modelHome.getProperty("/formSottostrumento/var_struttura") === true || modelHome.getProperty("/formSottostrumento/var_contabili") === true ||
+							modelHome.getProperty("/formSottostrumento/FB") === true || modelHome.getProperty("/formSottostrumento/FL") === true 
+							|| modelHome.getProperty("/formSottostrumento/OI") === true) ) {
+						arrDataResults = arrDataResults.filter(item => item.ToAmministrazione.results.length !== 0 &&
+										item.ToMissione.results.length !== 0 && item.ToInterno.results.length !== 0 && item.ToTitolo.results.length !== 0)     
+					} */
+					sottostrumentiModel.setData(arrDataResults);
+					sottostrumentiModel.setSizeLimit(2000);
+					oView.setModel(sottostrumentiModel, "sottostrumentiModel");
+					sap.ui.getCore().byId("idTableSottostrumento2").setBusy(false);
+				},
+				error: (e) => {
+					sap.ui.getCore().byId("idTableSottostrumento2").setBusy(true)
+				}
+			});
+			
 		},
 
+		onConfirmSottostrumento:function (oEvent){
+			//controllo se è tutto ok per associarlo altrimenti do warning
+			let modelSottoStrumenti = this.getView().getModel("sottostrumentiModel");
+			let sottostrumentoModel = this.getView().getModel("associaSottostrumento");
+
+			if(!sottostrumentoModel || !sottostrumentoModel.getProperty("/sottostrumento") || sottostrumentoModel.getProperty("/sottostrumento") === ""){
+				MessageBox.warning("Selezionare un sottostrumento da Associare");
+				return;
+			}
+
+			sottostrumentoModel.getProperty("/sottostrumento");
+
+			sottostrumentoModel.getProperty("/AnnoSstr");
+			sottostrumentoModel.getProperty("/TipoSstr");
+			sottostrumentoModel.getProperty("/FaseSstr");
+			sottostrumentoModel.getProperty("/NumeroSstr");
+
+
+			//LT CAMBIO REGISTRO
+			var that = this;
+	
+			sap.m.MessageBox.show(
+				this.getText("bodyAssociazioneStato"), {
+					icon: sap.m.MessageBox.Icon.QUESTION,
+					title: this.getText("headerAssociazioneStato"),
+					actions: ["Ok","Annulla"],
+					onClose: function (sButton) {
+						if (sButton === "Ok") {
+							//lt forzo il cambio stato e gli mando anche il sottostrumento
+							that.cambiaStato("5", true);
+							that.oDialogHVSottoStrumento.close();
+							
+						} else {
+							return;
+						}
+					},
+					styleClass: "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer"
+				}
+			);
+
+		},
 		
 		onPressConfermaSottostrumento: function (oEvent) {
 			let modelSottoStrumenti = this.getView().getModel("sottostrumentiModel")
@@ -897,36 +1208,19 @@ sap.ui.define([
 			let selectedItem = modelSottoStrumenti.getProperty(selectedPath)
 
 			if(!selectedItem){
+				MessageBox.warning("Nessun sottostrumento associato");
 				return;
 			}
 
-			sottostrumentoModel.setProperty("/sottostrumento", `${selectedItem.TestoTipo} - ${selectedItem.IdSstr} - ${selectedItem.EseAnnoEse}`);
+			sottostrumentoModel.setProperty("/sottostrumento", `${selectedItem.FaseSstr} - ${selectedItem.NumeroSstr} - ${selectedItem.AnnoSstr}`);
 
-			sottostrumentoModel.setProperty("/AnnoSstr", `${selectedItem.EseAnnoEse}`);
-			sottostrumentoModel.setProperty("/TipoSstr", `${selectedItem.TestoTipo}`);
-			sottostrumentoModel.setProperty("/NumeroSstr", `${selectedItem.TestoTipo}`);
+			sottostrumentoModel.setProperty("/AnnoSstr", `${selectedItem.AnnoSstr}`);
+			sottostrumentoModel.setProperty("/TipoSstr", `${selectedItem.TipoSstr}`);
+			sottostrumentoModel.setProperty("/FaseSstr", `${selectedItem.FaseSstr}`);
+			sottostrumentoModel.setProperty("/NumeroSstr", `${selectedItem.NumeroSstr}`);
 
-			//LT CAMBIO REGISTRO
-			var that = this;
-	
-			sap.m.MessageBox.show(
-				"Vuoi Associare?", {
-					icon: sap.m.MessageBox.Icon.QUESTION,
-					title: "Associa Sottostrumento a Sessione di Lavoro",
-					actions: ["Ok","Annulla"],
-					onClose: function (sButton) {
-						if (sButton === "Ok") {
-							//lt forzo il cambio stato e gli mando anche il sottostrumento
-							that.cambiaStato("5", true);
-							that.oDialogHVSottoStrumento.close();
-							that._oDialog.close();
-						} else {
-							return;
-						}
-					},
-					styleClass: "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer"
-				}
-			);
+			this._oDialog.close();
+			this.oDialogHVSottoStrumento.close();
 			
 		},
 		
@@ -936,7 +1230,6 @@ sap.ui.define([
 
 		onChangeNumberFormat: function(oEvent, model) {
 			var sField = oEvent.getSource().getBindingInfo("value").binding.getPath();
-			//var sPath = this._findPathNumeric(oEvent.getSource().getBindingInfo("value").binding.getContext().getPath());
 			var sPath = oEvent.getSource().getBindingInfo("value").binding.getContext().getPath();
 			var sModel = this.getOwnerComponent().getModel("modelHome");
 			var num = oEvent.getParameter("value");
@@ -949,11 +1242,7 @@ sap.ui.define([
 
 		_onChangeNumberFormat_: function(sField, num, sPath, sModel) {
 			var sValue = formatter.formatterNumber(num);
-			//sModel.setProperty("/" + sPath + "/" + sField, sValue);
 			sModel.setProperty(sPath + "/" + sField, sValue);
-		//	var aVal = sModel.getData();
-		//	var sTot = this._calculateTot(aVal, sField);
-		//	sModel.setProperty("/1/" + sField, formatter.formatterNumber(sTot));
 		}
 
 	});

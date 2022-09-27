@@ -211,7 +211,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 				
 		<footer>
 			<OverflowToolbar>
-				<Button text="test" press="test" type="Emphasized" visible="true"/>
+				<Button text="test" press="test" type="Emphasized" visible="false"/>
 				<Button text="test2" press="test2" type="Emphasized" visible="false"/>
 				<ToolbarSpacer/>
 				<Button text="{i18n>indietro}" press="onNavToDetail" type="Emphasized" visible="false"/>

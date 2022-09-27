@@ -140,7 +140,112 @@ sap.ui.define([
 					return this.getOwnerComponent().getModel("sapHanaS2NotifMail");
 					break;
 			}
-		}
+		},
+
+		__setPropertyFiltriMissioneDomSStr: function (oData) {
+			let modelHome = this.getView().getModel("modelHome")
+
+			let resultMissioni = oData.results.filter((s => a => !(s.has(a.Missione)) && (s.add(a.Missione)))(new Set))
+								.filter(tit => tit.Missione !== "");
+			modelHome.setProperty("/formSottostrumento/missione_set", resultMissioni)
+
+			let resultProgramma = oData.results.filter((s => a => !(s.has(a.Programma)) && (s.add(a.Programma)))(new Set))
+								.filter(tit => tit.Programma !== "");
+			modelHome.setProperty("/formSottostrumento/programma_set", resultProgramma)
+
+			let resultAzione= oData.results.filter((s => a => !(s.has(a.Azione)) && (s.add(a.Azione)))(new Set))
+								.filter(tit => tit.Azione !== "");
+			modelHome.setProperty("/formSottostrumento/azione_set", resultAzione)
+		},
+
+		__setPropertyFiltriTitoloDomSStr: function (oData) {
+			let modelHome = this.getView().getModel("modelHome")
+			// let resultAmm = oData.results.filter((s => a => !(s.has(a.Prctr)) && (s.add(a.Prctr)))(new Set))
+			//                         .filter(amm => amm.Prctr !== "");
+			// modelHome.setProperty("/formSottostrumento/dominio_sstrSet", resultAmm)
+
+			let resultTitoli = oData.results.filter((s => a => !(s.has(a.Titolo)) && (s.add(a.Titolo)))(new Set))
+								.filter(tit => tit.Titolo !== "");
+			modelHome.setProperty("/formSottostrumento/titolo_set", resultTitoli)
+
+			let resultCategoria = this.__removeDuplicate(oData.results, "categoria")
+										.filter(cat => cat.Titolo !== "");
+			modelHome.setProperty("/formSottostrumento/categoria_set", resultCategoria)
+
+			let resultCE2= this.__removeDuplicate(oData.results, "ce2")
+										.filter(ce2 => ce2.Ce2 !== "");
+			modelHome.setProperty("/formSottostrumento/economica2_set", resultCE2)
+
+			let resultCE3= this.__removeDuplicate(oData.results, "ce3")
+										.filter(ce3 => ce3.Ce3 !== "");
+			modelHome.setProperty("/formSottostrumento/economica3_set", resultCE3)
+		},
+
+		__removeDuplicate(arr, property){
+			let results = []
+			switch (property) {
+				case "categoria":
+					for(let i = 0; i <  arr.length; i++){
+						if(results.filter(item => (item.Categoria === arr[i].Categoria && item.Titolo === arr[i].Titolo)).length === 0)
+							results.push(arr[i])
+					}
+					break;
+				case "ce2":
+					for(let i = 0; i <  arr.length; i++){
+						if(results.filter(item => item.Categoria === arr[i].Categoria && item.Titolo === arr[i].Titolo
+										&& item.Ce2 === arr[i].Ce2).length === 0)
+							results.push(arr[i])
+					}
+					break; 
+				case "ce3":
+					for(let i = 0; i <  arr.length; i++){
+						if(results.filter(item => item.Categoria === arr[i].Categoria && item.Titolo === arr[i].Titolo
+										&& item.Ce2 === arr[i].Ce2 && item.Ce3 === arr[i].Ce3).length === 0)
+							results.push(arr[i])
+					}
+					break; 
+				case "missioni":
+					for(let i = 0; i <  arr.length; i++){
+						if(results.filter(item => item.Missione === arr[i].Missione).length === 0)
+							results.push(arr[i])
+					}
+					break; 
+				case "programma":
+					for(let i = 0; i <  arr.length; i++){
+						if(results.filter(item => item.Missione === arr[i].Missione && item.Programma === arr[i].Programma).length === 0)
+							results.push(arr[i])
+					}
+					break; 
+				case "azioni":
+					for(let i = 0; i <  arr.length; i++){
+						if(results.filter(item => item.Missione === arr[i].Missione && item.Programma === arr[i].Programma
+											&& item.Azione === arr[i].Azione).length === 0)
+							results.push(arr[i])
+					}
+					break; 
+				case "esposizione":
+					for (let i = 0; i < arr.length; i++) {
+						if(results.filter(item => item.Esposizione === arr[i].Esposizione).length === 0)
+								results.push(arr[i])  
+					}
+					break;
+				case "tipologia":
+					for (let i = 0; i < arr.length; i++) {
+						if(results.filter(item => item.Tipologia === arr[i].Tipologia).length === 0)
+								results.push(arr[i])  
+					}
+					break;
+				case "visibilita":
+					for (let i = 0; i < arr.length; i++) {
+						if(results.filter(item => item.Reale === arr[i].Reale).length === 0)
+								results.push(arr[i])  
+					}
+					break;
+				default:
+					break;
+			}
+			return results
+		},
 
 	});
 });
