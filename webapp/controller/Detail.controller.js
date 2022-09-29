@@ -384,7 +384,7 @@ sap.ui.define([
 		adaptNumber: function(number, isPercent){
 			if(number.indexOf(".") !== -1 && parseFloat(number) > 0){
 			//salvo i numeri inseriti come vuole SAP
-				number = number.replace(".","");
+				number = number.replace(/\./g,"");
 				number = number.replace(",",".");
 			}else if(number.indexOf(",") !== -1 && parseFloat(number) > 0){
 				number = number.replace(",",".");
@@ -754,8 +754,26 @@ sap.ui.define([
 		},
 
 		onNavToRoot: function () {		
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("Home");
+
+			var that = this;
+			var rows = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected/items");
+			var rowsStringify = JSON.stringify(rows);
+			var bk = this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/Stringify");
+			var bkNoStringify = JSON.parse(bk);
+			if(rowsStringify !== bk){
+				MessageBox.warning(this.getText("messageSaveOnNavBack"), {
+					actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+					onClose: function (oAction) { / * do something * / 
+					if(oAction === "YES"){
+						var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+							oRouter.navTo("Home");
+
+					}
+				}.bind(this)
+			});
+			
+		}	
+			
 					
 		},
 
