@@ -174,7 +174,7 @@ sap.ui.define([
 
 
 			var titolo = "Avanzamento Aprovazione Accantonamenti";
-			var destinatario = "L.TARTAGGIA";
+			var destinatario = "L.TARTAGGIA"; //cancellato perchè preso da sessione
 			var messaggio = "La sessione lavoro " + accantonamento.NomeSessione + " dell'accantonamento è passata in stato: " + statoNuovo[0].Descrizione
 			//var messaggio = this.getText("textNotif", [accantonamento.NomeSessione,statoNuovo[0].Descrizione]);
 
@@ -216,13 +216,6 @@ sap.ui.define([
 			const dt = DateFormat.getDateTimeInstance({ pattern: "dd.MM.yyyy HH.mm" });
 			const dateFormatted = dt.format(new Date()); // returns: "01/08/2020"
 
-			/* var entry = {
-				"TITLE": statoNuovo.Descrizione,
-				"TEXT": "L.TARTAGGIA",
-				"DATETIME": dateFormatted,
-				"FASE": parseInt(statoNuovo.Stato),
-				"ICON": "person-placeholder"
-			  } */
 			var today = new Date();
 			  var entry = {
 				"NomeSessione" : accantonamento.NomeSessione,
@@ -331,12 +324,38 @@ sap.ui.define([
                 "Taglio": "OBC",
                 "AnnoDa": "0000", 
                 "AnnoA": "0000",
-                "PercPrimoAnno" : "0.00",
-                "PercSecondoAnno" : "0.00",
-                "PercTerzoAnno" : "0.00",
-                "PrimoAnno" : "0.00",
-                "SecondoAnno" : "0.00",
-                "TerzoAnno" : "0.00",
+				"Obiettivo" : "0,00",
+                "PercPrimoAnno" : "0,00",
+                "PercSecondoAnno" : "0,00",
+                "PercTerzoAnno" : "0,00",
+                "PrimoAnno" : "0,00",
+                "SecondoAnno" : "0,00",
+                "TerzoAnno" : "0,00",
+                "ADecorrere": false,
+                "AllaCassa": false
+			})
+			this.getOwnerComponent().getModel("modelHome").setProperty("/formRow", {
+				"NomeSessione": accantonamentoSelected.NomeSessione,
+				"Esercizio": accantonamentoSelected.Esercizio,
+                "Amministrazione": "G080",
+                "CodiceCategoria": "02",
+                "CodiceClaeco2": "01",  
+                "CodiceClaeco3": "02",
+                "CodiceMissione": "08",
+                "CodiceProgramma": "",
+                "CodiceAzione" : "",
+                "ClassAut": "FB",
+                "CpCs": "CP",
+                "Taglio": "OBC",
+                "AnnoDa": "0000", 
+                "AnnoA": "0000",
+				"Obiettivo" : "0,00",
+                "PercPrimoAnno" : "0,00",
+                "PercSecondoAnno" : "0,00",
+                "PercTerzoAnno" : "0,00",
+                "PrimoAnno" : "0,00",
+                "SecondoAnno" : "0,00",
+                "TerzoAnno" : "0,00",
                 "ADecorrere": false,
                 "AllaCassa": false
 			})
@@ -360,13 +379,17 @@ sap.ui.define([
 			var itemsTable = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected/items");
 			//lt inserire controlli per i duplicati
 
-			//inserire chiamata di creazione
+			MessageBox.information(this.getText("messageSaveRow"), {
+					actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+					onClose: function (oAction) { / * do something * / 
+					if(oAction === "YES"){
+						
+						this.addRowToDb(object);
+
+					}
+				}.bind(this)
+			});
 			
-			this.addRowToDb(object);
-			//metto l'oggetto dentro l'array
-			/* itemsTable.push(object);
-			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected/items",itemsTable);
-			this.handlecloseRowAccantonamento(); */
 		},
 
 		adaptRow: function(row){
@@ -438,16 +461,24 @@ sap.ui.define([
 			var that = this;
 			var rowExt = jQuery.extend(true, {}, row);	
 			
+			rowExt = this.adaptRow(rowExt);
+			var validation = this.validateRow(rowExt);
+			if(validation){
+				//non effettuo la chiamata
+				MessageBox.error("Riga non valida");
+				return;
+			}
 			//imposto i valori di default
-
+			var that = this;
 			oModel.create("/ElementoSessioneSet" , rowExt, {				
 				success: function(oData, response) {
 					var itemsTable = that.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected/items");
 					itemsTable.push(this);
 					that.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected/items", itemsTable);
 					console.log("creato con successo l'elemento della sessione");
-					MessageBox.success("Riga Creata Con successo.");
 					that.handlecloseRowAccantonamento();
+					MessageBox.success("Riga Creata Con successo.", {onClose: function (oAction) { that._onObjectMatched(null, true); }.bind(that)});
+					
 				}.bind(rowExt),
 				error: function(error) {
 					console.log(error);	
@@ -712,9 +743,9 @@ sap.ui.define([
 
 			object = this.getOwnerComponent().getModel("modelHome").getProperty("/formRow");
 
-			var valDefPercent = "0.0";
+			var valDefPercent = "0,00";
 			var valDefAnno = "0000";
-			var valDefImporti = "0.00";
+			var valDefImporti = "0,00";
 
 
 			switch (selection) {
@@ -760,18 +791,21 @@ sap.ui.define([
 			var rowsStringify = JSON.stringify(rows);
 			var bk = this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/Stringify");
 			var bkNoStringify = JSON.parse(bk);
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			if(rowsStringify !== bk){
 				MessageBox.warning(this.getText("messageSaveOnNavBack"), {
 					actions: [MessageBox.Action.YES, MessageBox.Action.NO],
 					onClose: function (oAction) { / * do something * / 
 					if(oAction === "YES"){
-						var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+						
 							oRouter.navTo("Home");
 
 					}
 				}.bind(this)
 			});
 			
+		}else{
+			oRouter.navTo("Home");
 		}	
 			
 					
@@ -1270,9 +1304,10 @@ sap.ui.define([
 			oEvent.getSource().getParent().close()
 		},
 
-		onChangeNumberFormat: function(oEvent, model) {
+		onChangeNumberFormat: function(oEvent, model, fromSh) {
 			var sField = oEvent.getSource().getBindingInfo("value").binding.getPath();
-			var sPath = oEvent.getSource().getBindingInfo("value").binding.getContext().getPath();
+			if(fromSh) sField = sField.replace("/", "");
+			var sPath = fromSh ? "" : oEvent.getSource().getBindingInfo("value").binding.getContext().getPath();
 			var sModel = this.getOwnerComponent().getModel("modelHome");
 			var num = oEvent.getParameter("value");
 			this._onChangeNumberFormat_(sField, num, sPath, sModel);

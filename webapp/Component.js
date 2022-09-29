@@ -42,7 +42,11 @@ sap.ui.define([
 		
 
 		initModel: async function (){
-			
+			//var utente = new sap.ushell.Container.getService("UserInfo").getUser();
+			var utente = new sap.ushell.Container.getService("UserInfo").getUser().getId();
+			var nomeUtente = utente !== "DEFAULT_USER" ? utente : 'L.TARTAGGIA';
+			this.setModel(new JSONModel({"user": nomeUtente}),"userModel");
+
 			this.setModel(new JSONModel({faseRicerca: true, infoSottoStrumento: {}}),"modelHome");
 			this.setModel(new JSONModel({Esercizio: 2023}),"modelFilterHome");
 			this.getModel("modelHome").setProperty("/form",{})

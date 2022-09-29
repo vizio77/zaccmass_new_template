@@ -101,22 +101,22 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
 											<Text text="{i18n>importo}" class="boldCss"/>
 										</Column>
-										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
+										<Column width="auto" demandPopin="true" minScreenWidth="1442px" >
 											<Text text="{i18n>importo1}" class="boldCss"/>
 										</Column>
-										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
+										<Column width="auto" demandPopin="true" minScreenWidth="1442px" >
 											<Text text="{i18n>importo2}" class="boldCss"/>
 										</Column>
-										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
+										<Column width="auto" demandPopin="true" minScreenWidth="1442px" >
 											<Text text="{i18n>importo3}" class="boldCss"/>
 										</Column>
-										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
+										<Column width="auto" demandPopin="true" minScreenWidth="1442px" >
 											<Text text="{i18n>percent1}" class="boldCss"/>
 										</Column>
-										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
+										<Column width="auto" demandPopin="true" minScreenWidth="1442px" >
 											<Text text="{i18n>percent2}" class="boldCss"/>
 										</Column>
-										<Column width="auto" demandPopin="true" minScreenWidth="1367px" >
+										<Column width="auto" demandPopin="true" minScreenWidth="1442px" >
 											<Text text="{i18n>percent3}" class="boldCss"/>
 										</Column>
 										<Column width="auto" demandPopin="true" minScreenWidth="1681px" >

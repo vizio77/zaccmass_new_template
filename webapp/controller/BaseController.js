@@ -18,7 +18,7 @@ sap.ui.define([
 			var accantonamentoSelected = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected");
 			var payload = {
 				"SchedaSac" : "GESTIONE",
-				"Zuser": "L.TARTAGGIA",
+				//"Zuser": "L.TARTAGGIA", //cancellato perchè preso da sessione
 				"Esercizio": item.Esercizio,
 				"Stato": parseInt(accantonamentoSelected.Stato),
 				"ProgSessLavoro" : parseInt(item.ProgSessLavoro),
@@ -49,24 +49,7 @@ sap.ui.define([
 
 		onPressSend: async function(titolo, destinatario, messaggio ) {
 
-			/* var oTupla = {
-				Titolo: this.getView().byId("idTitoloNotifica").getValue(),
-				Destinatario: this.getView().byId("idUtenza").getValue().toUpperCase(),
-				Messaggio: this.getView().byId("idTextArea").getValue(),
-				TypeKey: "TESTMESS",
-				TypeVersion: "1.0",
-				Oggetto: this.getView().byId("idTitoloNotifica").getValue(),
-				Semobj: "DASSWF"				
-			}; 
-			var oTupla = {
-				Titolo: "Avanzamento Aprovazione Accantonamenti",
-				Destinatario: "L.TARTAGGIA", //this.getView().byId("idUtenza").getValue().toUpperCase()
-				Messaggio: "La sezione lavoro xxx dell'accantonamento è passata dallo stato 1 allo stato 2",
-				TypeKey: "TESTMESS",
-				TypeVersion: "1.0",
-				Oggetto: "Avanzamento Aprovazione Accantonamenti",
-				Semobj: "DASSWF"				
-			};*/
+			
 			var oTupla = {
 				Titolo:  titolo,
 				Destinatario: destinatario, //this.getView().byId("idUtenza").getValue().toUpperCase()

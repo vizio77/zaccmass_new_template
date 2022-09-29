@@ -113,23 +113,23 @@
 					<DatePicker width="70%" xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoA}" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}"/>
 
 					<Label text="{i18n>importo}" />
-					<Input value="{modelHome>/formRow/Obiettivo}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
+					<Input value="{modelHome>/formRow/Obiettivo}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}" change=".onChangeNumberFormat($event, 'modelHome', true)"/>
 					<Label text="{i18n>importo1}" />
-					<Input value="{modelHome>/formRow/PrimoAnno}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>					
+					<Input value="{modelHome>/formRow/PrimoAnno}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome', true)"/>					
 					<Label text="{i18n>importo2}" />
-					<Input value="{modelHome>/formRow/SecondoAnno}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
+					<Input value="{modelHome>/formRow/SecondoAnno}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome', true)"/>
 					<Label text="{i18n>importo3}" />
-					<Input value="{modelHome>/formRow/TerzoAnno}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/>
+					<Input value="{modelHome>/formRow/TerzoAnno}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome', true)"/>
 
 					<!-- <Label text="{i18n>importo}" />
 					<Input value="{modelHome>/formRow/importo3}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'OBC'}" change=".onChangeNumberFormat($event, 'modelHome')"/> -->
 
 					<Label text="{i18n>percent1}" />
-					<Input value="{modelHome>/formRow/PercPrimoAnno}" maxLength="3" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'LIN'}"/>
+					<Input value="{modelHome>/formRow/PercPrimoAnno}" maxLength="3" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'LIN'}" change=".onChangeNumberFormat($event, 'modelHome', true)"/>
 					<Label text="{i18n>percent2}" />
-					<Input value="{modelHome>/formRow/PercSecondoAnno}" maxLength="3" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'LIN'}"/>
+					<Input value="{modelHome>/formRow/PercSecondoAnno}" maxLength="3" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'LIN'}" change=".onChangeNumberFormat($event, 'modelHome', true)"/>
 					<Label text="{i18n>percent3}" />
-					<Input value="{modelHome>/formRow/PercTerzoAnno}" maxLength="3" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'LIN'}"/>
+					<Input value="{modelHome>/formRow/PercTerzoAnno}" maxLength="3" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'LIN'}" change=".onChangeNumberFormat($event, 'modelHome', true)"/>
 
 					<Label text="{i18n>aDecorrereLB}" />
 					<CheckBox selected="{modelHome>/formRow/ADecorrere}" />

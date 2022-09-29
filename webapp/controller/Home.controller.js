@@ -99,7 +99,7 @@ sap.ui.define([
 				"NomeSessione" : formExt.NomeSessione,
 				"Esercizio" : formExt.Esercizio,
 				"Descrizione": stati[0].Descrizione,
-				"Utente": "L.TARTAGGIA",
+				//"Utente": "L.TARTAGGIA", //cancellato perchè preso da sessione
 				"DataStato": today,
 				"OraStato" : today.toTimeString().substr(0, 8),
 				"Stato": parseInt(stati[0].Stato)
