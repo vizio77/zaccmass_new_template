@@ -164,7 +164,8 @@ sap.ui.define([
 					for (var j = 0; batchCallRel.__batchResponses && j < batchCallRel.__batchResponses.length; j++) {
 						var propertyToSave = this[j];	
 						if (batchCallRel.__batchResponses[j].statusCode === "200") {
-								
+							
+							if("/TipoStatiSet") batchCallRel.__batchResponses[j].data.results.unshift({"Descrizione" : "", "Stato" : ""});
 							//console.log("propertyToSave")		
 							//console.log(batchCallRel.__batchResponses[j].data.results.length)	
 							that.getModel("accantonamentiModel").setProperty(propertyToSave, batchCallRel.__batchResponses[j].data.results);						
