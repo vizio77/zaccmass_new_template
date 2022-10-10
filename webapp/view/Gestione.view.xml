@@ -14,6 +14,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 		
 			<uxap:ObjectPageHeaderContent class="noMarginLeftUxap">
 				<uxap:content>
+					<ScrollContainer >
 					<FlexBox alignItems="Center" justifyContent="SpaceBetween">
 						<layout:VerticalLayout class="sapUiTinyMargin">
 							<VBox direction='Row' visible="true">
@@ -104,6 +105,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 						</layout:VerticalLayout>
 						
 					</FlexBox>
+				</ScrollContainer >
 					<!-- <Table id="TableGestione" width="auto"  
 										items="{ path: 'modelHome>/AccantonamentoSelected/Item'}"
 										itemPress="onItemPress" selectionChange="onGirSelect">

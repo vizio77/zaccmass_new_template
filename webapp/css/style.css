@@ -1,3 +1,10 @@
+.textBold>.sapMObjStatusTitle {
+    padding-right: .25rem !important;
+    font-weight: bold !important;
+}
+
+
+
 /*
 .sapUiMedia-Std-Desktop .sapUxAPObjectPageHeaderContent.noMarginLeftUxap {
     padding-left: 1rem;
