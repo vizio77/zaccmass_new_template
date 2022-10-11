@@ -259,7 +259,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 									</commons:Timeline> -->
 									<!-- lt modifiche WF con oData Real -->
 									<commons:Timeline id="idTimeline" enableDoubleSided="false" growingThreshold="0" height="auto" 
-										content="{ path: 'modelHome>/AccantonamentoSelected/SessioneLav_StatiSessioni', sorter: { path: 'FASE' ,descending: false} }" showHeaderBar="false" enableSocial="false"
+										content="{ path: 'modelHome>/AccantonamentoSelected/SessioneLav_StatiSessioni', sorter: { path: 'Stato' ,descending: false} }" showHeaderBar="false" enableSocial="false"
 										alignment="Right" axisOrientation="Vertical" sortOldestFirst="true" sort="false" enableScroll="true" >
 										<commons:content>
 											<commons:TimelineItem id="idTimelineItem" text="{i18n>OpCompBy} '{modelHome>Utente}'" dateTime="{ parts: [ {path: 'modelHome>DataStato'}], formatter: '.formatter.formatDataWorkFlow' } - {modelHome>OraStato}"
