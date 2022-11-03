@@ -91,6 +91,11 @@ sap.ui.define([
                         "VALORE": "OI",
                         "DESCRIZIONE": "OI",
                         "DESCRIZIONE_ESTESA": "Obbligo Inderogabile"
+                    },
+                    {
+                        "VALORE": "FL",
+                        "DESCRIZIONE": "FL",
+                        "DESCRIZIONE_ESTESA": "Fattore legislativo"
                     }
                     ],
                     "StatiAccantonamento": [
