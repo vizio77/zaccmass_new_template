@@ -29,6 +29,57 @@ sap.ui.define([
             return oModel;
         },
 
+            createModelModel: function () {
+                var oModel = new JSONModel({                      
+                    "selectCpCs": [{
+                        "VALORE": "CP",
+                        "DESCRIZIONE": "CP",
+                        "DESCRIZIONE_ESTESA": "Competenza"
+                    },
+                    {
+                        "VALORE": "CS",
+                        "DESCRIZIONE": "CS",
+                        "DESCRIZIONE_ESTESA": "Cassa"
+                    }
+                    ], 
+                    "selectObbLin": [{
+                        "VALORE": "OBC",
+                        "DESCRIZIONE": "OBB",
+                        "DESCRIZIONE_ESTESA": "Obiettivo Contabile"
+                    },
+                    {
+                        "VALORE": "LIN",
+                        "DESCRIZIONE": "LIN",
+                        "DESCRIZIONE_ESTESA": "Taglio Lineare"
+                    },
+                    {
+                        "VALORE": "PLUR",
+                        "DESCRIZIONE": "PLURI",
+                        "DESCRIZIONE_ESTESA": "Obiettivo Pluriennale"
+                    }
+                
+                    ],
+                    "selectClass": [{
+                        "VALORE": "FB",
+                        "DESCRIZIONE": "FB",
+                        "DESCRIZIONE_ESTESA": "Fabbisogno"
+                    },
+                    {
+                        "VALORE": "OI",
+                        "DESCRIZIONE": "OI",
+                        "DESCRIZIONE_ESTESA": "Obbligo Inderogabile"
+                    },
+                    {
+                        "VALORE": "FL",
+                        "DESCRIZIONE": "FL",
+                        "DESCRIZIONE_ESTESA": "Fattore legislativo"
+                    }
+                    ]
+                                       
+                });
+                return oModel 
+            },
+
             createMockUpModel: function () {
                 var oModel = new JSONModel({   
                     "WorkFlow" : [        

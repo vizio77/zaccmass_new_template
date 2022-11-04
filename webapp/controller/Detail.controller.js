@@ -40,6 +40,7 @@ sap.ui.define([
 				esercizio = this.getOwnerComponent().getModel("accantonamentiModel").getProperty("/esercizio");
 			}	
 			
+			
 			this.getOwnerComponent().getModel("accantonamentiModel").setProperty("/nomeSessione", nomeSessione);
 			this.getOwnerComponent().getModel("accantonamentiModel").setProperty("/esercizio", esercizio);
 
@@ -121,6 +122,9 @@ sap.ui.define([
 			accantonamento.STAC !== "" && accantonamento.STAC !== undefined ? visibility.STAC = true : visibility.STAC = false;
 			
 			this.getOwnerComponent().setModel(new JSONModel(visibility),"visibilityModel");
+			//lt forzo il tab sempre nel dettaglio delle righe
+			this.getView().byId("itb1").setSelectedKey("1")
+			this.getView().byId("itb1").setExpanded(true);			
 		},
 
 		onCambiaStato: async function(oEvent, sottoStrumento){

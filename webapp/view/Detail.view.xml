@@ -41,13 +41,14 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 						id="itb1"
 						selectedKey="1"
 						upperCase="false"
-						
+						expanded="false"
 						>
 						<items >
 							<IconTabFilter
 								key="1"
 								icon="sap-icon://accounting-document-verification"
-								text="{i18n>Elementi}">
+								text="{i18n>Elementi}"
+								>
 								<OverflowToolbar design="Solid">
 									<ToolbarSpacer />
 									<Button type="Emphasized" icon="sap-icon://detail-view" text="{i18n>gestisciRiga}" press="onNavToGestione" enabled="true"/>

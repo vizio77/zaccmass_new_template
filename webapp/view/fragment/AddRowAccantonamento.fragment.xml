@@ -108,9 +108,9 @@
 							<core:Item key="{modelHome>VALORE}" text="{modelHome>DESCRIZIONE_ESTESA}"/>
 					</Select>
 					<Label text="{i18n>da}" />
-					<DatePicker width="70%" xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoDa}" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}"/>	
+					<DatePicker width="70%" xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>/formRow/AnnoDa}" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}"/>	
 					<Label text="{i18n>a}" />
-					<DatePicker width="70%" xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>AnnoA}" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}"/>
+					<DatePicker width="70%" xmlns="sap.m" displayFormat="yyyy" valueFormat="yyyy" value="{modelHome>/formRow/AnnoA}" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}"/>
 
 					<Label text="{i18n>importo}" />
 					<Input value="{modelHome>/formRow/Obiettivo}" width="70%" showValueHelp="false" visible="{= ${modelHome>/formRow/Taglio} === 'PLUR'}" change=".onChangeNumberFormat($event, 'modelHome', true)"/>

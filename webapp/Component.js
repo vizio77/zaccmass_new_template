@@ -53,7 +53,7 @@ sap.ui.define([
 			//lt setto un modello per gestire la visualizzazione dei vari 
 			this.setModel(new JSONModel({}),"sessionModel");
 
-			this.setModel(models.createMockUpModel(), "modelHome");
+			this.setModel(models.createModelModel(), "modelHome");
 			/* let itemsMock = await this.loadJSONTest("/model/data_mock.json");
 			this.getModel("modelHome").setProperty("/",itemsMock) */
 			
