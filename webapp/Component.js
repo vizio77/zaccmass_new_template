@@ -27,21 +27,57 @@ sap.ui.define([
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
 
-			// enable routing
-			this.getRouter().initialize();
+			var that = this;
+			that.showBusyIndicator();
+			that.initApplication().then(result => {
+				that.hideBusyIndicator();
+				// enable routing
+				that.getRouter().initialize();
+			}).catch(err => {
+				console.log("app error")
+				that.hideBusyIndicator();
+				that.getRouter().getTargets().display("PageFail", err);
+			}); 
+			
+		},
+		/* * hide busy indicator
+		 * 
+		 * */
+		hideBusyIndicator: function () {
+			sap.ui.core.BusyIndicator.hide();
+		},
+		/* * show busy indicator
+		 * 
+		 * */
+		showBusyIndicator: function () {
+			sap.ui.core.BusyIndicator.show(0);
+		},
+
+		initApplication: async function () {
+			var that = this;
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
 			this.setModel(models.createIframeModel(), "iframe");
 			this.setModel(new JSONModel({}),"shModel");
-			this.initModel();
-			//console.log("entro in sh")
-			this.initSH();
-			this.initAccantonamenti();
-		},
+			this.initUserModel();
+			
+			return new Promise(async(resolve, reject) => {
+				Promise.all([
+							this.initSH(),
+							this.initAccantonamenti()
+						])
+					.then(function(res){
+						resolve()
+					}.bind(this))
+					.catch(err => {
+						reject(err)
+					})
+			});
+    	 }, 
 		
 
-		initModel: async function (){
+		initUserModel: function (){
 			//var utente = new sap.ushell.Container.getService("UserInfo").getUser();
 			var utente = new sap.ushell.Container.getService("UserInfo").getUser().getId();
 			var nomeUtente = utente !== "DEFAULT_USER" ? utente : 'L.TARTAGGIA';
@@ -52,10 +88,7 @@ sap.ui.define([
 			this.getModel("modelHome").setProperty("/form",{})
 			//lt setto un modello per gestire la visualizzazione dei vari 
 			this.setModel(new JSONModel({}),"sessionModel");
-
 			this.setModel(models.createModelModel(), "modelHome");
-			/* let itemsMock = await this.loadJSONTest("/model/data_mock.json");
-			this.getModel("modelHome").setProperty("/",itemsMock) */
 			
 			
 		},
@@ -92,7 +125,7 @@ sap.ui.define([
 					odataSh.read(entity,	  {groupId: "scpGroup", urlParameters: urlParam, filters: aFilters });
 		
         	}
-        	
+        	return new Promise( (resolve, reject) => {
 			//console.log("provo la chiamata")
 
 			odataSh.submitChanges({
@@ -113,21 +146,26 @@ sap.ui.define([
 							entitiesInError = entitiesInError + "\n" + entity;
 							errore = true;
 						}
+						resolve()
 					}
 					if(errore){
 							sap.ui.core.BusyIndicator.hide();
 							MessageBox.error("Errore recupero di alcune entities: \n" + entitiesInError);
 							//return;
+							reject()
 					}
 					sap.ui.core.BusyIndicator.hide();
 				}.bind(entityArray),
 				error: function (oError) {
+					reject()
 					//console.log("errore")
 					sap.ui.core.BusyIndicator.hide();
 					MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("errorChiamataBatchInit"));
 					return;
 				}.bind(entityArray)
 			});
+
+		})
 
 		},
 		initAccantonamenti: function () {
