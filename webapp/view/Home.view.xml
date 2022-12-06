@@ -117,7 +117,7 @@ xmlns:zcontrol="zsap.com.r3.cobi.s4.custposfin.z_s4_zposfin.controls"
 			</f:content>
 		<f:footer>
 			<OverflowToolbar>
-				<Button text="Test invio notifica" press="onPressSend" type="Emphasized" visible="true"/> 
+				<Button text="Test invio notifica" press="onPressSend" type="Emphasized" visible="false"/> 
 				<ToolbarSpacer/>
 				<!-- <Button text="{i18n>salva}" press="onSalva" type="Emphasized" visible="true"/>  -->
 			</OverflowToolbar>

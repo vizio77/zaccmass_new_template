@@ -55,15 +55,16 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 									<Button type="Emphasized" icon="sap-icon://delete" text="{i18n>deleteRow}" press="handlecDeleteRow" enabled="true"/>
 									<Button type="Emphasized" icon="sap-icon://add" text="{i18n>addRow}" press="handleAddRowAccantonamento" enabled="true"/>
 								</OverflowToolbar>
+						<ScrollContainer height="100%" vertical="false">
 							<VBox height="auto"> 
-								<!-- <ScrollContainer height="100%" vertical="true">  -->
-								<Table id="TableDetail" alternateRowColors="true" mode="SingleSelectLeft" popinLayout="GridSmall"
+								 <!--  popinLayout="GridSmall" -->
+								<Table id="TableDetail" alternateRowColors="true" mode="SingleSelectLeft"
 												items="{ path: 'modelHome>/AccantonamentoSelected/items', 
 												filters : [{ path : 'Cancellato', operator : 'EQ', value1 : false}],
 												sorter: { path: 'ProgSessLavoro' }}"
-												itemPress="onItemPress"  ><!-- class="sapUiTinyMargin" items="{ path: 'modelHome>/AccantonamentoSelected/items'}" --> 
+												itemPress="onItemPress">
 									<columns>
-										<Column  width="6rem" >
+										<!-- <Column  width="6rem" >
 											<Text text="{i18n>amm}" class="boldCss"/>
 										</Column>
 										<Column width="auto" demandPopin="true">
@@ -124,6 +125,69 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 											<Text text="{i18n>aDecorrere}" class="boldCss"/>
 										</Column>
 										<Column width="auto" demandPopin="true" minScreenWidth="1919px" >
+											<Text text="{i18n>allCassa}" class="boldCss"/>
+										</Column> -->
+										<Column  width="6rem" >
+											<Text text="{i18n>amm}" class="boldCss"/>
+										</Column>
+										<Column width="6rem" >
+											<Text text="{i18n>cat}" class="boldCss"/>
+										</Column>
+										<Column width="6rem" >
+											<Text text="{i18n>ce2Smart}" class="boldCss"/>
+										</Column>
+										<Column width="6rem" >
+											<Text text="{i18n>ce3Smart}" class="boldCss"/>
+										</Column>
+										<Column width="6rem" >
+											<Text text="{i18n>class}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>mis}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>prog}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"   >
+											<Text text="{i18n>azi}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>cpCs}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>obbLin}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>da}" class="boldCss" />
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>a}" class="boldCss"/>
+										</Column>
+										<Column width="10rem"  >
+											<Text text="{i18n>importo}" class="boldCss"/>
+										</Column>
+										<Column width="10rem"  >
+											<Text text="{i18n>importo1}" class="boldCss"/>
+										</Column>
+										<Column width="10rem"  >
+											<Text text="{i18n>importo2}" class="boldCss"/>
+										</Column>
+										<Column width="10rem"  >
+											<Text text="{i18n>importo3}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>percent1}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>percent2}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>percent3}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
+											<Text text="{i18n>aDecorrere}" class="boldCss"/>
+										</Column>
+										<Column width="6rem"  >
 											<Text text="{i18n>allCassa}" class="boldCss"/>
 										</Column>
 									</columns>
@@ -234,8 +298,8 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 										</ColumnListItem>
 									</items>
 								</Table>
-						<!-- </ScrollContainer>	 -->
-							 	</VBox>
+							</VBox>
+						</ScrollContainer>	
 							</IconTabFilter>
 							<IconTabFilter
 								key="2"

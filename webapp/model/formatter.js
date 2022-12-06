@@ -146,11 +146,13 @@ sap.ui.define(["sap/ui/core/format/NumberFormat","sap/ui/core/format/DateFormat"
 		},
 
 		auth: function (valore) {
-			if (valore === "FB") {
+			//lt come indicato da mario riporto il valore
+			/* if (valore === "FB") {
 				return "Fabbisogno";
 			} else {
-				return "Obbligo Inderogabile";
-			}
+				return "Onere Inderogabile";
+			} */
+			return valore
 		},
 
 		taglio: function (valore) {

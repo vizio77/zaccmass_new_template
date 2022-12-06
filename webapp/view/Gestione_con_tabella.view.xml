@@ -65,7 +65,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 
 								</layout:VerticalLayout>
 								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
-									<ObjectStatus title="{i18n>classLB}" text="{path:'modelHome>/ItemHeader/class', formatter: '.formatter.auth' }" class="textBold" visible="true"/>
+									<ObjectStatus title="{i18n>classLB}" text="{path:'modelHome>/ItemHeader/ClassAut', formatter: '.formatter.auth' }" class="textBold" visible="true"/>
 
 								</layout:VerticalLayout>
 								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd">
@@ -83,7 +83,7 @@ xmlns:form="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"  xmlns:core="sa
 								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'PLUR'}">
 									<ObjectStatus title="{i18n>da}" text="{modelHome>/ItemHeader/AnnoDa}" class="textBold" visible="true"/>
 									<ObjectStatus title="{i18n>a}" text="{modelHome>/ItemHeader/AnnoA}"	class="textBold"/>
-									<ObjectStatus title="{i18n>importo}" text="{modelHome>/ItemHeader/importo}"	class="textBold"/>
+									<ObjectStatus title="{i18n>importo}" text="{modelHome>/ItemHeader/Obiettivo}"	class="textBold"/>
 								</layout:VerticalLayout>
 								<layout:VerticalLayout class="sapUiTinyMarginBeginEnd" visible="{= ${modelHome>/HeaderDetail/tipoAccantonamento} === 'OBC'}">
 									<ObjectStatus title="{i18n>importo1}" text="{modelHome>/ItemHeader/PrimoAnno}" class="textBold" visible="true"/>

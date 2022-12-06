@@ -60,6 +60,10 @@ sap.ui.define([
                 
                     ],
                     "selectClass": [{
+                        "VALORE": "",
+                        "DESCRIZIONE": "",
+                        "DESCRIZIONE_ESTESA": ""
+                    },{
                         "VALORE": "FB",
                         "DESCRIZIONE": "FB",
                         "DESCRIZIONE_ESTESA": "Fabbisogno"
