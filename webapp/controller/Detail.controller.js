@@ -188,7 +188,7 @@ sap.ui.define([
 			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected", accantonamento);
 			
 
-			//await this.setEntryWorkFlow(statoNuovo[0]);
+			await this.setEntryWorkFlow(statoNuovo[0]);
 			
 
 			if(sottoStrumento){
@@ -238,67 +238,62 @@ sap.ui.define([
 			//this.getOwnerComponent().getModel("modelHome").setProperty("/WorkFlow", workFlowSession);
 			this.getOwnerComponent().getModel("modelHome").setProperty("/AccantonamentoSelected/SessioneLav_StatiSessioni" , workFlowSession);
 
-			  // decommentare per portare le modifiche a livello oData
-			var oModel = this.getOwnerComponent().getModel("accantonamenti");
+			// settare a true se si vuole salvare
+			var salvare = false;
+
+			if(salvare){
+				
+				var oModel = this.getOwnerComponent().getModel("accantonamenti");
+				
+				var scpDeferredGroups = oModel.getDeferredGroups();
+				scpDeferredGroups = scpDeferredGroups.concat(["scpGroup"]);
+				oModel.setDeferredGroups(scpDeferredGroups);
 			
-			var scpDeferredGroups = oModel.getDeferredGroups();
-			scpDeferredGroups = scpDeferredGroups.concat(["scpGroup"]);
-			oModel.setDeferredGroups(scpDeferredGroups);
-			
-			var that = this;		
-			//creo riga stato WF
-			oModel.create("/StatoSessioneSet",	entry, {groupId: "scpGroup"});
-			//aggiorno la sessione lavoro
-			var path = "/SessioneLavoroSet(NomeSessione='" + accantonamento.NomeSessione + "',Esercizio='"+ accantonamento.Esercizio +"')";
-			var modificaAccantonamento = {Stato: parseInt(statoNuovo.Stato)};
-			oModel.update(path,	 modificaAccantonamento, {groupId: "scpGroup"})	
+				var that = this;		
+				//creo riga stato WF
+				oModel.create("/StatoSessioneSet",	entry, {groupId: "scpGroup"});
+				//aggiorno la sessione lavoro
+				var path = "/SessioneLavoroSet(NomeSessione='" + accantonamento.NomeSessione + "',Esercizio='"+ accantonamento.Esercizio +"')";
+				var modificaAccantonamento = {Stato: parseInt(statoNuovo.Stato)};
+				oModel.update(path,	 modificaAccantonamento, {groupId: "scpGroup"})	
 
-			var entityArray = ["StatoSessione" , "UpdateSessione"];
-
-			return new Promise((resolve, reject) => { 
-				oModel.submitChanges({
-					success: function (batchCallRel) {
-						var errore = false;
-						var entitiesInError = "";
-						for (var j = 0; batchCallRel.__batchResponses && j < batchCallRel.__batchResponses.length; j++) {
-							var propertyToSave = this[j];	
-							if (batchCallRel.__batchResponses[j].statusCode === "200") {
-								var log="test";									
-								
-							}else{
-
-								var log="test";
+				var entityArray = ["StatoSessione" , "UpdateSessione"];
+				
+				return new Promise((resolve, reject) => { 
+					oModel.submitChanges({
+						success: function (batchCallRel) {
+							var errore = false;
+							var entitiesInError = "";
+							for (var j = 0; batchCallRel.__batchResponses && j < batchCallRel.__batchResponses.length; j++) {
+								var propertyToSave = this[j];	
+								if (batchCallRel.__batchResponses[j].statusCode === "200") {
+									var log="test";									
+									
+								}else{
+									
+									var log="test";
+								}
 							}
-						}
-						if(errore){
+							if(errore){
 								sap.ui.core.BusyIndicator.hide();
 								MessageBox.error("Errore Aggiornamento");
 								//return;
-						}
-						resolve();
-						sap.ui.core.BusyIndicator.hide();
-					}.bind(entityArray),
-					error: function (oError) {
-						console.log(oError);	
-						reject(oError);
-						sap.ui.core.BusyIndicator.hide();
-						MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("erroreAggiornamentoStato"));
-						return;
-						
-					}.bind(entityArray)
+							}
+							resolve();
+							sap.ui.core.BusyIndicator.hide();
+						}.bind(entityArray),
+						error: function (oError) {
+							console.log(oError);	
+							reject(oError);
+							sap.ui.core.BusyIndicator.hide();
+							MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("erroreAggiornamentoStato"));
+							return;
+							
+						}.bind(entityArray)
+					});
 				});
-			});
-
-			/* oModel.create("/StatoSessioneSet" , entry, {				
-				success: function(oData, response) {
-					that.getOwnerComponent().getModel("visibilityModel").setProperty("/stato", statoNuovo.Stato.toString());
-					workFlowSession.push(entry);
-					that.getOwnerComponent().getModel("modelHome").setProperty("/WorkFlow", workFlowSession);					
-				}.bind(entry),
-				error: function(error) {
-					console.log(error);	
-				}
-			}); */
+						
+			}
 
 		},
 

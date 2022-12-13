@@ -16,8 +16,46 @@ sap.ui.define([
 		writeAndRetrive: async function(item){
 
 			var accantonamentoSelected = this.getOwnerComponent().getModel("modelHome").getProperty("/AccantonamentoSelected");
+			var scheda;
+			switch (accantonamentoSelected.Stato) {
+				case "1":
+					scheda = "GESTIONE"
+					break;
+				case "2":
+					scheda = "DEFBASAGGR"
+					break;
+				case "3":
+					scheda = "PROPACC"
+					break;
+				case "4":
+					scheda = "VALIDAZIONE"
+					break;
+				case "5":
+					scheda = "GESTIONE"
+					break;
+				case "6":
+					scheda = "GESTIONE"
+					break;
+				case "7":
+					scheda = "GESTIONE"
+					break;
+			
+				default:
+					break;
+			}
+			/* 
+			1	Iniziato
+			2	Definizione Base Aggredibile
+			3	Proposte Accantonamenti
+			4	In Validazione
+			5	Associazione STAC
+			6	Calato in Bilancio
+			7	Chiuso
+
+			*/
+
 			var payload = {
-				"SchedaSac" : "GESTIONE",
+				"SchedaSac" : scheda,
 				//"Zuser": "L.TARTAGGIA", //cancellato perchè preso da sessione
 				"Esercizio": item.Esercizio,
 				"Stato": parseInt(accantonamentoSelected.Stato),

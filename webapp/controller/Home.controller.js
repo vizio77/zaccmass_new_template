@@ -98,11 +98,11 @@ sap.ui.define([
 			var stato = {
 				"NomeSessione" : formExt.NomeSessione,
 				"Esercizio" : formExt.Esercizio,
-				"Descrizione": stati[0].Descrizione,
+				"Descrizione": stati[1].Descrizione,
 				//"Utente": "L.TARTAGGIA", //cancellato perchè preso da sessione
 				"DataStato": today,
 				"OraStato" : today.toTimeString().substr(0, 8),
-				"Stato": parseInt(stati[0].Stato)
+				"Stato": parseInt(stati[1].Stato)
 			};
 
 			var that = this;
@@ -117,6 +117,9 @@ sap.ui.define([
 					var entitiesInError = "";
 					if (batchCallRel.__batchResponses && batchCallRel.__batchResponses.length === 1){
 						var responseBatch = batchCallRel.__batchResponses[0].__changeResponses;
+
+						if(!responseBatch) MessageBox.error("Errore Creazione");
+
 						for (let i = 0;responseBatch && i < responseBatch.length; i++) {
 							const element = responseBatch[i];
 							if (element.statusCode !== "200" && element.statusCode !== "201") {
