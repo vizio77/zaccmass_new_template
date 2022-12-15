@@ -41,11 +41,12 @@ sap.ui.define([
 		},
 
 		handleAddAccantonamenti: function (oEvent) {
-
+			var accantonamentiModel = this.getOwnerComponent().getModel("accantonamentiModel")
+			
 			/* this.getOwnerComponent().getModel("generalModel").setProperty("/ValueNpshNew", {}); */
 			this.getOwnerComponent().getModel("modelHome").setProperty("/form",{
 				NomeSessione 		: "",
-				Esercizio 	: "",
+				Esercizio 	: accantonamentiModel.getProperty("/Anno"),
 				Descrizione : "",
 				statoWf		: "Iniziato",
 				Stato: "1"
@@ -106,51 +107,26 @@ sap.ui.define([
 			};
 
 			var that = this;
-			oModel.create("/SessioneLavoroSet",	formExt, {groupId: "scpGroup"});
-			oModel.create("/StatoSessioneSet",	stato, {groupId: "scpGroup"});
+			//oModel.create("/SessioneLavoroSet",	formExt, {groupId: "scpGroup"});
+			//oModel.create("/StatoSessioneSet",	stato, {groupId: "scpGroup"});
 
-			var entities = ["Sessione","Stato"];
+			//var entities = ["Sessione","Stato"];
 
-			oModel.submitChanges({
-				success: function (batchCallRel) {
+			oModel.create("/SessioneLavoroSet",	formExt , {
+				success: function (oData) {
 					var errore = false;
-					var entitiesInError = "";
-					if (batchCallRel.__batchResponses && batchCallRel.__batchResponses.length === 1){
-						var responseBatch = batchCallRel.__batchResponses[0].__changeResponses;
-
-						if(!responseBatch) MessageBox.error("Errore Creazione");
-
-						for (let i = 0;responseBatch && i < responseBatch.length; i++) {
-							const element = responseBatch[i];
-							if (element.statusCode !== "200" && element.statusCode !== "201") {
-								errore = true;
-								entitiesInError = entitiesInError + this[i] +"\n";
-							}							
-						}
-						if(errore){
-							sap.ui.core.BusyIndicator.hide();
-							MessageBox.error("Errore Creazione");
-							//return;
-						}else{
-							var sessioniPresenti = that.getOwnerComponent().getModel("accantonamentiModel").getProperty("/SessioneLavoroSet");
-							sessioniPresenti.push(this);
-							that.getOwnerComponent().getModel("accantonamentiModel").setProperty("/SessioneLavoroSet", sessioniPresenti);
-							console.log("creato con successo l'elemento della sessione");
-							MessageBox.success("Accantonamento Creato con successo.");
-							that.handlecloseAccantonamenti();
-						}
-					}else{
-						sap.ui.core.BusyIndicator.hide();
-						MessageBox.error("Errore Creazione");
-					}				
+					var entitiesInError = "";					
+					MessageBox.success("Accantonamento Creato con successo.");
+					that.handlecloseAccantonamenti();
+					that.onPressAvvio();	
 					sap.ui.core.BusyIndicator.hide();
-				}.bind(entities),
+				}.bind(this),
 				error: function (oError) {
 					//console.log("errore")
 					sap.ui.core.BusyIndicator.hide();
 					MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("erroreAggiornamentoStato"));
 					return;
-				}.bind(entities)
+				}.bind(this)
 			}); 
 			
 

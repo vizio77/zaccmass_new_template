@@ -64,10 +64,12 @@ sap.ui.define([
 			
 			return new Promise(async(resolve, reject) => {
 				Promise.all([
-							this.initSH(),
+							this.__getAnnoFase(),
+							//this.initSH(),
 							this.initAccantonamenti()
 						])
 					.then(function(res){
+						this.setModel(new JSONModel({Esercizio: res[0]}),"modelFilterHome");
 						resolve()
 					}.bind(this))
 					.catch(err => {
@@ -231,5 +233,24 @@ sap.ui.define([
 			});
 
 		},
+
+		__getAnnoFase: function () {
+			var that = this;
+			let modelTopologiche = this.getModel("odataSH")  
+			return new Promise((resolve, reject) => {
+			  modelTopologiche.read("/ZES_CAL_FIN_SET",{
+				  filters: [new Filter("FASE", FilterOperator.EQ, "F")],
+				  success: (oData) => {
+					  that.getModel("accantonamentiModel").setProperty("/Anno", oData.results[0].ANNO);
+					  resolve(oData.results[0].ANNO)
+				  },
+				  error: (oData) => {
+					  console.log("errore recupero")
+					  resolve("2023")
+				  }
+  
+			  })
+			})
+		  },
 	});
 });

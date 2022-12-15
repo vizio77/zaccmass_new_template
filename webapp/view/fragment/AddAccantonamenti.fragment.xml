@@ -10,13 +10,14 @@
 					<Label text="{i18n>nome}" required="true"/>
 					<Input id="idAmmPosizioneFin" value="{modelHome>/form/NomeSessione}" width="70%" showValueHelp="false"/>
 					<Label text="{i18n>esercizio}" required="true"/>
-					<Select id="selEsercizio" forceSelection="false" selectedKey="{modelHome>/form/Esercizio}" width="70%">
+						<Input id="selEsercizio" value="{modelHome>/form/Esercizio}" width="70%" showValueHelp="false"/>
+					<!-- <Select id="selEsercizio" forceSelection="false" selectedKey="{modelHome>/form/Esercizio}" width="70%">
 						<items>
 							<core:Item text="2021" key="2021"/>
 							<core:Item text="2022" key="2022"/>
 							<core:Item text="2023" key="2023"/>
 						</items>
-					</Select>
+					</Select> -->
 					<Label text="{i18n>descrizione}"  required="true"/>
 					<Input value="{modelHome>/form/Descrizione}" width="70%" showValueHelp="false" valueHelpRequest="onPressMatchCodeFragment">
                         <customData>
