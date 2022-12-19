@@ -743,9 +743,11 @@ sap.ui.define([
 			if(from === "table"){
 				var path = oEvent.getSource().getParent().getBindingContext("modelHome").getPath();
 				object = this.getOwnerComponent().getModel("modelHome").getProperty(path);
+			}else{
+				
+				object = this.getOwnerComponent().getModel("modelHome").getProperty("/formRow");
 			}		
 
-			object = this.getOwnerComponent().getModel("modelHome").getProperty("/formRow");
 
 			var valDefPercent = "0,00";
 			var valDefAnno = "0000";
